@@ -10,6 +10,8 @@ public class movement : MonoBehaviour
     private float verticalSpeed = 12;
     private Rigidbody2D body;
     private bool grounded = false;
+
+    private float horizontalInput;
     
     void Awake()
     {
@@ -18,6 +20,14 @@ public class movement : MonoBehaviour
 
     private void Update()
     {
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        //Flip player when moving left-right
+        if (horizontalInput > 0.01f)
+            transform.localScale = Vector3.one;
+        else if (horizontalInput < -0.01f)
+            transform.localScale = new Vector3(-1, 1, 1);
+
         // Get inputs
         float horizontalMovement = Input.GetAxis("Horizontal");
         bool jumpKeyPressed = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
@@ -36,6 +46,10 @@ public class movement : MonoBehaviour
         {
             grounded = true;
         }
+    }
+
+    public bool canAttack(){
+        return true;
     }
 }
 
