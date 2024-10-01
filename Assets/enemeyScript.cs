@@ -58,7 +58,6 @@ public class enemeyScript : MonoBehaviour
         rightChild.transform.localScale = originalSize;  // Ensure child has the original size
 
         // Optionally, add additional behavior to the children if needed
-        
     }
 
     // Method to grow the parent enemy
@@ -66,10 +65,9 @@ public class enemeyScript : MonoBehaviour
     {
         // Increase the parent's size by multiplying its scale by the growth factor (2D Vector)
         transform.localScale *= growthFactor; 
-         if (boxCollider != null)
+        if (transform.localScale.x > boxCollider.size.x || transform.localScale.y > boxCollider.size.y)
         {
-            boxCollider.size = boxCollider.size * growthFactor;
-            boxCollider.offset = boxCollider.offset * growthFactor;  // Adjust offset if needed to keep it centered
+            growthFactor = 1; // Adjust offset if needed to keep it centered
         }
     }
     private void FixedUpdate()
