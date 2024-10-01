@@ -7,9 +7,10 @@ public class enemeyScript : MonoBehaviour
     public float walkSpeed =  3f;
     private Rigidbody2D rb; 
    
-    public GameObject childEnemyPrefab;  // Prefab of the child enemy
+    public GameObject ChildEnemies;  // Prefab of the child enemy
     public float spawnInterval = 5f;  // Time interval for spawning
-    public float growthFactor = 4f;  // Factor to increase the parent size every interval
+    public float growthFactor = 2f;  // Factor to increase the parent size every interval
+    public float spawnDistance = 1.3f;
 
     private Vector2 originalSize;  // Store the original size of the enemy
 
@@ -44,21 +45,25 @@ public class enemeyScript : MonoBehaviour
     // Method to spawn two child enemies
     private void SpawnChildEnemies()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            // Instantiate the child enemy at the parent's position but keep the original size
-            GameObject child = Instantiate(childEnemyPrefab, transform.position, Quaternion.identity);
-            child.transform.localScale = originalSize;  // Ensure child has the original size
+        // Position the first child enemy on the left side of the parent
+        Vector2 leftSpawnPosition = new Vector2(transform.position.x - spawnDistance, transform.position.y);
+        GameObject leftChild = Instantiate(ChildEnemies, leftSpawnPosition, Quaternion.identity);
+        leftChild.transform.localScale = originalSize;  // Ensure child has the original size
 
-            // Optionally, you can add behavior to the child enemy after spawning
-        }
+        // Position the second child enemy on the right side of the parent
+        Vector2 rightSpawnPosition = new Vector2(transform.position.x + spawnDistance, transform.position.y);
+        GameObject rightChild = Instantiate(ChildEnemies, rightSpawnPosition, Quaternion.identity);
+        rightChild.transform.localScale = originalSize;  // Ensure child has the original size
+
+        // Optionally, add additional behavior to the children if needed
+        
     }
 
     // Method to grow the parent enemy
     private void GrowParentEnemy()
     {
         // Increase the parent's size by multiplying its scale by the growth factor (2D Vector)
-        transform.localScale *= growthFactor;  // Now using Vector2 for 2D scaling
+        transform.localScale *= growthFactor; 
     }
     private void FixedUpdate()
     {
