@@ -11,6 +11,7 @@ public class enemeyScript : MonoBehaviour
     public float spawnInterval = 5f;  // Time interval for spawning
     public float growthFactor = 2f;  // Factor to increase the parent size every interval
     public float spawnDistance = 1.3f;
+    private BoxCollider2D boxCollider;
 
     private Vector2 originalSize;  // Store the original size of the enemy
 
@@ -18,6 +19,7 @@ public class enemeyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         originalSize = transform.localScale;
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
@@ -64,6 +66,11 @@ public class enemeyScript : MonoBehaviour
     {
         // Increase the parent's size by multiplying its scale by the growth factor (2D Vector)
         transform.localScale *= growthFactor; 
+         if (boxCollider != null)
+        {
+            boxCollider.size = boxCollider.size * growthFactor;
+            boxCollider.offset = boxCollider.offset * growthFactor;  // Adjust offset if needed to keep it centered
+        }
     }
     private void FixedUpdate()
     {
@@ -75,7 +82,7 @@ public class enemeyScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Check if the enemy collides with a wall (you can use a tag or a specific layer)
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player") )
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ground") )
         {
             Flip();
         }
