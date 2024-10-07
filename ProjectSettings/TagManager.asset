@@ -14,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Projectile_test
   - 
   - 
   - 
@@ -43,7 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 3572649973
-    locked: 0
+    locked: 1
   - name: Default
     uniqueID: 0
     locked: 0
