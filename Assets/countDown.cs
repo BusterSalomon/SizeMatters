@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class countDown : MonoBehaviour
 {
     public TextMeshPro timer;
     private float counter;
     private Vector2 originalScale;
-    public float RemainingTime => counter;
+    // Reference to the SpriteRenderer on the enemy for color change
+    private SpriteRenderer enemySpriteRenderer;
 
-    public bool IsCounterZero => counter <= 0;
-        public void Start()
+    public Color targetColor = Color.red;
+    public Color targetColor2 = Color.blue;
+    int check = 0; 
+
+        private void Awake()
+    {
+        originalScale = transform.localScale;
+        enemySpriteRenderer = GetComponentInParent<SpriteRenderer>(); // Find the parent enemy's SpriteRenderer
+    }
+
+    public void Start()
     {
         ResetCounter();
     }
@@ -25,10 +36,6 @@ public class countDown : MonoBehaviour
     {
         counter = Random.Range(5, 10); 
     }
-    void Awake()
-    {
-        originalScale = transform.localScale;
-    }
 
     void Update()
     {
@@ -39,8 +46,19 @@ public class countDown : MonoBehaviour
         }
         else
         {
+            transform.localScale = new Vector2(Mathf.Abs(originalScale.x), originalScale.y);
             timer.text = "0";
+            if (check == 0)
+            {
+                enemySpriteRenderer.color = targetColor;
+                check++;
+                RestartCounter();
+            }
+            else if (check == 1) {
+                enemySpriteRenderer.color = targetColor2;
+                ResetCounter();
+                check++; 
+            }          
         }
-        transform.localScale = new Vector2(Mathf.Abs(originalScale.x), originalScale.y);
     }
 }
