@@ -30,20 +30,19 @@ public class PlattformController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-{
-    if (collision.CompareTag("Character"))
     {
-        Debug.Log("Character entered platform");
-        collision.transform.SetParent(this.transform);
+        if (collision.CompareTag("Character")) // Tag ändern, falls dein Charakter "Player" ist
+        {
+            collision.transform.SetParent(this.transform); // Charakter wird Kind der Plattform
+        }
     }
-}
 
-private void OnTriggerExit2D(Collider2D collision)
-{
-    if (collision.CompareTag("Character"))
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Character exited platform");
-        collision.transform.SetParent(null);
+        if (collision.CompareTag("Character")) // Tag ändern, falls dein Charakter "Player" ist
+        {
+            collision.transform.SetParent(null); // Entfernt Charakter von der Plattform
+        }
     }
 }
-}
+ 
