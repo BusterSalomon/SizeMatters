@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
-
-
 
 public class PlattformController : MonoBehaviour
 {
@@ -11,12 +8,14 @@ public class PlattformController : MonoBehaviour
     public float speed; 
     Vector3 targetPos;
 
-private void Start()
-{
-    targetPos = posB.position;
-}
+    private void Start()
+    {
+        targetPos = posB.position;
+    }
+
     private void Update()
     {
+        // Bewegungslogik der Plattform
         if (Vector2.Distance(transform.position, posA.position) < 0.05f) 
         {
             targetPos = posB.position;
@@ -31,18 +30,20 @@ private void Start()
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.CompareTag("Character"))
     {
-        if (collision.CompareTag("Character"))
-        {
-            collision.transform.parent=this.transform; 
-        }
+        Debug.Log("Character entered platform");
+        collision.transform.SetParent(this.transform);
     }
+}
 
-    private void OnTriggerExit2D(Collider2D collision)
+private void OnTriggerExit2D(Collider2D collision)
+{
+    if (collision.CompareTag("Character"))
     {
-        if (collision.CompareTag("Character"))
-        {
-            collision.transform.parent=null; 
-        }
+        Debug.Log("Character exited platform");
+        collision.transform.SetParent(null);
     }
+}
 }

@@ -7,13 +7,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] projectiles;
     private Animator anim;
-    private movement playerMovement; 
+    private Movement playerMovement; 
     private float cooldownTimer = Mathf.Infinity;
 
     private void Awake(){
 
         anim = GetComponent<Animator>();
-        playerMovement = GetComponent<movement>();
+        playerMovement = GetComponent<Movement>();
 
     }
 
