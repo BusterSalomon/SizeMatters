@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class enemeyScript : MonoBehaviour
 {
+    [SerializeField] private float damage;
+    [SerializeField] private float startingHealth;
+    private float currentHealth;
     public float walkSpeed =  3f;
     private Rigidbody2D rb; 
 
@@ -57,7 +60,25 @@ public class enemeyScript : MonoBehaviour
         {
             Flip();
         }
+        if(collision.gameObject.CompareTag("Character")){
+            collision.collider.GetComponent<Health>().TakeDamage(damage);
+            Debug.Log("Bum");
+        }
     }
+
+        public void TakeDamage(float _damage){
+
+        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        currentHealth -= _damage;
+        
+        if(currentHealth > 0){
+            //player hurt
+        }else{
+            //Dead
+        }
+    
+    }  
+
     private void Flip()
     {
         // Reverse the walk speed to change direction
