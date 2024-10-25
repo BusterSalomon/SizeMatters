@@ -29,6 +29,7 @@ public abstract class EnemyBase : MonoBehaviour
     /// <param name="damage">Damage value</param>
     public void TakeHit(float damage)
     {
+        Debug.Log("I took a hit!");
         health -= damage;
 
         if (health <= 0)

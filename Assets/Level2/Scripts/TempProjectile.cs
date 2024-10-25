@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class TempProjectile : MonoBehaviour
 {
     [SerializeField] private float speed;
     private float direction;
@@ -28,7 +30,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy")){
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
             collision.GetComponent<enemeyScript>().TakeHit(1);
         }
         hit = true;
@@ -55,4 +58,5 @@ public class Projectile : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
 }

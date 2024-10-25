@@ -14,6 +14,8 @@ public class Health : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
         currentHealth -= _damage;
+
+        Debug.Log("I took damage");
         
         if(currentHealth > 0){
             //player hurt
