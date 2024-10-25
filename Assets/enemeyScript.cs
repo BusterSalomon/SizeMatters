@@ -67,6 +67,7 @@ public class enemeyScript : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Character")){
             collision.collider.GetComponent<Health>().TakeDamage(damage);
+            TakeHit((MaxHitpoints/4));
             Debug.Log("Bum");
         }
     }

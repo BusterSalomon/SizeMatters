@@ -29,6 +29,7 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy")){
+            Debug.Log("Hited an enemy");
             collision.GetComponent<enemeyScript>().TakeHit(1);
         }
         hit = true;
