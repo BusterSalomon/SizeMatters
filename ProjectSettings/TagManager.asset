@@ -9,6 +9,8 @@ TagManager:
   - Wall
   - Platform
   - Projectile
+  - Tree
+  - Enemy
   layers:
   - Default
   - TransparentFX
