@@ -117,7 +117,7 @@ public class enemeyScript : MonoBehaviour
 
         enemeyScript newEnemyScript = newEnemy.GetComponent<enemeyScript>();
         newEnemyScript.spriteRenderer.color = originalColor;
-        newEnemyScript.counterScript = counterScript; 
+        //newEnemyScript.counterScript = counterScript; 
     }
   
 }
