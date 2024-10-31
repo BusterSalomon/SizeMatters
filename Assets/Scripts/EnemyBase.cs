@@ -11,8 +11,9 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField] private float health;
     [SerializeField] private int move_speed;
-    [SerializeField] private float FloorDistance = 10f;
+    [SerializeField] private float FloorDistance = 4f;
     [SerializeField] private float DistanceToJump = 0.5f;
+    [SerializeField] private float PlatformLookAheadDistance = 3f;
     [SerializeField] private float JumpVelocity = 2;
     private List<Target> targets = new List<Target>();
 
@@ -124,20 +125,34 @@ public class EnemyBase : MonoBehaviour
         // Apply velocity in the X direction
         PursueTargetX(target);
 
-        // Retrieve target transform
-        Transform targetTransform = target.Transform;
-
-        // Get relative floor
-        RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
-        
         // Always check for gaps and jump
         if (IsGapAhead())
         {
             Jump();
         }
 
+        // Retrieve target transform
+        Transform targetTransform = target.Transform;
+
+        // Get relative floor
+        RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
+        Debug.Log(relativeFloor);
+
+        if (relativeFloor == RelativeFloor.above)
+        {
+            // Check for platforms to jump onto
+            if (IsPlatformAboveInReach())
+            {
+                Jump();
+            }
+        }
     }
 
+    private bool IsPlatformAboveInReach()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(PlatformLookAheadDistance, 0, 0), Vector2.up, 8f, groundLayer);
+        return hit;
+    }
     private bool IsGapAhead()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(DistanceToJump, 0, 0), Vector2.down, 2f, groundLayer);
@@ -163,10 +178,10 @@ public class EnemyBase : MonoBehaviour
         
         // Instantiate relative floor type
         RelativeFloor relativeTargetFloor;
-        
+
         // Set floor: above || below || same
         if (yDistance > FloorDistance) relativeTargetFloor = RelativeFloor.above;
-        else if (yDistance < FloorDistance) relativeTargetFloor = RelativeFloor.below;
+        else if (yDistance < -FloorDistance) relativeTargetFloor = RelativeFloor.below;
         else relativeTargetFloor = RelativeFloor.same;
         
         return relativeTargetFloor;
