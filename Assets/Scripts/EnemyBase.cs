@@ -1,25 +1,36 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour
 {
 
     [SerializeField] private float health;
     [SerializeField] private int move_speed;
-    private List<Transform> target_transforms = new List<Transform>();
+    [SerializeField] private float FloorDistance = 10f;
+    [SerializeField] private float DistanceToJump = 0.5f;
+    [SerializeField] private float JumpVelocity = 2;
+    private List<Target> targets = new List<Target>();
+
+    public LayerMask groundLayer;
+    private Rigidbody2D body;
 
     // ---- START ----
     private void Start()
     {
-        target_transforms = GetTargetTransforms();
+        body = GetComponent<Rigidbody2D>();
+        targets = GetTargetList();
     }
 
     // ---- UPDATE ----
     private void FixedUpdate()
     {
-        Move();
+        Target targetToFollow = GetTargetToFollow();
+        PursueTargetXYNaively(targetToFollow);
     }
 
     // ---- OWN METHODS ----
@@ -39,25 +50,42 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Default: Move towards the targets that it is closest to
-    /// </summary>
-    protected virtual void Move()
+    /// <returns>A list of Target objects, that includes the target tag and the transform
+    private List<Target> GetTargetList()
     {
-        if (target_transforms == null || target_transforms.Count == 0)
+        List<string> target_tags = GetTargetTags();
+        List<Target> targets = new List<Target>();
+
+        foreach (string tag in target_tags)
         {
-            return; // No targets to move towards
+            Transform target_transform = GameObject.FindGameObjectWithTag(tag).GetComponent<Transform>();
+            Target target = new Target(tag, target_transform);
+            targets.Add(target);
         }
 
+        return targets;
+    }
+
+    /// <summary>
+    /// May be overridden. Retrieves a list of tags that the enemy will target.
+    /// </summary>
+    /// <returns>By default ["Character"]</returns>
+    public virtual List<string> GetTargetTags() {
+        return new List<string> { "Character" };
+    }
+
+    
+    /// <returns>By default returns the target closest to the enemy. May be overriden.</returns>
+    protected virtual Target GetTargetToFollow()
+    {
+        
         // 1) Find the closest target
-        Transform closestTarget = null;
+        Target closestTarget = null;
         float closestDistance = Mathf.Infinity;
 
-        foreach (Transform target in target_transforms)
+        foreach (Target target in targets)
         {
-            if (target == null) continue; // Skip any null targets
-
-            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            float distanceToTarget = Vector3.Distance(transform.position, target.Transform.position);
             if (distanceToTarget < closestDistance)
             {
                 closestDistance = distanceToTarget;
@@ -65,43 +93,104 @@ public abstract class EnemyBase : MonoBehaviour
             }
         }
 
-        // 2) Move towards the closest target with move_speed
-        if (closestTarget != null)
-        {
-            //Make sure that the enemy doesn't follow vertically
-            Vector3 currentPos = transform.position;
-            Vector3 targetPosition = closestTarget.position;
-            targetPosition.y = currentPos.y;
+        return closestTarget;
 
-            // Move towards the target position
-            transform.position = Vector3.MoveTowards(
-                currentPos,                       // Current position
-                targetPosition,                   // Target position
-                move_speed * Time.deltaTime               // Speed factor
-            );
-        }
     }
 
-    /// <returns>The transforms of the targets</returns>
-    private List<Transform> GetTargetTransforms()
+
+    /// <summary>
+    /// Default: Move towards the targets that it is closest to in the X direction
+    /// </summary>
+    protected virtual void PursueTargetX(Target target)
     {
-        List<string> target_tags = GetTargetTags();
-        List<Transform> target_transforms = new List<Transform>();
+        //Make sure that the enemy doesn't follow vertically
+        Vector3 currentPos = transform.position;
+        Vector3 targetPosition = target.Transform.position;
+        targetPosition.y = currentPos.y;
 
-        foreach (string tag in target_tags)
-        {
-            Transform target_transform = GameObject.FindGameObjectWithTag(tag).GetComponent<Transform>();
-            target_transforms.Add(target_transform);
-        }
-
-        return target_transforms;
+        // Move towards the target position
+        transform.position = Vector3.MoveTowards(
+            currentPos,                       // Current position
+            targetPosition,                   // Target position
+            move_speed * Time.deltaTime       // Speed factor
+        );
     }
 
     /// <summary>
-    /// Abstract, must be implemented. Retrieves a list of tags that the enemy will target.
+    /// Default: Move towards the targets that it is closest to in the X and Y direction in a naive way
     /// </summary>
-    /// <returns>A list of strings representing the target tags.</returns>
-    public abstract List<string> GetTargetTags(); 
+    protected virtual void PursueTargetXYNaively(Target target)
+    {
+        // Apply velocity in the X direction
+        PursueTargetX(target);
 
+        // Retrieve target transform
+        Transform targetTransform = target.Transform;
+
+        // Get relative floor
+        RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
+        
+        // Always check for gaps and jump
+        if (IsGapAhead())
+        {
+            Jump();
+        }
+
+    }
+
+    private bool IsGapAhead()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(DistanceToJump, 0, 0), Vector2.down, 2f, groundLayer);
+        return !hit;
+    }
+
+    private void Jump()
+    {
+        // Do groundcheck
+        RaycastHit2D ground = Physics2D.Raycast(transform.position, Vector2.down, 2f, groundLayer);
+
+        // Jump if on ground
+        if (ground) {
+            body.velocity = body.velocity + new Vector2(0, JumpVelocity);
+        }
+    }
+
+    private RelativeFloor GetRelativeTargetFloor(Transform targetTransform)
+    {
+        // Get distances
+        Vector3 xyzDistance = targetTransform.position - transform.position;
+        float yDistance = xyzDistance[1];
+        
+        // Instantiate relative floor type
+        RelativeFloor relativeTargetFloor;
+        
+        // Set floor: above || below || same
+        if (yDistance > FloorDistance) relativeTargetFloor = RelativeFloor.above;
+        else if (yDistance < FloorDistance) relativeTargetFloor = RelativeFloor.below;
+        else relativeTargetFloor = RelativeFloor.same;
+        
+        return relativeTargetFloor;
+    }
+
+    private enum RelativeFloor
+    {
+        above = 1,
+        same = 2,
+        below = 3,
+    }
+
+
+}
+
+public class Target
+{
+    public string Tag = null;
+    public Transform Transform = null;
+
+    public Target (string tag, Transform transform)
+    {
+        Tag = tag;
+        Transform = transform;
+    }
 }
 
