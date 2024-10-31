@@ -15,6 +15,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float DistanceToJump = 0.5f;
     [SerializeField] private float PlatformLookAheadDistance = 3f;
     [SerializeField] private float JumpVelocity = 2;
+    [SerializeField] private float MaximumJumpDistance = 6f;
     private List<Target> targets = new List<Target>();
 
     public LayerMask groundLayer;
@@ -125,27 +126,26 @@ public class EnemyBase : MonoBehaviour
         // Apply velocity in the X direction
         PursueTargetX(target);
 
-        // Always check for gaps and jump
-        if (IsGapAhead())
-        {
-            Jump();
-        }
-
         // Retrieve target transform
         Transform targetTransform = target.Transform;
 
         // Get relative floor
         RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
-        Debug.Log(relativeFloor);
+
+        // Always check for gaps and jump
+        if (IsGapAhead() && CanJumpGap() && relativeFloor != RelativeFloor.below)
+        {
+            Jump();
+        }
 
         if (relativeFloor == RelativeFloor.above)
         {
-            // Check for platforms to jump onto
             if (IsPlatformAboveInReach())
             {
                 Jump();
             }
         }
+
     }
 
     private bool IsPlatformAboveInReach()
@@ -159,10 +159,16 @@ public class EnemyBase : MonoBehaviour
         return !hit;
     }
 
+    private bool CanJumpGap()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(MaximumJumpDistance, 0, 0), Vector2.down, 2f, groundLayer);
+        return hit;
+    }
+
     private void Jump()
     {
         // Do groundcheck
-        RaycastHit2D ground = Physics2D.Raycast(transform.position, Vector2.down, 2f, groundLayer);
+        RaycastHit2D ground = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
 
         // Jump if on ground
         if (ground) {
