@@ -9,16 +9,20 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
 
-    [SerializeField] private float health;
-    [SerializeField] private int move_speed;
-    [SerializeField] private float FloorDistance = 4f;
-    [SerializeField] private float DistanceToJump = 0.5f;
-    [SerializeField] private float PlatformLookAheadDistance = 3f;
-    [SerializeField] private float JumpVelocity = 2;
-    [SerializeField] private float MaximumJumpDistance = 6f;
+    [SerializeField] private int health = 10;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float floorDistance = 4f;
+    [SerializeField] private float distanceToJump = 0.5f;
+    [SerializeField] private float platformLookAheadDistance = 3f;
+    [SerializeField] private float jumpVelocity = 2;
+    [SerializeField] private float maximumJumpDistance = 6f;
+    [SerializeField] private LayerMask groundLayer;
+
+    private int xDirection;
+
     private List<Target> targets = new List<Target>();
 
-    public LayerMask groundLayer;
+    
     private Rigidbody2D body;
 
     // ---- START ----
@@ -40,7 +44,7 @@ public class EnemyBase : MonoBehaviour
     /// Method to call when the enemy should take a hit
     /// </summary>
     /// <param name="damage">Damage value</param>
-    public void TakeHit(float damage)
+    public void TakeHit(int damage)
     {
         Debug.Log("I took a hit!");
         health -= damage;
@@ -103,18 +107,19 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// Default: Move towards the targets that it is closest to in the X direction
     /// </summary>
-    protected virtual void PursueTargetX(Target target)
+    protected virtual void PursueTargetX(Transform targetTransform)
     {
         //Make sure that the enemy doesn't follow vertically
         Vector3 currentPos = transform.position;
-        Vector3 targetPosition = target.Transform.position;
+        Vector3 targetPosition = targetTransform.position;
         targetPosition.y = currentPos.y;
+        
 
         // Move towards the target position
         transform.position = Vector3.MoveTowards(
             currentPos,                       // Current position
             targetPosition,                   // Target position
-            move_speed * Time.deltaTime       // Speed factor
+            moveSpeed * Time.deltaTime       // Speed factor
         );
     }
 
@@ -123,14 +128,21 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void PursueTargetXYNaively(Target target)
     {
+        // Set intermediate target! // to allow it to move when (x=xTarget && floor != floorTarget)
+        // <>
+
         // Apply velocity in the X direction
-        PursueTargetX(target);
+        // NEW IDEA: change in X direction at random time intervals when not on the same level
+        PursueTargetX(target.Transform);
+
+        SetXDirectionGlobally(target.Transform);
 
         // Retrieve target transform
         Transform targetTransform = target.Transform;
 
         // Get relative floor
         RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
+        Debug.Log(relativeFloor);
 
         // Always check for gaps and jump
         if (IsGapAhead() && CanJumpGap() && relativeFloor != RelativeFloor.below)
@@ -140,7 +152,7 @@ public class EnemyBase : MonoBehaviour
 
         if (relativeFloor == RelativeFloor.above)
         {
-            if (IsPlatformAboveInReach())
+            if (IsGapAbove() && IsPlatformAboveInReach()) // Only look for a platform above when there is a gap above
             {
                 Jump();
             }
@@ -148,20 +160,31 @@ public class EnemyBase : MonoBehaviour
 
     }
 
+    private void SetXDirectionGlobally(Transform targetTransform)
+    {
+        xDirection = Math.Sign(targetTransform.position[0] - transform.position[0]);
+    }
+
+    private bool IsGapAbove()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, floorDistance, groundLayer);
+        return !hit;
+    }
+
     private bool IsPlatformAboveInReach()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(PlatformLookAheadDistance, 0, 0), Vector2.up, 8f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(xDirection * platformLookAheadDistance, 0, 0), Vector2.up, floorDistance, groundLayer);
         return hit;
     }
     private bool IsGapAhead()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(DistanceToJump, 0, 0), Vector2.down, 2f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(distanceToJump, 0, 0), Vector2.down, 2f, groundLayer);
         return !hit;
     }
 
     private bool CanJumpGap()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(MaximumJumpDistance, 0, 0), Vector2.down, 2f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(maximumJumpDistance, 0, 0), Vector2.down, 2f, groundLayer);
         return hit;
     }
 
@@ -172,7 +195,7 @@ public class EnemyBase : MonoBehaviour
 
         // Jump if on ground
         if (ground) {
-            body.velocity = body.velocity + new Vector2(0, JumpVelocity);
+            body.velocity = body.velocity + new Vector2(0, jumpVelocity);
         }
     }
 
@@ -186,8 +209,8 @@ public class EnemyBase : MonoBehaviour
         RelativeFloor relativeTargetFloor;
 
         // Set floor: above || below || same
-        if (yDistance > FloorDistance) relativeTargetFloor = RelativeFloor.above;
-        else if (yDistance < -FloorDistance) relativeTargetFloor = RelativeFloor.below;
+        if (yDistance > floorDistance) relativeTargetFloor = RelativeFloor.above;
+        else if (yDistance < -floorDistance) relativeTargetFloor = RelativeFloor.below;
         else relativeTargetFloor = RelativeFloor.same;
         
         return relativeTargetFloor;

@@ -599,12 +599,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8254cb88bee1d4f8c1277f6646b39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  move_speed: 5
-  FloorDistance: 4
-  DistanceToJump: 2
-  PlatformLookAheadDistance: 3
-  JumpVelocity: 3
+  health: 10
+  moveSpeed: 5
+  floorDistance: 4
+  distanceToJump: 0.5
+  platformLookAheadDistance: 3
+  jumpVelocity: 2
+  maximumJumpDistance: 6
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
