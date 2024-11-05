@@ -1446,7 +1446,7 @@ Transform:
   m_GameObject: {fileID: 1216289292}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.16, y: 0.5021941, z: -0.05572583}
+  m_LocalPosition: {x: 14.95, y: 0.83, z: -0.05572583}
   m_LocalScale: {x: 1.0395656, y: 17.8999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1481,7 +1481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   moveSpeed: 5
-  floorDistance: 4
+  floorDistance: 2
   distanceToJump: 0.5
   platformLookAheadDistance: 3
   jumpVelocity: 20
@@ -1561,19 +1561,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.45536867
+      value: 0.20274863
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3035652
+      value: 0.13515955
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.96
+      value: -4.55
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.42
+      value: -5.75
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1657,7 +1657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3521488016078132206, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3951883224178809342, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1745,7 +1745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1674405034
 Transform:
   m_ObjectHideFlags: 0
@@ -1989,7 +1989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1799122464
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2306,7 +2306,7 @@ Transform:
   m_GameObject: {fileID: 1984986007}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.42, y: 0.53659415, z: -0.05572583}
+  m_LocalPosition: {x: -12.07, y: 0.83, z: -0.05572583}
   m_LocalScale: {x: 1.2156918, y: 17.899519, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
