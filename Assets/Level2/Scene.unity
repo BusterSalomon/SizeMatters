@@ -1335,7 +1335,7 @@ GameObject:
   - component: {fileID: 1216289293}
   m_Layer: 0
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: Blocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1489,6 +1489,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  a:
+  - s
+  - ds
+  enemyVersion: 0
 --- !u!4 &1277691663 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5853013215478933966, guid: 7ff335d1e5b8fc3478f8e7a59ed14fa5, type: 3}
@@ -1569,11 +1573,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.55
+      value: -7.06
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.75
+      value: -5.47
       objectReference: {fileID: 0}
     - target: {fileID: 1572560779492531239, guid: ba3043b4f53c0fb4c98a967c45e17d2e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1989,7 +1993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1799122464
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2195,7 +2199,7 @@ GameObject:
   - component: {fileID: 1984986008}
   m_Layer: 0
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: Blocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2632,11 +2636,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5853013215478933966, guid: 7ff335d1e5b8fc3478f8e7a59ed14fa5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.89
+      value: 1.69
       objectReference: {fileID: 0}
     - target: {fileID: 5853013215478933966, guid: 7ff335d1e5b8fc3478f8e7a59ed14fa5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.06
+      value: -5.23
       objectReference: {fileID: 0}
     - target: {fileID: 5853013215478933966, guid: 7ff335d1e5b8fc3478f8e7a59ed14fa5, type: 3}
       propertyPath: m_LocalPosition.z

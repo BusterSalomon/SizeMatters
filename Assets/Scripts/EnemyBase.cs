@@ -18,6 +18,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float maximumJumpDistance = 6f;
     [SerializeField] private LayerMask groundLayer;
 
+    public List<string> a;
+
+    public EnemyVersion enemyVersion = EnemyVersion.Naive;
+
+    private Direction direction = Direction.right;
+
     private int xDirection;
 
     private List<Target> targets = new List<Target>();
@@ -36,7 +42,17 @@ public class EnemyBase : MonoBehaviour
     private void FixedUpdate()
     {
         Target targetToFollow = GetTargetToFollow();
-        PursueTargetXYNaively(targetToFollow);
+
+        if (enemyVersion == EnemyVersion.Naive)
+        {
+            PursueTargetXYNaively(targetToFollow);
+        }
+
+        if (enemyVersion == EnemyVersion.Smart)
+        {
+            PursueTargetXY(targetToFollow);
+        }
+        
     }
 
     // ---- OWN METHODS ----
@@ -100,7 +116,6 @@ public class EnemyBase : MonoBehaviour
         }
 
         return closestTarget;
-
     }
 
 
@@ -160,6 +175,39 @@ public class EnemyBase : MonoBehaviour
 
     }
 
+    protected void PursueTargetXY(Target target)
+    {
+        Transform targetTransform = target.Transform;
+
+        // Retrieve floor / state
+        RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
+        
+        if (relativeFloor == RelativeFloor.above)
+        {
+
+        }
+
+        if (relativeFloor == RelativeFloor.below)
+        {
+
+        }
+
+        if (relativeFloor == RelativeFloor.same)
+        {
+            MoveX(direction);
+        }
+
+
+    }
+
+    private void MoveX (Direction direction)
+    {
+        
+        if (direction == Direction.right) body.velocity = new Vector2(Math.Abs(moveSpeed), 0);
+        else body.velocity = new Vector2(-Math.Abs(moveSpeed), 0);
+        Debug.Log(body.velocity);
+    }
+
     private void SetXDirectionGlobally(Transform targetTransform)
     {
         xDirection = Math.Sign(targetTransform.position[0] - transform.position[0]);
@@ -216,6 +264,21 @@ public class EnemyBase : MonoBehaviour
         return relativeTargetFloor;
     }
 
+    private void Flip ()
+    {
+        Debug.Log("did flip!");
+        if (direction == Direction.right) direction = Direction.left;
+        else direction = Direction.right;
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        Debug.Log(direction);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        bool isBlocker = collision.gameObject.CompareTag("Blocker");
+        if (isBlocker) Flip();
+    }
+
     private enum RelativeFloor
     {
         above = 1,
@@ -223,6 +286,30 @@ public class EnemyBase : MonoBehaviour
         below = 3,
     }
 
+    private enum Direction
+    {
+        right,
+        left
+    }
+
+    private enum State
+    {
+        PURSUE_X,
+        PURSUE_UP,
+        PURSUE_DOWN
+    }
+
+    public enum EnemyVersion
+    {
+        Naive,
+        Smart
+    }
+
+    private static Dictionary<Direction, int> directionScalarMap = new Dictionary<Direction, int>
+        {
+            { Direction.left, -1 },
+            { Direction.right, 1 }
+        };
 
 }
 

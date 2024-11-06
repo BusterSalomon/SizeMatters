@@ -11,6 +11,8 @@ TagManager:
   - Projectile
   - Tree
   - Enemy
+  - Blocker
+  - Collectable
   layers:
   - Default
   - TransparentFX
