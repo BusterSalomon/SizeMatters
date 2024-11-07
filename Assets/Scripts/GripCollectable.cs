@@ -6,28 +6,46 @@ using UnityEngine;
 public class GripCollectable : MonoBehaviour
 {
     private List<GameObject> collectableGameObjects = new List<GameObject>();
-    public float pickupRange = 2.0f; // The distance threshold for picking up
+    public float pickupRange = 5.0f; // The distance threshold for picking up
     public Transform gripPoint;
+    private bool collectableGripped = false;
+    private float delay = 2f;
     void Start()
     {
-        SetCollectablesTransforms();
+        SetCollectables();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject collectableGripped = GetCollectableIfHovering();
-        if (collectableGripped != null && Input.GetKey(KeyCode.E))
+        float collectToReleaseDelay = -1f;
+        GameObject collectable = GetCollectableIfHovering();
+        if (collectable != null && Input.GetKey(KeyCode.E) && !collectableGripped)
         {
-            collectableGripped.transform.position = gripPoint.position;
-            collectableGripped.transform.SetParent(transform);
+            collectableGripped = true;
+            //collectable.transform.position = gripPoint.position - new Vector3(collectable.transform.localScale.x/2, 0, 0);
+            collectable.transform.position = gripPoint.position;
+            collectable.transform.SetParent(transform);
+            collectToReleaseDelay = Time.time;
+            collectable.GetComponent<Collectable>().collect();
         }
+        bool canRelease = Time.time - collectToReleaseDelay > delay;
+        Debug.Log($"can realse: {canRelease}");
+        Debug.Log($"gripped: {collectableGripped}");
+        Debug.Log($"key: {Input.GetKey(KeyCode.E)}");
+        if (collectableGripped && Input.GetKey(KeyCode.E) && canRelease)
+        {
+            collectableGripped = false;
+            collectable.transform.SetParent(null);
+            collectable.GetComponent<Collectable>().release();
+        }
+
     }
 
     /// <summary>
     /// Sets the collectableTransforms to the transforms having the Collectable tag
     /// </summary>
-    private void SetCollectablesTransforms ()
+    private void SetCollectables ()
     {
         // Find all game objects with the "Item" tag
         //GameObject[] collectables = GameObject.FindGameObjectsWithTag("Collectable");
