@@ -3,13 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GripCollectable : MonoBehaviour
+public class Collector : MonoBehaviour
 {
-    private List<GameObject> collectableGameObjects = new List<GameObject>();
-    public float pickupRange = 5.0f; // The distance threshold for picking up
+
+    /// <summary>
+    /// The range for which the collector is able to collect items
+    /// </summary>
+    public float pickupRange = 5.0f; 
+
+    /// <summary>
+    /// The position to hold the collectable
+    /// </summary>
     public Transform gripPoint;
+    
+    /// <summary>
+    /// Collectables that the Collector is able to collect. If empty, is will collect any collectable.
+    /// </summary>
+    public List<string> CollectableTags; 
+
+    private List<GameObject> collectableGameObjects = new List<GameObject>();
     private bool collectableGripped = false;
-    private float delay = 2f;
+    private float collectToReleaseDelay = 2f;
+    
     void Start()
     {
         SetCollectables();
@@ -18,18 +33,17 @@ public class GripCollectable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float collectToReleaseDelay = -1f;
+        float btnPressedTime = -1f;
         GameObject collectable = GetCollectableIfHovering();
         if (collectable != null && Input.GetKey(KeyCode.E) && !collectableGripped)
         {
             collectableGripped = true;
-            //collectable.transform.position = gripPoint.position - new Vector3(collectable.transform.localScale.x/2, 0, 0);
             collectable.transform.position = gripPoint.position;
             collectable.transform.SetParent(transform);
-            collectToReleaseDelay = Time.time;
+            btnPressedTime = Time.time;
             collectable.GetComponent<Collectable>().collect();
         }
-        bool canRelease = Time.time - collectToReleaseDelay > delay;
+        bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
         if (collectableGripped && Input.GetKey(KeyCode.E) && canRelease)
         {
             collectableGripped = false;
@@ -48,10 +62,14 @@ public class GripCollectable : MonoBehaviour
         //GameObject[] collectables = GameObject.FindGameObjectsWithTag("Collectable");
         Collectable[] collectables = FindObjectsOfType<Collectable>();
 
-        // Loop through the array and add each Transform to the list
+        // Loop through the array and add collectable game objects to the list
         foreach (Collectable collectable in collectables)
         {
-            collectableGameObjects.Add(collectable.gameObject);
+            // add all if CollectableTags are empty, otherwise only tagged
+            if (CollectableTags.Count == 0 || CollectableTags.Contains(collectable.tag))
+            {
+                collectableGameObjects.Add(collectable.gameObject);
+            }
         }
 
         // Optional: Log the number of items found

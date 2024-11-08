@@ -549,6 +549,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 2
   gripPoint: {fileID: 395058415}
+  CollectableTags:
+  - Leafblower
 --- !u!114 &565481896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,7 +966,7 @@ GameObject:
   - component: {fileID: 924366156}
   m_Layer: 0
   m_Name: Leafblower
-  m_TagString: Untagged
+  m_TagString: Leafblower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

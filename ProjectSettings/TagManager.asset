@@ -13,6 +13,8 @@ TagManager:
   - Enemy
   - Blocker
   - Collectable
+  - Leafblower
+  - Animal
   layers:
   - Default
   - TransparentFX
