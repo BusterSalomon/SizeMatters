@@ -6,7 +6,7 @@ public class Collectable : MonoBehaviour
 {
     // Start is called before the first frame update
     public string CollectableType;
-    private bool IsCollected = false;
+    public bool IsCollected = false;
     
     public void collect ()
     {

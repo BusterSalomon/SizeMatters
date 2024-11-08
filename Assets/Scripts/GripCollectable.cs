@@ -30,9 +30,6 @@ public class GripCollectable : MonoBehaviour
             collectable.GetComponent<Collectable>().collect();
         }
         bool canRelease = Time.time - collectToReleaseDelay > delay;
-        Debug.Log($"can realse: {canRelease}");
-        Debug.Log($"gripped: {collectableGripped}");
-        Debug.Log($"key: {Input.GetKey(KeyCode.E)}");
         if (collectableGripped && Input.GetKey(KeyCode.E) && canRelease)
         {
             collectableGripped = false;
