@@ -19,11 +19,12 @@ public class Collector : MonoBehaviour
     /// <summary>
     /// Collectables that the Collector is able to collect. If empty, is will collect any collectable.
     /// </summary>
-    public List<string> CollectableTags; 
+    public List<string> CollectableTags;
+
+    public Collectable CollectableCollected;
 
     private List<GameObject> collectableGameObjects = new List<GameObject>();
-    private bool collectableGripped = false;
-    private float collectToReleaseDelay = 2f;
+    
     
     void Start()
     {
@@ -33,22 +34,38 @@ public class Collector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float btnPressedTime = -1f;
         GameObject collectable = GetCollectableIfHovering();
-        if (collectable != null && Input.GetKey(KeyCode.E) && !collectableGripped)
+        if (collectable != null && CollectableCollected == null && CollectCondition())
         {
-            collectableGripped = true;
-            collectable.transform.position = gripPoint.position;
+            // Disable physics
+            Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
+            if (rb != null) { 
+                rb.isKinematic = true;
+                rb.velocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+            CollectableCollected = collectable.GetComponent<Collectable>();
             collectable.transform.SetParent(transform);
-            btnPressedTime = Time.time;
+            collectable.transform.position = gripPoint.position;
             collectable.GetComponent<Collectable>().collect();
+
+            Collider2D collider = collectable.GetComponent<Collider2D>();
+            if (collider != null) collider.enabled = false;
         }
-        bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
-        if (collectableGripped && Input.GetKey(KeyCode.E) && canRelease)
+
+        if (CollectableCollected != null && ReleaseCondition())
         {
-            collectableGripped = false;
+            // Enable physics
+            Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
+            if (rb != null) rb.isKinematic = false;
+
+            CollectableCollected = null;
             collectable.transform.SetParent(null);
             collectable.GetComponent<Collectable>().release();
+
+            Collider2D collider = collectable.GetComponent<Collider2D>();
+            if (collider != null) collider.enabled = true;
         }
 
     }
@@ -66,14 +83,11 @@ public class Collector : MonoBehaviour
         foreach (Collectable collectable in collectables)
         {
             // add all if CollectableTags are empty, otherwise only tagged
-            if (CollectableTags.Count == 0 || CollectableTags.Contains(collectable.tag))
+            if (CollectableTags.Count == 0 || CollectableTags.Contains(collectable.CollectableType))
             {
                 collectableGameObjects.Add(collectable.gameObject);
             }
         }
-
-        // Optional: Log the number of items found
-        Debug.Log("Found " + collectableGameObjects.Count + " collectables.");
     }
     /// <summary>
     /// Returns the tag if the character is in the same position as a collectable
@@ -90,4 +104,29 @@ public class Collector : MonoBehaviour
         }
         return null;
     }
+
+    // ---- DEFAULT COLLECTION LOGIC ----
+    private float collectToReleaseDelay = 2f;
+    private float btnPressedTime = -1f;
+
+    /// <summary>
+    /// Condition to enable collect. By default, evalutes to true when C is pressed. May be overridden by subclasses.
+    /// </summary>
+    public virtual bool CollectCondition ()
+    {
+        btnPressedTime = Time.time;
+        return Input.GetKey(KeyCode.C);
+    }
+
+    /// <summary>
+    /// Condition to enable realse. By default, evalutes to true when R and collectToReleaseDelay is passed since the collectable was collected.
+    /// May be overridden by subclasses.
+    /// </summary>
+    public virtual bool ReleaseCondition()
+    {
+        bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
+        return Input.GetKey(KeyCode.R) && canRelease;
+    }
+
+
 }

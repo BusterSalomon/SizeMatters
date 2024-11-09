@@ -11,15 +11,6 @@ public class LeafblowerCollectable : Collectable
     private void Start()
     {
         blowNozzle = transform.Find("BlowNozzle");
-
-        if (blowNozzle == null)
-        {
-            Debug.LogError("BlowNozzle child object not found.");
-        }
-        else
-        {
-            Debug.Log("BlowNozzle Transform found: " + blowNozzle.position);
-        }
     }
     private void Update()
     {

@@ -20,7 +20,6 @@ public class LeafBlowerZone : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         parent.HandleObjectInBlowZone(collision);
-        Debug.Log($"Object detected! {collision.tag}");
     }
 
     //private void OnTriggerEnter(Collider other)
