@@ -11,6 +11,12 @@ TagManager:
   - Projectile
   - Tree
   - Enemy
+  - Blocker
+  - Collectable
+  - Leafblower
+  - Animal
+  - Cannon
+  - Virus
   layers:
   - Default
   - TransparentFX
