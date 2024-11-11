@@ -552,6 +552,21 @@ MonoBehaviour:
   CollectableTags:
   - Leafblower
   CollectableCollected: {fileID: 0}
+  RealeaseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CannonMechanics, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &565481896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,6 +898,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb47ef3d2b3d4b14fb51f5121368aae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ButtonPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1800701383}
+        m_TargetAssemblyTypeName: CannonballCollector, Assembly-CSharp
+        m_MethodName: resetButtonDidRealease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ButtonRealesed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1800701383}
+        m_TargetAssemblyTypeName: CannonballCollector, Assembly-CSharp
+        m_MethodName: setButtonDidRealease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &857423900
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +986,7 @@ Transform:
   m_GameObject: {fileID: 858197121}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.21643952, w: 0.97629607}
-  m_LocalPosition: {x: 0.47452915, y: 0.5946062, z: 0}
+  m_LocalPosition: {x: 0.4745292, y: 0.59460616, z: 0}
   m_LocalScale: {x: 2.098854, y: 1.3295811, z: 0.71347034}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1145,7 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollectableType: Leafblower
   IsCollected: 0
-  initialForce: 100
+  initialForce: 200
   blowNozzle: {fileID: 0}
 --- !u!1 &925530354
 GameObject:
@@ -1446,7 +1491,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 7.0249786
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 10
@@ -1479,6 +1524,22 @@ MonoBehaviour:
   - Virus
   - Scissor
   CollectableCollected: {fileID: 0}
+  RealeaseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1800701384}
+        m_TargetAssemblyTypeName: CannonMechanics, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  cannonballReleaseToCollectTime: 3
 --- !u!114 &1800701384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1492,6 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CannonAngularVelocityOnBtnPress: 50
+  FireForce: 25
 --- !u!1 &1811670802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1949,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

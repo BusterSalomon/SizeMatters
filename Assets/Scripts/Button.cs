@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Button : MonoBehaviour
 {
     private bool buttonPressed = false;
     private List<Action<bool>> listeners =  new List<Action<bool>>();
+    public UnityEvent ButtonPressed;
+    public UnityEvent ButtonRealesed;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -14,6 +17,7 @@ public class Button : MonoBehaviour
         {
             buttonPressed = true;
             updateListeners(buttonPressed);
+            ButtonPressed.Invoke();
             Debug.Log("Btn pressed");
         }
     }
@@ -24,6 +28,7 @@ public class Button : MonoBehaviour
         {
             buttonPressed = false;
             updateListeners(buttonPressed);
+            ButtonRealesed.Invoke();
             Debug.Log("Btn not pressed");
         }
     }

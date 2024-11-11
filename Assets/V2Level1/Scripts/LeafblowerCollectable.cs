@@ -5,7 +5,7 @@ using UnityEngine;
 public class LeafblowerCollectable : Collectable
 {
     public float initialForce = 100f;
-    public Transform blowNozzle;
+    private Transform blowNozzle;
     private bool blow = false;
 
     private void Start()

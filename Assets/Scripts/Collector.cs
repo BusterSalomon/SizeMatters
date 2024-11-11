@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Collector : MonoBehaviour
 
     public Collectable CollectableCollected;
 
+    public UnityEvent RealeaseEvent;
+
     private List<GameObject> collectableGameObjects = new List<GameObject>();
     
     
@@ -37,6 +40,8 @@ public class Collector : MonoBehaviour
         GameObject collectable = GetCollectableIfHovering();
         if (collectable != null && CollectableCollected == null && CollectCondition())
         {
+            CollectableCollected = collectable.GetComponent<Collectable>();
+
             // Disable physics
             Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
             if (rb != null) { 
@@ -45,7 +50,6 @@ public class Collector : MonoBehaviour
                 rb.angularVelocity = 0f;
             }
 
-            CollectableCollected = collectable.GetComponent<Collectable>();
             collectable.transform.SetParent(transform);
             collectable.transform.position = gripPoint.position;
             collectable.GetComponent<Collectable>().collect();
@@ -56,16 +60,27 @@ public class Collector : MonoBehaviour
 
         if (CollectableCollected != null && ReleaseCondition())
         {
+
+            GameObject collectableCollectedGO = CollectableCollected.gameObject;
+            Debug.Log($"Should release now! {collectableCollectedGO.name}");
+
+
+            // Free
+            collectableCollectedGO.transform.SetParent(null);
+
             // Enable physics
-            Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = collectableCollectedGO.GetComponent<Rigidbody2D>();
             if (rb != null) rb.isKinematic = false;
+            
+            collectableCollectedGO.GetComponent<Collectable>().release();
 
-            CollectableCollected = null;
-            collectable.transform.SetParent(null);
-            collectable.GetComponent<Collectable>().release();
-
-            Collider2D collider = collectable.GetComponent<Collider2D>();
+            // Enable collider
+            Collider2D collider = collectableCollectedGO.GetComponent<Collider2D>();
             if (collider != null) collider.enabled = true;
+
+            // Call realease action and initiase collectable afterwards
+            RealeaseEvent.Invoke();
+            CollectableCollected = null;
         }
 
     }
@@ -127,6 +142,4 @@ public class Collector : MonoBehaviour
         bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
         return Input.GetKey(KeyCode.R) && canRelease;
     }
-
-
 }
