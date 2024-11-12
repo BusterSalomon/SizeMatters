@@ -13,7 +13,7 @@ public class Button : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Character"))
         {
             buttonPressed = true;
             updateListeners(buttonPressed);
@@ -24,7 +24,7 @@ public class Button : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Character"))
         {
             buttonPressed = false;
             updateListeners(buttonPressed);

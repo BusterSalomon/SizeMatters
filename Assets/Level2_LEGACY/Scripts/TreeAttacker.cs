@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class TreeAttacker : EnemyBase
 {
-    public override List<string> GetTargetTags()
-    {
-        return new List<string> { "Tree" };
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

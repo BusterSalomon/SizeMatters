@@ -25,6 +25,7 @@ public class Collector : MonoBehaviour
     public Collectable CollectableCollected;
 
     public UnityEvent RealeaseEvent;
+    public UnityEvent CollectEvent;
 
     private List<GameObject> collectableGameObjects = new List<GameObject>();
     
@@ -56,6 +57,8 @@ public class Collector : MonoBehaviour
 
             Collider2D collider = collectable.GetComponent<Collider2D>();
             if (collider != null) collider.enabled = false;
+
+            CollectEvent.Invoke();
         }
 
         if (CollectableCollected != null && ReleaseCondition())

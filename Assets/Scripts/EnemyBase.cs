@@ -18,7 +18,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float maximumJumpDistance = 6f;
     [SerializeField] private LayerMask groundLayer;
 
-    public List<string> a;
+    public List<string> TargetTags = new List<string> { "Character" };
 
     public EnemyVersion enemyVersion = EnemyVersion.Naive;
 
@@ -28,8 +28,11 @@ public class EnemyBase : MonoBehaviour
 
     private List<Target> targets = new List<Target>();
 
-    
+    private bool enemyEnabled = true;
+
+    private Collectable collectable;
     private Rigidbody2D body;
+
 
     // ---- START ----
     private void Start()
@@ -41,18 +44,21 @@ public class EnemyBase : MonoBehaviour
     // ---- UPDATE ----
     private void FixedUpdate()
     {
-        Target targetToFollow = GetTargetToFollow();
-
-        if (enemyVersion == EnemyVersion.Naive)
+        if (enemyEnabled)
         {
+            Target targetToFollow = GetTargetToFollow();
             PursueTargetXYNaively(targetToFollow);
         }
+    }
 
-        if (enemyVersion == EnemyVersion.Smart)
-        {
-            PursueTargetXY(targetToFollow);
-        }
-        
+    public void DisableEnemy()
+    {
+        enemyEnabled = false;
+    }
+
+    public void EnableEnemy()
+    {
+        enemyEnabled = true;
     }
 
     // ---- OWN METHODS ----
@@ -62,12 +68,10 @@ public class EnemyBase : MonoBehaviour
     /// <param name="damage">Damage value</param>
     public void TakeHit(int damage)
     {
-        Debug.Log("I took a hit!");
         health -= damage;
 
         if (health <= 0)
         {
-            Debug.Log("I am dead, destroy me!");
             //Destroy(gameObject);
         }
     }
@@ -75,10 +79,9 @@ public class EnemyBase : MonoBehaviour
     /// <returns>A list of Target objects, that includes the target tag and the transform
     private List<Target> GetTargetList()
     {
-        List<string> target_tags = GetTargetTags();
         List<Target> targets = new List<Target>();
 
-        foreach (string tag in target_tags)
+        foreach (string tag in TargetTags)
         {
             Transform target_transform = GameObject.FindGameObjectWithTag(tag).GetComponent<Transform>();
             Target target = new Target(tag, target_transform);
@@ -87,15 +90,6 @@ public class EnemyBase : MonoBehaviour
 
         return targets;
     }
-
-    /// <summary>
-    /// May be overridden. Retrieves a list of tags that the enemy will target.
-    /// </summary>
-    /// <returns>By default ["Character"]</returns>
-    public virtual List<string> GetTargetTags() {
-        return new List<string> { "Character" };
-    }
-
     
     /// <returns>By default returns the target closest to the enemy. May be overriden.</returns>
     protected virtual Target GetTargetToFollow()
@@ -157,7 +151,6 @@ public class EnemyBase : MonoBehaviour
 
         // Get relative floor
         RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
-        Debug.Log(relativeFloor);
 
         // Always check for gaps and jump
         if (IsGapAhead() && CanJumpGap() && relativeFloor != RelativeFloor.below)
@@ -175,37 +168,11 @@ public class EnemyBase : MonoBehaviour
 
     }
 
-    protected void PursueTargetXY(Target target)
-    {
-        Transform targetTransform = target.Transform;
-
-        // Retrieve floor / state
-        RelativeFloor relativeFloor = GetRelativeTargetFloor(targetTransform);
-        
-        if (relativeFloor == RelativeFloor.above)
-        {
-
-        }
-
-        if (relativeFloor == RelativeFloor.below)
-        {
-
-        }
-
-        if (relativeFloor == RelativeFloor.same)
-        {
-            MoveX(direction);
-        }
-
-
-    }
-
     private void MoveX (Direction direction)
     {
         
         if (direction == Direction.right) body.velocity = new Vector2(Math.Abs(moveSpeed), 0);
         else body.velocity = new Vector2(-Math.Abs(moveSpeed), 0);
-        Debug.Log(body.velocity);
     }
 
     private void SetXDirectionGlobally(Transform targetTransform)
