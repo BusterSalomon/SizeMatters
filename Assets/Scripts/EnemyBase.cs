@@ -242,8 +242,16 @@ public class EnemyBase : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Flip if colliding with a blocker
         bool isBlocker = collision.gameObject.CompareTag("Blocker");
         if (isBlocker) Flip();
+
+        // Take damage if target
+        bool isTarget = TargetTags.Contains(collision.gameObject.tag);
+        if (isTarget)
+        {
+            collision.gameObject.GetComponent<Health>().TakeDamage(1f);
+        }
     }
 
     private enum RelativeFloor
