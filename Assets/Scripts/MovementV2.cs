@@ -43,7 +43,7 @@ public class MovementV2 : MonoBehaviour
 
         if (dir != 0)
         {
-            rb.transform.localScale = new Vector3(dir * Mathf.Abs(rb.transform.localScale.x), rb.transform.localScale.y, rb.transform.localScale.z);
+            transform.localScale = new Vector3(dir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
 
         rb.velocity = new Vector2(dir * moveSpeed, rb.velocity.y);

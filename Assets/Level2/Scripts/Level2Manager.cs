@@ -17,6 +17,7 @@ public class Level2Manager : LevelManager
         jarRightTransform = jar.transform.Find("Right");
         virusTransform = GameObject.Find("Virus").transform;
         characterHealth = GameObject.FindGameObjectWithTag("Character").GetComponent<Health>();
+        Debug.Log(characterHealth);
     }
     public override bool DidWin()
     {

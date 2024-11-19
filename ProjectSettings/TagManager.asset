@@ -17,6 +17,7 @@ TagManager:
   - Animal
   - Cannon
   - Virus
+  - TEST
   layers:
   - Default
   - TransparentFX
@@ -59,4 +60,7 @@ TagManager:
     locked: 0
   - name: Text
     uniqueID: 1331954975
+    locked: 0
+  - name: Front
+    uniqueID: 2052038087
     locked: 0

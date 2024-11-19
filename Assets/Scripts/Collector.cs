@@ -22,7 +22,7 @@ public class Collector : MonoBehaviour
     /// </summary>
     public List<string> CollectableTypes;
 
-    public Collectable CollectableCollected;
+    private Collectable CollectableCollected;
 
     public UnityEvent RealeaseEvent;
     public UnityEvent CollectEvent;
@@ -39,8 +39,11 @@ public class Collector : MonoBehaviour
     void Update()
     {
         GameObject collectable = GetCollectableIfHovering();
+        
+        // Collector DID collect an item
         if (collectable != null && CollectableCollected == null && CollectCondition())
         {
+            Collectable script = collectable.GetComponent<Collectable>();
             CollectableCollected = collectable.GetComponent<Collectable>();
 
             // Disable physics
@@ -51,16 +54,25 @@ public class Collector : MonoBehaviour
                 rb.angularVelocity = 0f;
             }
 
-            collectable.transform.SetParent(transform);
-            collectable.transform.position = gripPoint.position;
-            collectable.GetComponent<Collectable>().collect();
-
+            // Disable collider
             Collider2D collider = collectable.GetComponent<Collider2D>();
             if (collider != null) collider.enabled = false;
 
+            // Set parent, position and scale
+            collectable.transform.SetParent(gripPoint);
+            Vector3 collectableLocalScale = collectable.transform.localScale;
+            collectable.transform.localScale = new Vector3((int)script.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
+            Vector3 GripHandleOffset = gripPoint.position - script.HandlePoint.position;
+            collectable.transform.position += GripHandleOffset;
+
+            // Notify collectable
+            collectable.GetComponent<Collectable>().collect();
+
+            // Notify subscribers
             CollectEvent.Invoke();
         }
 
+        // Collector did NOT collect an item
         if (CollectableCollected != null && ReleaseCondition())
         {
 
@@ -121,6 +133,12 @@ public class Collector : MonoBehaviour
             }
         }
         return null;
+    }
+    
+    /// <returns>Collectable if any, otherwise null</returns>
+    public Collectable GetCollectableIfCollected()
+    {
+        return CollectableCollected;
     }
 
     // ---- DEFAULT COLLECTION LOGIC ----
