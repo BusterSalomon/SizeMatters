@@ -30,7 +30,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Text
   - 
   - 
   - 
@@ -53,7 +53,10 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 3572649973
-    locked: 1
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Text
+    uniqueID: 1331954975
     locked: 0
