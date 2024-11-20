@@ -2,18 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class MovementTest : MonoBehaviour
+public class MovementV2 : MonoBehaviour
 {
     public float moveSpeed = 8f;
     public float jumpForce = 15f;
-    private bool isGrounded;
+    public UnityEvent DidJump;
+    public UnityEvent DidLand;
+    private Animator anim;
 
+
+    [SerializeField] private bool isGrounded;
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
     }
 
     void Update()
@@ -36,7 +43,7 @@ public class MovementTest : MonoBehaviour
 
         if (dir != 0)
         {
-            rb.transform.localScale = new Vector3(-dir * Mathf.Abs(rb.transform.localScale.x), rb.transform.localScale.y, rb.transform.localScale.z);
+            rb.transform.localScale = new Vector3(dir * Mathf.Abs(rb.transform.localScale.x), rb.transform.localScale.y, rb.transform.localScale.z);
         }
 
         rb.velocity = new Vector2(dir * moveSpeed, rb.velocity.y);
@@ -55,6 +62,7 @@ public class MovementTest : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = true;
+            DidLand.Invoke();
         }
     }
 
@@ -63,6 +71,7 @@ public class MovementTest : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = false;
+            DidJump.Invoke();
         }
     }
 }

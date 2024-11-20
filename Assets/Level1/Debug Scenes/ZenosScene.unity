@@ -865,7 +865,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -944,6 +944,7 @@ MonoBehaviour:
   playerHealth: {fileID: 1758838666}
   totalhealthBar: {fileID: 1418589363}
   currenthealthBar: {fileID: 1292589321}
+  gameOverScreen: {fileID: 0}
 --- !u!1 &329160377
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,8 +2033,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.01, y: -0}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: -0.01, y: 0.0163}
+  m_SizeDelta: {x: 20, y: 4.9674}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &793502350
 MonoBehaviour:
@@ -2097,7 +2098,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.3
+  m_fontSize: 8.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3437,12 +3438,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf4caf458ac3458a8a94b9107b92f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  startingHealth: 0
   walkSpeed: 3
   spawnDistance: 1.3
   counterScript: {fileID: 793502350}
   Hitpoints: 0
   MaxHitpoints: 5
   Healthbar: {fileID: 1308672869}
+  enemyPrefab: {fileID: 0}
 --- !u!61 &1375505534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4639,6 +4643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  gameOverScreen: {fileID: 0}
 --- !u!1001 &1833822097
 PrefabInstance:
   m_ObjectHideFlags: 0

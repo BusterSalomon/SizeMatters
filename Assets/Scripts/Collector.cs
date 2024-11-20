@@ -20,7 +20,7 @@ public class Collector : MonoBehaviour
     /// <summary>
     /// Collectables that the Collector is able to collect. If empty, is will collect any collectable.
     /// </summary>
-    public List<string> CollectableTags;
+    public List<string> CollectableTypes;
 
     public Collectable CollectableCollected;
 
@@ -100,8 +100,8 @@ public class Collector : MonoBehaviour
         // Loop through the array and add collectable game objects to the list
         foreach (Collectable collectable in collectables)
         {
-            // add all if CollectableTags are empty, otherwise only tagged
-            if (CollectableTags.Count == 0 || CollectableTags.Contains(collectable.CollectableType))
+            // add all if CollectableTypes are empty, otherwise only tagged
+            if (CollectableTypes.Count == 0 || CollectableTypes.Contains(collectable.CollectableType))
             {
                 collectableGameObjects.Add(collectable.gameObject);
             }
