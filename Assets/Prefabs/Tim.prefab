@@ -468,6 +468,8 @@ GameObject:
   - component: {fileID: 5216263959034550606}
   - component: {fileID: 1863362000884088947}
   - component: {fileID: 1063742675879485587}
+  - component: {fileID: 3085171826488087148}
+  - component: {fileID: 6370887982074446742}
   m_Layer: 0
   m_Name: Tim
   m_TagString: Character
@@ -657,6 +659,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 10
   gameOverScreen: {fileID: 0}
+--- !u!114 &3085171826488087148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570787960110402872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc888643f24e903449c467e166e4f927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6370887982074446742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570787960110402872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f27b981f2b7c3144b188e9678409d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRange: 5
+  gripPoint: {fileID: 7467017438140723425}
+  CollectableTypes: []
+  RealeaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CollectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3085171826488087148}
+        m_TargetAssemblyTypeName: TimArmController, Assembly-CSharp
+        m_MethodName: SetArmAndCollectableToGripPosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5025385050052835704
 GameObject:
   m_ObjectHideFlags: 0

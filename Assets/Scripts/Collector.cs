@@ -43,7 +43,7 @@ public class Collector : MonoBehaviour
         // Collector DID collect an item
         if (collectable != null && CollectableCollected == null && CollectCondition())
         {
-            Collectable script = collectable.GetComponent<Collectable>();
+            Collectable collectableScript = collectable.GetComponent<Collectable>();
             CollectableCollected = collectable.GetComponent<Collectable>();
 
             // Disable physics
@@ -61,9 +61,18 @@ public class Collector : MonoBehaviour
             // Set parent, position and scale
             collectable.transform.SetParent(gripPoint);
             Vector3 collectableLocalScale = collectable.transform.localScale;
-            collectable.transform.localScale = new Vector3((int)script.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
-            Vector3 GripHandleOffset = gripPoint.position - script.HandlePoint.position;
-            collectable.transform.position += GripHandleOffset;
+            collectable.transform.localScale = new Vector3((int)collectableScript.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
+            
+            // If HandlePoint of Collectable is set, set collectable to that, otherwise use the default
+            if (collectableScript.HandlePoint != null)
+            {
+                Vector3 GripHandleOffset = gripPoint.position - collectableScript.HandlePoint.position;
+                collectable.transform.position += GripHandleOffset;
+            } else
+            {
+                collectable.transform.position = gripPoint.position;
+            }
+            
 
             // Notify collectable
             collectable.GetComponent<Collectable>().collect();
