@@ -3201,6 +3201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tim
       objectReference: {fileID: 0}
+    - target: {fileID: 3085171826488087148, guid: a1bf22131f1c4f942b93144544eca745, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6402210352353892567, guid: a1bf22131f1c4f942b93144544eca745, type: 3}
       propertyPath: m_LocalScale.x
       value: -0.5
