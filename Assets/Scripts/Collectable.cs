@@ -40,8 +40,22 @@ public class Collectable : MonoBehaviour
         releaseEvent.Invoke();
     }
 
-    private void Update()
+    public static GameObject FindCollectableGameObjectByType(string typeToFind)
     {
-        
+        // Get all Collectable components in the scene
+        Collectable[] collectables = FindObjectsOfType<Collectable>();
+
+        // Iterate through the list to find the one with the matching type
+        foreach (Collectable collectable in collectables)
+        {
+            if (collectable.CollectableType == typeToFind)
+            {
+                // Return the GameObject of the matching Collectable
+                return collectable.gameObject;
+            }
+        }
+
+        // Return null if no matching Collectable is found
+        return null;
     }
 }

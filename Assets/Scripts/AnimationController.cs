@@ -38,4 +38,14 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isJumping", false);
     }
 
+    public void RaiseArm(string collectableType)
+    {
+        anim.SetBool("itemIsCollected", true);
+    }
+
+    public void LowerArm(string collectableType)
+    {
+        anim.SetBool("itemIsCollected", false);
+    }
+
 }
