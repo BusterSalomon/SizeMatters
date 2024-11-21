@@ -796,7 +796,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.6
+  m_fontSize: 72
   m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1812,7 +1812,7 @@ MonoBehaviour:
   releaseEvent:
     m_PersistentCalls:
       m_Calls: []
-  HandlePoint: {fileID: 0}
+  HandlePoint: {fileID: 1395020823}
   direction: -1
   initialForce: 200
 --- !u!1 &925530354
@@ -2102,7 +2102,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.6
+  m_fontSize: 72
   m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2930,8 +2930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f48a1225e3ce6b4bbe00bce264d2c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameOverScreen: {fileID: 1342824968}
-  NextLevel: {fileID: 340280891}
+  gameOverScreen: {fileID: 0}
+  nextLevelScreen: {fileID: 0}
 --- !u!224 &1867629602
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3251,7 +3251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7833236408013614369, guid: a1bf22131f1c4f942b93144544eca745, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
