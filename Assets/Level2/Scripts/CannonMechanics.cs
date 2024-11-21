@@ -53,7 +53,7 @@ public class CannonMechanics : MonoBehaviour
     public void Fire ()
     {
         Debug.Log("Fire called!");
-        GameObject cannonBall = cannonballCollector.CollectableCollected.gameObject;
+        GameObject cannonBall = cannonballCollector.GetCollectableIfCollected().gameObject;
         if (cannonBall != null)
         {
             // Get rigidbody to apply force to

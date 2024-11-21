@@ -113,7 +113,8 @@ Transform:
   m_LocalPosition: {x: -0.14, y: 1.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7467017438140723425}
   m_Father: {fileID: 4197740878075566746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2803843719464358164
@@ -421,6 +422,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2478532279503991489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7467017438140723425}
+  m_Layer: 0
+  m_Name: GripPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7467017438140723425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478532279503991489}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12, y: -1.58, z: -0.02216022}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3298369267177436250}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2570787960110402872
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +468,8 @@ GameObject:
   - component: {fileID: 5216263959034550606}
   - component: {fileID: 1863362000884088947}
   - component: {fileID: 1063742675879485587}
+  - component: {fileID: 3085171826488087148}
+  - component: {fileID: 6370887982074446742}
   m_Layer: 0
   m_Name: Tim
   m_TagString: Character
@@ -568,21 +602,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   jumpForce: 15
-  DidTakeOf:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1863362000884088947}
-        m_TargetAssemblyTypeName: AnimationController, Assembly-CSharp
-        m_MethodName: PlayTakeOfAnim
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   DidJump:
     m_PersistentCalls:
       m_Calls:
@@ -640,6 +659,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 10
   gameOverScreen: {fileID: 0}
+--- !u!114 &3085171826488087148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570787960110402872}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc888643f24e903449c467e166e4f927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6370887982074446742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570787960110402872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f27b981f2b7c3144b188e9678409d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRange: 5
+  gripPoint: {fileID: 7467017438140723425}
+  CollectableTypes: []
+  RealeaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CollectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3085171826488087148}
+        m_TargetAssemblyTypeName: TimArmController, Assembly-CSharp
+        m_MethodName: SetArmAndCollectableToGripPosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5025385050052835704
 GameObject:
   m_ObjectHideFlags: 0
