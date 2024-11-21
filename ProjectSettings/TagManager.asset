@@ -18,6 +18,8 @@ TagManager:
   - Cannon
   - Virus
   - TEST
+  - Ladder
+  - Key
   layers:
   - Default
   - TransparentFX
@@ -63,4 +65,6 @@ TagManager:
     locked: 0
   - name: Front
     uniqueID: 2052038087
+  - name: New Layer 3
+    uniqueID: 1839438621
     locked: 0
