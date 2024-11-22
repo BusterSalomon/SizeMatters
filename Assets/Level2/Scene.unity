@@ -253,7 +253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 5
   gripPoint: {fileID: 702904259}
-  CollectableTypes: []
+  CollectableTypes:
+  - Virus
   RealeaseEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1571,8 +1572,8 @@ Transform:
   m_GameObject: {fileID: 708201609}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.9534615, y: -0.069314584, z: 0}
-  m_LocalScale: {x: 3.4166412, y: 3.9991753, z: 0.71347034}
+  m_LocalPosition: {x: -2.63, y: -0.01, z: 0}
+  m_LocalScale: {x: 22.08282, y: 3.906846, z: 0.71347034}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 924366155}
@@ -2188,7 +2189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &924366154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2250,7 +2251,7 @@ Transform:
   m_GameObject: {fileID: 924366153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2, y: -4.15, z: 0}
+  m_LocalPosition: {x: 0.09, y: -7.42, z: 0}
   m_LocalScale: {x: 2.7228885, y: 0.9296369, z: 1.4016}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3672,6 +3673,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6370887982074446742, guid: a1bf22131f1c4f942b93144544eca745, type: 3}
+      propertyPath: CollectableTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6370887982074446742, guid: a1bf22131f1c4f942b93144544eca745, type: 3}
+      propertyPath: CollectableTypes.Array.data[0]
+      value: Leafblower
+      objectReference: {fileID: 0}
     - target: {fileID: 6402210352353892567, guid: a1bf22131f1c4f942b93144544eca745, type: 3}
       propertyPath: m_LocalScale.x
       value: -0.5
@@ -4201,7 +4210,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076999390}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa7ea5634c711aa4a967e3d9e154c100, type: 3}
   m_Name: 

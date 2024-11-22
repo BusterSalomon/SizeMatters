@@ -48,7 +48,7 @@ public class Collector : MonoBehaviour
         {
             
             CollectableCollected = collectable.GetComponent<Collectable>();
-            collectableGroundOffSet = GetCollectableGroundOffset(collectable);
+            //collectableGroundOffSet = GetCollectableGroundOffset(collectable);
 
             // Disable physics
             Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
@@ -102,13 +102,13 @@ public class Collector : MonoBehaviour
             Rigidbody2D rb = collectableCollectedGO.GetComponent<Rigidbody2D>();
             if (rb != null) rb.isKinematic = false;
             // Place close to the ground is not affected by physics
-            else
-            {
-                Vector3 collectablePosition = collectableCollectedGO.transform.position;
-                RaycastHit2D hit = Physics2D.Raycast(new Vector2(collectablePosition.x, collectablePosition.y), Vector2.down, 10f);
-                float yGround = hit.point.y;
-                collectableCollectedGO.transform.position = new Vector3(collectablePosition.x, yGround+collectableGroundOffSet, collectablePosition.z);
-            }
+            //else
+            //{
+            //    Vector3 collectablePosition = collectableCollectedGO.transform.position;
+            //    RaycastHit2D hit = Physics2D.Raycast(new Vector2(collectablePosition.x, collectablePosition.y), Vector2.down, 10f);
+            //    float yGround = hit.point.y;
+            //    collectableCollectedGO.transform.position = new Vector3(collectablePosition.x, yGround+collectableGroundOffSet, collectablePosition.z);
+            //}
 
             collectableCollectedGO.GetComponent<Collectable>().release();
 
@@ -119,7 +119,11 @@ public class Collector : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Do not use yet - contain bugs
+    /// </summary>
+    /// <param name="collectableGO"></param>
+    /// <returns></returns>
     private float GetCollectableGroundOffset (GameObject collectableGO)
     {
         Vector3 collectablePosition = collectableGO.transform.position;
