@@ -13,7 +13,7 @@ public class CannonMechanics : MonoBehaviour
     public int FireForceScaler = 7;
     private bool lastFirePressed = false;
     private float fireButtonInitiatedTime =-1f;
-    private Animator anim;
+    private Animator barrelAnim;
 
     [Header("Aiming")]
     public float AimTickTimeInterval = 0.07f;
@@ -26,9 +26,9 @@ public class CannonMechanics : MonoBehaviour
     void Start()
     {
         cannonballCollector = GetComponent<Collector>();
-        barrelTransform = transform.Find("Barrel");
+        barrelTransform = transform.Find("BarrelRotationWrapper");
         lastAimTickTime = Time.time - AimTickTimeInterval; // Allow to aim at the beginning
-        anim = GetComponent<Animator>();
+        barrelAnim = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -142,7 +142,7 @@ public class CannonMechanics : MonoBehaviour
             // FIRE!
             rb.AddForce(FireForce*dirVec, ForceMode2D.Impulse);
         }
-        anim.SetTrigger("cannonFired");
+        barrelAnim.SetTrigger("fired");
     }
 
     private Vector2 getDiretionVectorFromDegAngle (float angleDeg)
