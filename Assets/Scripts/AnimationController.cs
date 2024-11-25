@@ -48,4 +48,9 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("itemIsCollected", false);
     }
 
+    public void PlaySuperMan()
+    {
+        anim.SetTrigger("cannonFired");
+    }
+
 }

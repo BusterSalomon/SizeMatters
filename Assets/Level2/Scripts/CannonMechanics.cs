@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,54 +9,125 @@ public class CannonMechanics : MonoBehaviour
 {
     // Start is called before the first frame update
     private Collector cannonballCollector;
-    private Button button;
-    private Rigidbody2D rb;
     private Transform barrelTransform;
-    private bool btnPressed = false;
-    public float CannonAngularVelocityOnBtnPress = 5f;
-    public float FireForce = 5f;
+    public int FireForceScaler = 7;
+    private bool lastFirePressed = false;
+    private float fireButtonInitiatedTime =-1f;
+    private Animator anim;
+
+    [Header("Aiming")]
+    public float AimTickTimeInterval = 0.07f;
+    public float AimTickDistance = 2f;
+    public bool ConsiderBoundaries = true;
+    public float MinRotation = -10;
+    public float MaxRotation = 90;
+    private float lastAimTickTime = -1f;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         cannonballCollector = GetComponent<Collector>();
         barrelTransform = transform.Find("Barrel");
-        button = FindObjectOfType<Button>();
-        button.addListener(BtnListener);
+        lastAimTickTime = Time.time - AimTickTimeInterval; // Allow to aim at the beginning
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
-        if (btnPressed)
-        {
-            rb.angularVelocity = CannonAngularVelocityOnBtnPress;
-        } 
-    }
+        // ---- Get user input
+        // Up / Down
+        bool up = Input.GetKey(KeyCode.UpArrow);
+        bool down = Input.GetKey(KeyCode.DownArrow);
 
-    public void BtnListener (bool btnStatus)
-    {
-        if (btnStatus)
+        // XOR
+        if (up ^ down)
         {
-            rb.isKinematic = true;
-            rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        } else
-        {
-            rb.isKinematic = false;
-            rb.constraints = RigidbodyConstraints2D.None; 
+            Aim(up ? Direction.UP : Direction.DOWN);
         }
-       
-        btnPressed = btnStatus;
+
+        // F (fire) (on realese) -> int
+        int fireForce = GetFireForceFromInput();
+        if (fireForce > 0) Fire(fireForce);
+
     }
+
+    private enum Direction
+    {
+        UP=1,
+        DOWN=-1
+    }
+
+    /// <summary>
+    /// Calculates the fire force as a linear funciton of the time the fire button was pressed
+    /// </summary>
+    /// <returns>The force as an integer</returns>
+    private int GetFireForceFromInput()
+    {
+        int fireForce = 0;
+        
+        // Get input
+        bool fire = Input.GetKey(KeyCode.F);
+
+        // Press
+        if (fire && !lastFirePressed)
+        {
+            lastFirePressed = true;
+            fireButtonInitiatedTime = Time.time;
+        }
+        // Release
+        else if (!fire && lastFirePressed)
+        {
+            float pressTime = Time.time - fireButtonInitiatedTime;
+            float pressTime0to5 = Mathf.Clamp(pressTime, 0, 5);
+            fireForce = (int)Mathf.Floor(pressTime0to5 * FireForceScaler);
+            lastFirePressed = false;
+        }
+
+        return fireForce;
+    }
+
+    
+    /// <summary>
+    /// Aims the barrel in discrete steps
+    /// </summary>
+    /// <param name="direction"></param>
+    private void Aim(Direction direction)
+    {
+        float currentTime = Time.time;
+
+        // Aim again
+        if (currentTime - lastAimTickTime > AimTickTimeInterval)
+        {
+            Vector3 newBarrelAngle = barrelTransform.eulerAngles + new Vector3(0, 0, (int)direction * AimTickDistance);
+            if (IsWithinBoundaries(newBarrelAngle.z)) barrelTransform.localEulerAngles = newBarrelAngle;
+
+            // Set time
+            lastAimTickTime = Time.time;
+        }
+
+    }
+    /// <summary>
+    /// Checks if the zAngle is within the boundaries. Can be disabled using the ConsiderBoundaries property.
+    /// </summary>
+    /// <param name="zAngle"></param>
+    /// <returns>the result as a bool</returns>
+    private bool IsWithinBoundaries (float zAngle)
+    {
+        if (!ConsiderBoundaries) return true; // early return if boundary-check is disabled
+        if (zAngle > 180) zAngle -= 360; // maps to [180; -180]
+        return (zAngle > MinRotation && zAngle < MaxRotation);
+    }
+
     /// <summary>
     /// Fires the cannon ball if loaded
     /// </summary>
-    public void Fire ()
+    public void Fire (int FireForce)
     {
-        Debug.Log("Fire called!");
-        GameObject cannonBall = cannonballCollector.GetCollectableIfCollected().gameObject;
+        Debug.Log($"Fire called! {FireForce}");
+        GameObject cannonBall = cannonballCollector.GetCollectableIfCollected()?.gameObject;
         if (cannonBall != null)
         {
+            cannonballCollector.Release();
+
             // Get rigidbody to apply force to
             Rigidbody2D rb = cannonBall.GetComponent<Rigidbody2D>();
 
@@ -63,18 +135,14 @@ public class CannonMechanics : MonoBehaviour
             float angleCannon = transform.eulerAngles.z;
             float angleBarrel = barrelTransform.eulerAngles.z;
             float angle = barrelTransform.eulerAngles.z;
-            Debug.Log($"Angle C: {angleCannon}");
-            Debug.Log($"Angle B: {angleBarrel}");
-
-            Debug.Log($"Angle: {angle}");
             
             // Get direction vector
             Vector2 dirVec = getDiretionVectorFromDegAngle(angle);
-            Debug.Log($"Vec: {dirVec}");
 
             // FIRE!
             rb.AddForce(FireForce*dirVec, ForceMode2D.Impulse);
         }
+        anim.SetTrigger("cannonFired");
     }
 
     private Vector2 getDiretionVectorFromDegAngle (float angleDeg)
