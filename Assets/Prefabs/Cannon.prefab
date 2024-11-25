@@ -386,9 +386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 10
   gripPoint: {fileID: 850670508486991233}
-  CollectableTypes:
-  - Tim
-  - Virus
+  CollectableTypes: []
   RealeaseEvent:
     m_PersistentCalls:
       m_Calls: []
