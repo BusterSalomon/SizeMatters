@@ -54,6 +54,7 @@ public class MovementV2 : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            DidJump.Invoke();
         }
     }
 
@@ -71,7 +72,6 @@ public class MovementV2 : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = false;
-            DidJump.Invoke();
         }
     }
 }

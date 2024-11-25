@@ -21,6 +21,7 @@ public class CannonballCollector : Collector
     // TODO: make it only able to collect when the cannonball rolls into the barrel
     private float cannonballReleaseTime = -1;
     public float cannonballReleaseToCollectTime = 3f;
+    
     public override bool CollectCondition()
     {
         if (cannonballReleaseTime != -1)
