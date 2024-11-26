@@ -46,79 +46,91 @@ public class Collector : MonoBehaviour
         // Collector DID collect an item
         if (collectable != null && CollectableCollected == null && CollectCondition())
         {
-            
-            CollectableCollected = collectable.GetComponent<Collectable>();
-            //collectableGroundOffSet = GetCollectableGroundOffset(collectable);
-
-            // Disable physics
-            Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
-            if (rb != null) { 
-                rb.isKinematic = true;
-                rb.velocity = Vector2.zero;
-                rb.angularVelocity = 0f;
-            }
-
-            // Disable collider
-            Collider2D collider = collectable.GetComponent<Collider2D>();
-            if (collider != null) collider.enabled = false;
-
-            // Set parent, position and scale
-            collectable.transform.SetParent(gripPoint);
-            Vector3 collectableLocalScale = collectable.transform.localScale;
-            collectable.transform.localScale = new Vector3((int)CollectableCollected.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
-            
-            // If HandlePoint of Collectable is set, set collectable to that, otherwise use the default
-            if (CollectableCollected.HandlePoint != null)
-            {
-                Vector3 GripHandleOffset = gripPoint.position - CollectableCollected.HandlePoint.position;
-                collectable.transform.position += GripHandleOffset;
-            } else
-            {
-                collectable.transform.position = gripPoint.position;
-            }
-            
-
-            // Notify collectable
-            collectable.GetComponent<Collectable>().collect();
-
-            // Notify subscribers
-            CollectEvent.Invoke(CollectableCollected.CollectableType);
+            Collect(collectable);
         }
 
         // Collector did NOT collect an item
         if (CollectableCollected != null && ReleaseCondition())
         {
-
-            GameObject collectableCollectedGO = CollectableCollected.gameObject;
-
-            // Free
-            collectableCollectedGO.transform.SetParent(null);
-
-            // Enable collider
-            Collider2D collider = collectableCollectedGO.GetComponent<Collider2D>();
-            if (collider != null) collider.enabled = true;
-
-            // Enable physics
-            Rigidbody2D rb = collectableCollectedGO.GetComponent<Rigidbody2D>();
-            if (rb != null) rb.isKinematic = false;
-            // Place close to the ground is not affected by physics
-            //else
-            //{
-            //    Vector3 collectablePosition = collectableCollectedGO.transform.position;
-            //    RaycastHit2D hit = Physics2D.Raycast(new Vector2(collectablePosition.x, collectablePosition.y), Vector2.down, 10f);
-            //    float yGround = hit.point.y;
-            //    collectableCollectedGO.transform.position = new Vector3(collectablePosition.x, yGround+collectableGroundOffSet, collectablePosition.z);
-            //}
-
-            collectableCollectedGO.GetComponent<Collectable>().release();
-
-            // Call realease action and initiase collectable afterwards
-            RealeaseEvent.Invoke(CollectableCollected.CollectableType);
-            CollectableCollected = null;
-            collectableGroundOffSet = -1;
+            Release();
         }
 
     }
+
+    public void Collect(GameObject collectable)
+    {
+        Debug.Log("Did collect");
+        CollectableCollected = collectable.GetComponent<Collectable>();
+        //collectableGroundOffSet = GetCollectableGroundOffset(collectable);
+
+        // Disable physics
+        Rigidbody2D rb = collectable.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        // Disable collider
+        Collider2D collider = collectable.GetComponent<Collider2D>();
+        if (collider != null) collider.enabled = false;
+
+        // Set parent, position and scale
+        collectable.transform.SetParent(gripPoint);
+        Vector3 collectableLocalScale = collectable.transform.localScale;
+        collectable.transform.localScale = new Vector3((int)CollectableCollected.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
+
+        // If HandlePoint of Collectable is set, set collectable to that, otherwise use the default
+        if (CollectableCollected.HandlePoint != null)
+        {
+            Vector3 GripHandleOffset = gripPoint.position - CollectableCollected.HandlePoint.position;
+            collectable.transform.position += GripHandleOffset;
+        }
+        else
+        {
+            collectable.transform.position = gripPoint.position;
+        }
+
+
+        // Notify collectable
+        collectable.GetComponent<Collectable>().collect();
+
+        // Notify subscribers
+        CollectEvent.Invoke(CollectableCollected.CollectableType);
+    }
+
+    public void Release()
+    {
+        GameObject collectableCollectedGO = CollectableCollected.gameObject;
+
+        // Free
+        collectableCollectedGO.transform.SetParent(null);
+
+        // Enable collider
+        Collider2D collider = collectableCollectedGO.GetComponent<Collider2D>();
+        if (collider != null) collider.enabled = true;
+
+        // Enable physics
+        Rigidbody2D rb = collectableCollectedGO.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.isKinematic = false;
+        // Place close to the ground is not affected by physics
+        //else
+        //{
+        //    Vector3 collectablePosition = collectableCollectedGO.transform.position;
+        //    RaycastHit2D hit = Physics2D.Raycast(new Vector2(collectablePosition.x, collectablePosition.y), Vector2.down, 10f);
+        //    float yGround = hit.point.y;
+        //    collectableCollectedGO.transform.position = new Vector3(collectablePosition.x, yGround+collectableGroundOffSet, collectablePosition.z);
+        //}
+
+        collectableCollectedGO.GetComponent<Collectable>().release();
+
+        // Call realease action and initiase collectable afterwards
+        RealeaseEvent.Invoke(CollectableCollected.CollectableType);
+        CollectableCollected = null;
+        collectableGroundOffSet = -1;
+    }
+
     /// <summary>
     /// Do not use yet - contain bugs
     /// </summary>
