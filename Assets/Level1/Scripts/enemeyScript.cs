@@ -23,7 +23,7 @@ public class enemeyScript : MonoBehaviour
 
     public float Hitpoints;
     public float MaxHitpoints = 5;
-    public healthbarBehavior Healthbar;
+    public EnemyHealthbar Healthbar;
 
      public GameObject enemyPrefab; // Enemy prefab to spawn
     [SerializeField] private float spawnIntervalMin ; // Minimum spawn interval
