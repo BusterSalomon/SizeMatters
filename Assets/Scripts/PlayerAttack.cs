@@ -1,8 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerAttack : MonoBehaviour
-{
+{   
+    public TMP_Text Ammo_Text;
 
+    [SerializeField] private uint maxAmmo;
+    [SerializeField] private uint currentAmmo;
     [SerializeField] private float attackCooldown;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] projectiles;
@@ -15,13 +19,21 @@ public class PlayerAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<Movement>();
 
+        maxAmmo = 30;
+        currentAmmo = 10;
+        UpdateAmmoText();
     }
 
     private void Update() {
 
-        if(Input.GetKey(KeyCode.N) && cooldownTimer > attackCooldown && playerMovement.canAttack()){
+        if(Input.GetKey(KeyCode.N) && cooldownTimer > attackCooldown /*&& playerMovement.canAttack()*/){
             Attack();
-            Debug.Log("Attack called");
+            Debug.Log("Attack called " + currentAmmo);
+        }
+
+        if(Input.GetKey(KeyCode.R)){
+            Reload();
+            Debug.Log("Reload");
         }
 
         cooldownTimer += Time.deltaTime;
@@ -29,14 +41,26 @@ public class PlayerAttack : MonoBehaviour
 
         private void Attack(){
 
-        anim.SetTrigger("attack");
-        cooldownTimer = 0;
+        if( (maxAmmo != 0 ) && (currentAmmo != 0) ){
 
-        projectiles[FindProjectile()].transform.position = firePoint.position;
-        projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
-        //projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(-1);
-    
-       // Debug.Log(Mathf.Sign(transform.localScale.x));
+            anim.SetTrigger("attack");
+            cooldownTimer = 0;
+
+            projectiles[FindProjectile()].transform.position = firePoint.position;
+            projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+            //projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(-1);
+        
+            // Debug.Log(Mathf.Sign(transform.localScale.x));
+
+            currentAmmo--;
+            UpdateAmmoText();
+            }
+        }
+
+    private void Reload(){
+        maxAmmo -= (10 - currentAmmo);
+        currentAmmo = 10;
+        UpdateAmmoText();
     }
 
     private int FindProjectile(){
@@ -46,6 +70,14 @@ public class PlayerAttack : MonoBehaviour
                 return i;
         }
         return 0;
+    }
+
+    public void AddAmmo(uint _ammo){
+        maxAmmo += _ammo;
+        UpdateAmmoText();
+    }
+    private void UpdateAmmoText(){
+        Ammo_Text.text = "Ammo: " + maxAmmo.ToString() + " | " + currentAmmo.ToString() ;
     }
 
 }

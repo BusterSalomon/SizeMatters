@@ -26,8 +26,8 @@ public class enemeyScript : MonoBehaviour
     public healthbarBehavior Healthbar;
 
      public GameObject enemyPrefab; // Enemy prefab to spawn
-    private float spawnIntervalMin = 5f; // Minimum spawn interval
-    private float spawnIntervalMax = 10f; // Maximum spawn interval
+    [SerializeField] private float spawnIntervalMin ; // Minimum spawn interval
+    [SerializeField] private float spawnIntervalMax ; // Maximum spawn interval
     void Start()
     {
         Hitpoints = MaxHitpoints;

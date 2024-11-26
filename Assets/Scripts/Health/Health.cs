@@ -17,16 +17,22 @@ public class Health : MonoBehaviour
     {
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, startingHealth); // Gesundheit begrenzen (maximal 0)
         
-        // Optional: Ausgabe in der Konsole, wenn Schaden genommen wird
-        Debug.Log("Damage taken! Current health: " + currentHealth);
+        if(currentHealth > 0){
+            //player hurt
+        }else{
+            //Dead
+        }
+    
+    }    
+
+    public void AddHealth(float _health){
+        currentHealth = Mathf.Clamp(currentHealth + _health, 0, startingHealth);
     }
 
-    private void Update() 
-    {
-        // Zum Testen: Schaden zufügen, wenn 'E' gedrückt wird
-        if (Input.GetKeyDown(KeyCode.E)) 
-        {
-            TakeDamage(1); // Schaden von 1 zufügen
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.E)){
+            TakeDamage(1);
         }
     }
+
 }

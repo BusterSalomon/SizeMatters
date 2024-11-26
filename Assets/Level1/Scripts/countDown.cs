@@ -16,6 +16,9 @@ public class countDown : MonoBehaviour
     public Color targetColor2 = Color.blue;
     int check = 0; 
 
+    //Atempt to fix countdown
+    private enemeyScript emy;
+
         private void Awake()
     {
         originalScale = transform.localScale;
