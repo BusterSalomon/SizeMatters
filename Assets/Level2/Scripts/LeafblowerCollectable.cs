@@ -7,20 +7,24 @@ public class LeafblowerCollectable : Collectable
     public float initialForce = 100f;
     private Transform blowNozzle;
     private bool blow = false;
+    private Animator anim;
 
     private void Start()
     {
         blowNozzle = transform.Find("BlowNozzle");
+        anim = GetComponent<Animator>();
+        
     }
     private void Update()
     {
         if (IsCollected && Input.GetKey(KeyCode.N))
         {
-            bool blowBtnPressed = Input.GetKey(KeyCode.N);
             blow = true;
+            anim.SetBool("IsBlowing", true);
         } else
         {
             blow = false;
+            anim.SetBool("IsBlowing", false);
         }
     }
 
@@ -39,7 +43,7 @@ public class LeafblowerCollectable : Collectable
             {
                 rb.AddForce(direction * force);
             }
-        }   
+        }
     }
 
 }

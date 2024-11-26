@@ -169,7 +169,11 @@ public class Collector : MonoBehaviour
     {
         foreach (GameObject collectable in collectableGameObjects)
         {
-            float distance = Vector3.Distance(transform.position, collectable.transform.position);
+            // Calculates distance to HandlePoint if defined - otherwise to its own transform
+            Transform collectableHandlePoint = collectable.GetComponent<Collectable>().HandlePoint;
+            Transform transformToConsider = collectableHandlePoint ? collectableHandlePoint : collectable.transform;
+            
+            float distance = Vector3.Distance(transform.position, transformToConsider.position);
             if (distance < pickupRange)
             {
                 return collectable;
