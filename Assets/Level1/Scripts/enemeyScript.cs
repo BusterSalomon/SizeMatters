@@ -45,6 +45,7 @@ public class enemeyScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
