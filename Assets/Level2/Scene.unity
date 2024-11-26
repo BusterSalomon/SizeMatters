@@ -1188,6 +1188,7 @@ GameObject:
   - component: {fileID: 610796269}
   - component: {fileID: 610796268}
   - component: {fileID: 610796270}
+  - component: {fileID: 610796271}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1256,7 +1257,7 @@ Transform:
   m_GameObject: {fileID: 610796265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.26, y: -7.3, z: 0}
+  m_LocalPosition: {x: -3.71, y: -7.33, z: 0}
   m_LocalScale: {x: 1.6776, y: 1.6776, z: 1.6776}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1355,6 +1356,28 @@ MonoBehaviour:
   MoveSpeed: 5
   TargetTags:
   - Character
+--- !u!114 &610796271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610796265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb93d57a6540a9498312bce7d61dcba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollectableType: Enemy
+  IsCollected: 0
+  collectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  releaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  HandlePoint: {fileID: 0}
+  direction: 1
 --- !u!1 &636773243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,12 +2003,12 @@ GameObject:
   - component: {fileID: 924366154}
   - component: {fileID: 924366156}
   m_Layer: 0
-  m_Name: Leafblower
+  m_Name: LeafblowerMOCKUP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &924366154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2725,7 +2748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4749454347901525537, guid: c05a75d2d1fcb2848987f7604965fcfc, type: 3}
       propertyPath: HealthbarHeight
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880426604313773949, guid: c05a75d2d1fcb2848987f7604965fcfc, type: 3}
       propertyPath: m_Name
@@ -4276,7 +4299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: CollectableTypes.Array.data[0]
-      value: Virus
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: RealeaseEvent.m_PersistentCalls.m_Calls.Array.size
@@ -4290,11 +4313,76 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cannon
       objectReference: {fileID: 0}
+    - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+--- !u!1001 &7093150605230737870
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00011689542
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063549440630990942, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
+      propertyPath: m_Name
+      value: Leafblower
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4314,3 +4402,4 @@ SceneRoots:
   - {fileID: 4098664966564249982}
   - {fileID: 10854457}
   - {fileID: 610796267}
+  - {fileID: 7093150605230737870}
