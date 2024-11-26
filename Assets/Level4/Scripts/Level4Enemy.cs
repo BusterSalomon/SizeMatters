@@ -19,7 +19,7 @@ public class Level4Enemy : MonoBehaviour
     private Color originalColor; // Store the original color
     public float Hitpoints;
     public float MaxHitpoints = 5;
-    public healthbarBehavior Healthbar;
+    public EnemyHealthbar Healthbar;
 
     public GameObject enemyPrefab; // Enemy prefab to spawn
     private float respawnDelayMin = 5f; // Minimum respawn delay
