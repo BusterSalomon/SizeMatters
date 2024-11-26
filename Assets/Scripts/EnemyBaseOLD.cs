@@ -288,15 +288,15 @@ public class EnemyBase : MonoBehaviour
 
 }
 
-public class Target
-{
-    public string Tag = null;
-    public Transform Transform = null;
+//public class Target
+//{
+//    public string Tag = null;
+//    public Transform Transform = null;
 
-    public Target (string tag, Transform transform)
-    {
-        Tag = tag;
-        Transform = transform;
-    }
-}
+//    public Target (string tag, Transform transform)
+//    {
+//        Tag = tag;
+//        Transform = transform;
+//    }
+//}
 

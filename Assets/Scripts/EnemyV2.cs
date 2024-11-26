@@ -10,8 +10,14 @@ public class EnemyV2 : MonoBehaviour
     public float MaxHealth;
     public float Damage;
     public float MovementSpeed;
-    private bool enemyEnabled = false;
+    protected bool enemyEnabled = true;
 
+    protected virtual void Start()
+    {
+        CurrentHealth = MaxHealth;
+        Healthbar.SetHealth(CurrentHealth, MaxHealth);
+        Debug.Log("Base start called");
+    }
 
     public void TakeHit(float damage)
     {
