@@ -5,11 +5,18 @@ using UnityEngine;
 public class PursueEnemy : EnemyV2
 {
     // ---- Public properties
-    public float MoveSpeed = 5f;
     public List<string> TargetTags = new List<string> { "Character" };
 
     // ---- Private properties
     private List<Target> targets = new List<Target>();
+    private Direction direction = Direction.Right;
+    private Rigidbody2D rb;
+
+    private enum Direction
+    {
+        Right=1,
+        Left=-1
+    }
 
     // ---- Methods
     // Start is called before the first frame update
@@ -17,6 +24,7 @@ public class PursueEnemy : EnemyV2
     {
         base.Start();
         targets = GetTargetList();
+        rb = GetComponent<Rigidbody2D>();
         Debug.Log("Extended start called");
     }
 
@@ -24,28 +32,29 @@ public class PursueEnemy : EnemyV2
     {
         if (enemyEnabled)
         {
-            Target targetToFollow = GetTargetToFollow();
-            PursueTargetX(targetToFollow.Transform);
+            Target targetToPursue = GetTargetToFollow();
+            //CorrectDirection(targetToPursue.Transform);
+            PursueTargetX(targetToPursue.Transform);
         }
     }
-
+    
+    
     /// <summary>
     /// Default: Move towards the targets that it is closest to in the X direction
     /// </summary>
     protected virtual void PursueTargetX(Transform targetTransform)
     {
-        //Make sure that the enemy doesn't follow vertically
         Vector3 currentPos = transform.position;
-        Vector3 targetPosition = targetTransform.position;
-        targetPosition.y = currentPos.y;
+        Vector3 targetPos = targetTransform.position;
+        Direction newDirection = (Direction)Mathf.Sign(targetPos.x - currentPos.x);
+        if (newDirection != direction)
+        {
+            Flip();
+            direction = newDirection;
+        }
 
-
-        // Move towards the target position
-        transform.position = Vector3.MoveTowards(
-            currentPos,                       // Current position
-            targetPosition,                   // Target position
-            MoveSpeed * Time.deltaTime       // Speed factor
-        );
+        //Make sure that the enemy doesn't follow vertically
+        rb.velocity = new Vector2((int)newDirection * MovementSpeed, 0);       
     }
 
     /// <returns>By default returns the target closest to the enemy. May be overriden.</returns>

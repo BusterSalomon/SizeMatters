@@ -1,0 +1,334 @@
+fileFormatVersion: 2
+guid: ca3455b8069b91e4eb6c84fa263f48db
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BugSmaller_0
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 168
+        width: 597
+        height: 597
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6556d76469d96f4b9544925e0965999
+      internalID: 988128095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_1
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 714
+        width: 61
+        height: 98
+      alignment: 9
+      pivot: {x: 0.67160684, y: 0.072732106}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a1eb552b54e081489d3006ce1c332f2
+      internalID: 80249583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_2
+      rect:
+        serializedVersion: 2
+        x: 1321
+        y: 702
+        width: 90
+        height: 138
+      alignment: 9
+      pivot: {x: 0.15106472, y: 0.060037807}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7480842c14ead940b12a937ac71fe55
+      internalID: -845465289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_3
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 405
+        width: 125
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1a7e81f867083244955019bb831723a
+      internalID: 1516335806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_4
+      rect:
+        serializedVersion: 2
+        x: 1322
+        y: 148
+        width: 83
+        height: 249
+      alignment: 9
+      pivot: {x: 0.8657506, y: 0.9582407}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32409439eb0e3044286f853e3d5f3842
+      internalID: 188692776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_5
+      rect:
+        serializedVersion: 2
+        x: 1502
+        y: 143
+        width: 57
+        height: 219
+      alignment: 9
+      pivot: {x: 0.81220233, y: 0.9493145}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e93f6f0fe25da6c47965ab022e0b7f53
+      internalID: -1541310607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_6
+      rect:
+        serializedVersion: 2
+        x: 1698
+        y: 146
+        width: 53
+        height: 182
+      alignment: 9
+      pivot: {x: 0.8357671, y: 0.93712795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97039e54f1c664f4ea27ab37230effa6
+      internalID: -560829922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_7
+      rect:
+        serializedVersion: 2
+        x: 1862
+        y: 141
+        width: 55
+        height: 178
+      alignment: 9
+      pivot: {x: 0.1954723, y: 0.9351889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb30bfe2057cbda43929001092a8d042
+      internalID: -1946505702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_8
+      rect:
+        serializedVersion: 2
+        x: 2061
+        y: 137
+        width: 61
+        height: 208
+      alignment: 9
+      pivot: {x: 0.1739482, y: 0.9529453}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fdb12d95873a5945a7db054239750fc
+      internalID: 169595589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BugSmaller_9
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 142
+        width: 81
+        height: 250
+      alignment: 9
+      pivot: {x: 0.09937126, y: 0.96059495}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b1d022f792dd2d46827b50ea2f5f087
+      internalID: 1946430553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      BugSmaller_0: 988128095
+      BugSmaller_1: 80249583
+      BugSmaller_2: -845465289
+      BugSmaller_3: 1516335806
+      BugSmaller_4: 188692776
+      BugSmaller_5: -1541310607
+      BugSmaller_6: -560829922
+      BugSmaller_7: -1946505702
+      BugSmaller_8: 169595589
+      BugSmaller_9: 1946430553
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -40,6 +40,14 @@ public class EnemyV2 : MonoBehaviour
         characterHealth.TakeDamage(damage);
     }
 
+    /// <summary>
+    /// Flip the enemy
+    /// </summary>
+    protected void Flip()
+    {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
     public void DisableEnemy()
     {
         enemyEnabled = false;
