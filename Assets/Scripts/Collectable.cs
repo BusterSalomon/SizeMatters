@@ -7,10 +7,12 @@ public class Collectable : MonoBehaviour
 {
     // Start is called before the first frame update
     public string CollectableType;
-    public bool IsCollected = false;
+    public int RotationOnCollection = 0;
+    protected bool IsCollected = false;
     public UnityEvent collectEvent;
     public UnityEvent releaseEvent;
     public Transform HandlePoint;
+    
 
     /// <summary>
     /// The direction the collectable is pointing in.

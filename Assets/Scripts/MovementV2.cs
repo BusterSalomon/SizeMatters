@@ -46,7 +46,7 @@ public class MovementV2 : MonoBehaviour
             transform.localScale = new Vector3(dir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
 
-        rb.velocity = new Vector2(dir * moveSpeed, rb.velocity.y);
+        if (isGrounded) rb.velocity = new Vector2(dir * moveSpeed, rb.velocity.y);
     }
 
     void Jump()

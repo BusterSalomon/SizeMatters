@@ -59,8 +59,8 @@ public class Collector : MonoBehaviour
 
     public void Collect(GameObject collectable)
     {
-        Debug.Log("Did collect");
         CollectableCollected = collectable.GetComponent<Collectable>();
+        Debug.Log($"{name} did collect {CollectableCollected.CollectableType}");
         //collectableGroundOffSet = GetCollectableGroundOffset(collectable);
 
         // Disable physics
@@ -159,8 +159,11 @@ public class Collector : MonoBehaviour
             if (CollectableTypes.Count == 0 || CollectableTypes.Contains(collectable.CollectableType))
             {
                 collectableGameObjects.Add(collectable.gameObject);
+                Debug.Log($"{name} found {collectable.CollectableType}");
             }
         }
+
+        
     }
     /// <summary>
     /// Returns the tag if the character is in the same position as a collectable

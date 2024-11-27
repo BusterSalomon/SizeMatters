@@ -54,7 +54,8 @@ public class PursueEnemy : EnemyV2
         }
 
         //Make sure that the enemy doesn't follow vertically
-        rb.velocity = new Vector2((int)newDirection * MovementSpeed, 0);       
+        if (isGrounded) rb.velocity = new Vector2((int)newDirection * MovementSpeed, 0);
+              
     }
 
     /// <returns>By default returns the target closest to the enemy. May be overriden.</returns>

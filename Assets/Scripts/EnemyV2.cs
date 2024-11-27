@@ -11,19 +11,19 @@ public class EnemyV2 : MonoBehaviour
     public float Damage;
     public float MovementSpeed;
     protected bool enemyEnabled = true;
+    protected bool isGrounded = false;
 
     protected virtual void Start()
     {
         CurrentHealth = MaxHealth;
-        Healthbar.SetHealth(CurrentHealth, MaxHealth);
+        if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);
         Debug.Log("Base start called");
     }
 
     public void TakeHit(float damage)
     {
         CurrentHealth -= damage;
-        Healthbar.SetHealth(CurrentHealth, MaxHealth);
-
+        if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);
         if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
@@ -56,5 +56,21 @@ public class EnemyV2 : MonoBehaviour
     public void EnableEnemy()
     {
         enemyEnabled = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }

@@ -17,7 +17,6 @@ public class EnemyAnimationController : MonoBehaviour
     void Update()
     {
         float velX = rb.velocity.x;
-        Debug.Log(velX);
         if (velX != 0)
         {
             anim.SetBool("isWalking", true);

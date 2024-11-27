@@ -99,8 +99,16 @@ public class CannonMechanics : MonoBehaviour
         // Aim again
         if (currentTime - lastAimTickTime > AimTickTimeInterval)
         {
-            Vector3 newBarrelAngle = barrelTransform.eulerAngles + new Vector3(0, 0, (int)direction * AimTickDistance);
-            if (IsWithinBoundaries(newBarrelAngle.z)) barrelTransform.localEulerAngles = newBarrelAngle;
+            float deltaAngle = (int)direction * AimTickDistance;
+            Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
+            Vector3 newBarrelAngle = barrelTransform.eulerAngles + deltaVector;
+            if (IsWithinBoundaries(newBarrelAngle.z)) {
+                barrelTransform.localEulerAngles = newBarrelAngle;
+                if (getCannonball())
+                {
+                    getCannonball().transform.localEulerAngles -= deltaVector;
+                }
+            } 
 
             // Set time
             lastAimTickTime = Time.time;
@@ -119,13 +127,18 @@ public class CannonMechanics : MonoBehaviour
         return (zAngle > MinRotation && zAngle < MaxRotation);
     }
 
+    private GameObject getCannonball()
+    {
+        return cannonballCollector.GetCollectableIfCollected()?.gameObject;
+    }
+
     /// <summary>
     /// Fires the cannon ball if loaded
     /// </summary>
     public void Fire (int FireForce)
     {
         Debug.Log($"Fire called! {FireForce}");
-        GameObject cannonBall = cannonballCollector.GetCollectableIfCollected()?.gameObject;
+        GameObject cannonBall = getCannonball();
         if (cannonBall != null)
         {
             cannonballCollector.Release();
