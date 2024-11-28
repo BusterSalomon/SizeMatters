@@ -12,10 +12,10 @@ public class Level2Manager : LevelManager
 
     public void Start()
     {
-        GameObject jar = GameObject.Find("Jar");
+        GameObject jar = GameObject.Find("BugJar");
         jarLeftTransform = jar.transform.Find("Left");
         jarRightTransform = jar.transform.Find("Right");
-        virusTransform = GameObject.Find("Virus").transform;
+        virusTransform = GameObject.Find("Bug").transform;
         characterHealth = GameObject.FindGameObjectWithTag("Character").GetComponent<Health>();
         Debug.Log(characterHealth);
     }

@@ -4,17 +4,26 @@ using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CannonMechanics : MonoBehaviour
 {
     // Start is called before the first frame update
     private Collector cannonballCollector;
     private Transform barrelTransform;
-    public int FireForceScaler = 7;
-    private bool lastFirePressed = false;
+    private bool fireInitiated = false;
     private float fireButtonInitiatedTime =-1f;
     private Animator barrelAnim;
     private Animator explosionAnim;
+
+    [Header("Fire")]
+    public int MaxForce = 150;
+    public int TimeToReachMaxForce = 5;
+    private int FireForceScaler;
+    public UnityEvent OnFireInitiated;
+    public UnityEvent<int, int> OnFireForceUpdated;
+    public UnityEvent OnFire;
+    private int maxForce;
 
     [Header("Aiming")]
     public float AimTickTimeInterval = 0.07f;
@@ -31,6 +40,7 @@ public class CannonMechanics : MonoBehaviour
         lastAimTickTime = Time.time - AimTickTimeInterval; // Allow to aim at the beginning
         barrelAnim = GameObject.Find("Barrel").GetComponent<Animator>();
         explosionAnim = GameObject.Find("ExpAnimator").GetComponent<Animator>();
+        FireForceScaler = MaxForce / TimeToReachMaxForce;
     }
 
     private void Update()
@@ -47,7 +57,7 @@ public class CannonMechanics : MonoBehaviour
         }
 
         // F (fire) (on realese) -> int
-        int fireForce = GetFireForceFromInput();
+        int fireForce = HandleFireForceIO();
         if (fireForce > 0) Fire(fireForce);
 
     }
@@ -58,33 +68,52 @@ public class CannonMechanics : MonoBehaviour
         DOWN=-1
     }
 
+    public int FireForce = 0;
+    public bool ReadyToFire = false;
     /// <summary>
-    /// Calculates the fire force as a linear funciton of the time the fire button was pressed
+    /// Calculates the fire force as a linear funciton of the time the fire button was pressed (input), and invokes unity events on updates (output).
     /// </summary>
     /// <returns>The force as an integer</returns>
-    private int GetFireForceFromInput()
+    private int HandleFireForceIO()
     {
-        int fireForce = 0;
         
         // Get input
         bool fire = Input.GetKey(KeyCode.F);
 
         // Press
-        if (fire && !lastFirePressed)
+        if (fire && !fireInitiated)
         {
-            lastFirePressed = true;
+            fireInitiated = true;
             fireButtonInitiatedTime = Time.time;
+            OnFireInitiated.Invoke();
         }
-        // Release
-        else if (!fire && lastFirePressed)
+        
+        // Hold
+        else if (fire && fireInitiated)
         {
             float pressTime = Time.time - fireButtonInitiatedTime;
-            float pressTime0to5 = Mathf.Clamp(pressTime, 0, 5);
-            fireForce = (int)Mathf.Floor(pressTime0to5 * FireForceScaler);
-            lastFirePressed = false;
+            float pressTimeClamped = Mathf.Clamp(pressTime, 0, TimeToReachMaxForce);
+            int newFireForce = (int)Mathf.Floor(pressTimeClamped * FireForceScaler);
+            if (newFireForce != FireForce)
+            {
+
+                FireForce = newFireForce;
+                OnFireForceUpdated.Invoke(FireForce, MaxForce);
+            }
         }
 
-        return fireForce;
+        // Release
+        else if (!fire && fireInitiated)
+        {
+            fireInitiated = false;
+            int fireForce = FireForce;
+            FireForce = 0;
+            OnFire.Invoke();
+            return fireForce;
+        }
+
+        return 0;
+        
     }
 
     

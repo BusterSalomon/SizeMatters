@@ -94,6 +94,15 @@ public class PursueEnemy : EnemyV2
         return targets;
     }
 
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (collision.collider.CompareTag("Character"))
+        {
+            collision.gameObject.GetComponent<Health>().TakeDamage(Damage);
+        }
+    }
+
 }
 
 public class Target
