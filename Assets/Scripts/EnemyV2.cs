@@ -58,7 +58,7 @@ public class EnemyV2 : MonoBehaviour
         enemyEnabled = true;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground"))
         {
@@ -66,7 +66,7 @@ public class EnemyV2 : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    protected virtual void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground"))
         {
