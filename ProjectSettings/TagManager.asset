@@ -21,6 +21,7 @@ TagManager:
   - Ladder
   - Key
   - MovingBar
+  - RotationWrapper
   layers:
   - Default
   - TransparentFX
