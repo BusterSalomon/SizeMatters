@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class CannonMechanics : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class CannonMechanics : MonoBehaviour
     private float fireButtonInitiatedTime =-1f;
     private Animator barrelAnim;
     private Animator explosionAnim;
+    private bool cannonballRotated = false;
 
     [Header("Fire")]
     public int MaxForce = 150;
@@ -56,6 +58,8 @@ public class CannonMechanics : MonoBehaviour
             Aim(up ? Direction.UP : Direction.DOWN);
         }
 
+        RotateCannonballOnceIfLoaded(cannonballCollector.GetCollectableIfCollected());
+
         // F (fire) (on realese) -> int
         int fireForce = HandleFireForceIO();
         if (fireForce > 0) Fire(fireForce);
@@ -66,6 +70,21 @@ public class CannonMechanics : MonoBehaviour
     {
         UP=1,
         DOWN=-1
+    }
+
+    /// <summary>
+    /// NOT IMPLEMENTED YET. Should rotate the cannonball when loaded.
+    /// </summary>
+    /// <param name="c"></param>
+    private void RotateCannonballOnceIfLoaded (Collectable c)
+    {
+        if (c && !cannonballRotated)
+        {
+            //Vector3 barrelAngles = barrelTransform.eulerAngles;
+            //Debug.Log(barrelAngles);
+            //c.transform.localEulerAngles = new Vector3(barrelAngles.x, barrelAngles.y, AngleToMP180(barrelAngles.z)-90);
+            //cannonballRotated = true;
+        }
     }
 
     public int FireForce = 0;
@@ -116,7 +135,7 @@ public class CannonMechanics : MonoBehaviour
         
     }
 
-    
+    private float deltaAngleTotal = 0f;
     /// <summary>
     /// Aims the barrel in discrete steps
     /// </summary>
@@ -129,13 +148,17 @@ public class CannonMechanics : MonoBehaviour
         if (currentTime - lastAimTickTime > AimTickTimeInterval)
         {
             float deltaAngle = (int)direction * AimTickDistance;
+            deltaAngleTotal += deltaAngle;
             Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
             Vector3 newBarrelAngle = barrelTransform.eulerAngles + deltaVector;
             if (IsWithinBoundaries(newBarrelAngle.z)) {
                 barrelTransform.localEulerAngles = newBarrelAngle;
-                if (getCannonball())
-                {
-                    getCannonball().transform.localEulerAngles -= deltaVector;
+                
+                // TODO: remove when cannonball rotation logic is implemented
+                GameObject cannonBall = getCannonball();
+                if (cannonBall)
+                { 
+                   cannonBall.transform.localEulerAngles -= deltaVector;
                 }
             } 
 
@@ -152,8 +175,20 @@ public class CannonMechanics : MonoBehaviour
     private bool IsWithinBoundaries (float zAngle)
     {
         if (!ConsiderBoundaries) return true; // early return if boundary-check is disabled
-        if (zAngle > 180) zAngle -= 360; // maps to [180; -180]
+        zAngle = AngleToMP180(zAngle); // maps to [180; -180]
         return (zAngle > MinRotation && zAngle < MaxRotation);
+    }
+
+
+    /// <summary>
+    /// Converts the angle domain to [180; -180]
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <returns></returns>
+    private float AngleToMP180 (float angle)
+    {
+        if (angle > 180) return angle -= 360;
+        else return angle;
     }
 
     private GameObject getCannonball()
@@ -185,9 +220,26 @@ public class CannonMechanics : MonoBehaviour
 
             // FIRE!
             rb.AddForce(FireForce*dirVec, ForceMode2D.Impulse);
+
+            RotateCannonballOnFire(cannonBall.transform);
+            InitializeState();
         }
         barrelAnim.SetTrigger("fired");
         explosionAnim.SetTrigger("fired");
+    }
+
+    private void InitializeState ()
+    {
+        cannonballRotated = false;
+    }
+
+    /// <summary>
+    /// NOT IMPLEMENTED YET
+    /// </summary>
+    /// <param name="cannonballTransform"></param>
+    private void RotateCannonballOnFire(Transform cannonballTransform)
+    {
+        // cannonballTransform.localEulerAngles += new Vector3(0, 0, 90-deltaAngleTotal);
     }
 
     private Vector2 getDiretionVectorFromDegAngle (float angleDeg)
