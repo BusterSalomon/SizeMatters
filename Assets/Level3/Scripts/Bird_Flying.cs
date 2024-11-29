@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
-    public float moveSpeed = 3f;     // Geschwindigkeit der Vögel
-    public Transform treeTarget;     // Baumziel
-    private Vector2 targetPosition;  // Zielposition (Baum)
+    public float moveSpeed = 3f;         // Geschwindigkeit der Vögel
+    public Transform treeTarget;        // Baumziel
+    public float damageToTree = 1f;     // Schaden, den der Vogel dem Baum zufügt
+    private Vector2 targetPosition;     // Zielposition (Baum)
 
     void Start()
     {
@@ -36,16 +37,17 @@ public class Bird : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Tree"))
         {
-            TreeHealth treeHealth = collision.gameObject.GetComponent<TreeHealth>();
+            // Hole das Health-Skript vom Baum
+            Health treeHealth = collision.gameObject.GetComponent<Health>();
             if (treeHealth != null)
             {
-                treeHealth.TakeDamage(1);  // Vogel verursacht 1 Schaden
+                treeHealth.TakeDamage(damageToTree); // Schaden zufügen
             }
-            Destroy(gameObject);  // Vogel wird zerstört
+            Destroy(gameObject); // Vogel wird zerstört
         }
         else if (collision.gameObject.CompareTag("MovingBar"))
         {
-            Destroy(gameObject);  // Vogel wird durch Plattform zerstört
+            Destroy(gameObject); // Vogel wird durch Plattform zerstört
         }
     }
 }

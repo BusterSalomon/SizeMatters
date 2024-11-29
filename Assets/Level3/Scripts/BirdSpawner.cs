@@ -49,7 +49,7 @@ public class BirdSpawner : MonoBehaviour
         GameObject birdInstance = Instantiate(birdPrefab, spawnPosition, Quaternion.identity);
 
         // Skalierung anpassen (z. B. kleiner machen)
-        Vector3 scale = birdInstance.transform.localScale * 0.6f; // Verkleinern
+        Vector3 scale = birdInstance.transform.localScale * 0.4f; // Verkleinern
 
         if (!spawnFromLeft)
         {
