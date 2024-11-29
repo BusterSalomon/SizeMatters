@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRange: 5
-  gripPoint: {fileID: 729286951165554638}
+  GripPoint: {fileID: 729286951165554638}
   CollectableTypes:
   - Leafblower
   RealeaseEvent:

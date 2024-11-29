@@ -200,8 +200,8 @@ Transform:
   m_GameObject: {fileID: 10854455}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6, y: -2.7, z: 0}
-  m_LocalScale: {x: 183.96655, y: 101.263435, z: 1}
+  m_LocalPosition: {x: 69.2933, y: 34.442, z: 0}
+  m_LocalScale: {x: 313.35022, y: 175.5503, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -926,7 +926,7 @@ Transform:
   m_GameObject: {fileID: 308834552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.72, y: -9.48, z: -10}
+  m_LocalPosition: {x: -10, y: -8.7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2939,7 +2939,7 @@ PrefabInstance:
       objectReference: {fileID: 1855169785}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: pickupRange
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: CollectableTypes.Array.size
@@ -3749,7 +3749,7 @@ Transform:
   m_GameObject: {fileID: 1710922579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.41, y: 18.48, z: 0}
+  m_LocalPosition: {x: -29.47, y: -2.29, z: 0}
   m_LocalScale: {x: 23.66964, y: 2.0350873, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3973,8 +3973,8 @@ Transform:
   m_GameObject: {fileID: 1807901624}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.26, y: -0.5, z: 0}
-  m_LocalScale: {x: 4.6207, y: 4.6207, z: 4.6207}
+  m_LocalPosition: {x: 48, y: 25.5, z: 0}
+  m_LocalScale: {x: 11.416018, y: 11.416018, z: 11.416018}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4310,11 +4310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511471964709172363, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.25
+      value: 2.46
       objectReference: {fileID: 0}
     - target: {fileID: 8511471964709172363, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.25
+      value: -16.46
       objectReference: {fileID: 0}
     - target: {fileID: 8511471964709172363, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4792,12 +4792,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: pickupRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: CollectableTypes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: CollectableTypes.Array.data[0]
       value: Tim
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: CollectableTypes.Array.data[1]
+      value: Bug
       objectReference: {fileID: 0}
     - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: m_Name
@@ -5312,11 +5320,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.54
+      value: -8.42
       objectReference: {fileID: 0}
     - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.52
+      value: -17.05
       objectReference: {fileID: 0}
     - target: {fileID: 1154610169306999395, guid: dba154332b6cdd24f885f2d55dd28bd8, type: 3}
       propertyPath: m_LocalPosition.z
