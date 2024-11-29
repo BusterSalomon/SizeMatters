@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private float horizontalSpeed = 10;
-    private float verticalSpeed = 18;
+    private float verticalSpeed = 15;
     private Rigidbody2D body;
     private bool grounded = false;
     private Transform currentPlatform; // Speichere die aktuelle Plattform, auf der der Charakter steht

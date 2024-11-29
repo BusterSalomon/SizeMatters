@@ -27,6 +27,8 @@ public class Level4Enemy : MonoBehaviour
 
     private Vector2 spawnPosition; // Position to respawn the enemy
 
+    private PoliceHealthbar policeHealthbar;
+
     void Start()
     {
         Hitpoints = MaxHitpoints;
@@ -52,6 +54,7 @@ public class Level4Enemy : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
         originalColor = spriteRenderer.color; // Store the original color
+        policeHealthbar = GetComponentInChildren<PoliceHealthbar>();
     }
 
     private void FixedUpdate()
@@ -87,10 +90,17 @@ public class Level4Enemy : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
-        // Reverse the walk speed to change direction
+        
+         // Reverse the walk speed to change direction
         walkSpeed *= -1;
+        // Flip the enemy sprite by inverting the local scale on the X axis
+        Vector2 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler; 
+        policeHealthbar.healthXposition *= -1;
+
     }
 
     private void DieAndRespawn()
