@@ -11,7 +11,7 @@ public class CannonMechanics : MonoBehaviour
 {
     // Start is called before the first frame update
     private Collector cannonballCollector;
-    private Transform barrelTransform;
+    private Transform barrelRotationWrapperTransform;
     private bool fireInitiated = false;
     private float fireButtonInitiatedTime =-1f;
     private Animator barrelAnim;
@@ -37,11 +37,16 @@ public class CannonMechanics : MonoBehaviour
 
     void Start()
     {
-        cannonballCollector = GetComponent<Collector>();
-        barrelTransform = transform.Find("BarrelRotationWrapper");
         lastAimTickTime = Time.time - AimTickTimeInterval; // Allow to aim at the beginning
-        barrelAnim = GameObject.Find("Barrel").GetComponent<Animator>();
-        explosionAnim = GameObject.Find("ExpAnimator").GetComponent<Animator>();
+
+        // Retrive components
+        cannonballCollector = GetComponent<Collector>();
+        barrelRotationWrapperTransform = transform.Find("BarrelRotationWrapper");
+        Transform barrelTransform = barrelRotationWrapperTransform.Find("Barrel");
+        barrelAnim = barrelTransform.GetComponent<Animator>();
+        explosionAnim = barrelTransform.Find("Explosion").Find("ExpAnimator").GetComponent<Animator>();
+        
+        // Calculate
         FireForceScaler = MaxForce / TimeToReachMaxForce;
     }
 
@@ -133,10 +138,10 @@ public class CannonMechanics : MonoBehaviour
             float deltaAngle = (int)direction * AimTickDistance;
             deltaAngleTotal += deltaAngle;
             Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
-            Vector3 newBarrelAngle = barrelTransform.localEulerAngles + deltaVector;
-            Debug.Log($"Old angle: l: {barrelTransform.localEulerAngles}, g: {barrelTransform.eulerAngles}");
+            Vector3 newBarrelAngle = barrelRotationWrapperTransform.localEulerAngles + deltaVector;
+            Debug.Log($"Old angle: l: {barrelRotationWrapperTransform.localEulerAngles}, g: {barrelRotationWrapperTransform.eulerAngles}");
             if (IsWithinBoundaries(newBarrelAngle.z)) {
-                barrelTransform.localEulerAngles = newBarrelAngle;
+                barrelRotationWrapperTransform.localEulerAngles = newBarrelAngle;
                 Debug.Log($"New angle: {newBarrelAngle}");
                 
                 // TODO: remove when cannonball rotation logic is implemented
@@ -196,7 +201,7 @@ public class CannonMechanics : MonoBehaviour
             Rigidbody2D rb = cannonBall.GetComponent<Rigidbody2D>();
 
             // Get force angle
-            float angle = GetAngleRelativeToScale(barrelTransform.localEulerAngles.z);
+            float angle = GetAngleRelativeToScale(barrelRotationWrapperTransform.localEulerAngles.z);
             
             // Get direction vector
             Vector2 dirVec = getDiretionVectorFromDegAngle(angle);
@@ -240,7 +245,7 @@ public class CannonMechanics : MonoBehaviour
     {
         if (c && !cannonballRotated)
         {
-            //Vector3 barrelAngles = barrelTransform.eulerAngles;
+            //Vector3 barrelAngles = barrelRotationWrapperTransform.eulerAngles;
             //Debug.Log(barrelAngles);
             //c.transform.localEulerAngles = new Vector3(barrelAngles.x, barrelAngles.y, AngleToMP180(barrelAngles.z)-90);
             //cannonballRotated = true;
