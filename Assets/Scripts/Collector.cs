@@ -7,6 +7,15 @@ using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
+    // Static field to keep track of the next UID
+    private static int nextUID = 1;
+
+
+    // Dictionary to store all Collectors by UID
+    private static Dictionary<int, Collector> collectorsByUID = new Dictionary<int, Collector>();
+
+    // Instance field to hold the unique ID for each Collector
+    public int UID { get; private set; }
 
     /// <summary>
     /// The range for which the collector is able to collect items
@@ -31,11 +40,45 @@ public class Collector : MonoBehaviour
     private float collectableGroundOffSet;
 
     private List<GameObject> collectableGameObjects = new List<GameObject>();
-    
-    
+
+    public bool PointCollectableInSameDirectionAsCollector = true;
+
+
+    void Awake()
+    {
+        // Assign a unique ID to this Collector instance
+        UID = GetUID();
+
+        // Register the Collector in the static dictionary
+        collectorsByUID[UID] = this;
+
+        Debug.Log($"Collector {name} initialized with UID: {UID}");
+    }
+
     void Start()
     {
         SetCollectables();
+    }
+
+    // Static method to get the next UID
+    private static int GetUID()
+    {
+        return nextUID++;
+    }
+
+    // Static method to retrieve a Collector by UID
+    public static Collector GetCollectorByUID(int uid)
+    {
+        collectorsByUID.TryGetValue(uid, out Collector collector);
+        return collector;
+    }
+    void OnDestroy()
+    {
+        // Remove the Collector from the dictionary when it is destroyed
+        if (collectorsByUID.ContainsKey(UID))
+        {
+            collectorsByUID.Remove(UID);
+        }
     }
 
     // Update is called once per frame
@@ -79,7 +122,15 @@ public class Collector : MonoBehaviour
         // Set parent, position and scale
         collectable.transform.SetParent(GripPoint);
         Vector3 collectableLocalScale = collectable.transform.localScale;
-        collectable.transform.localScale = new Vector3((int)CollectableCollected.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
+        if (PointCollectableInSameDirectionAsCollector)
+        {
+            collectable.transform.localScale = new Vector3(
+                (int)CollectableCollected.direction * Mathf.Abs(collectableLocalScale.x),
+                collectableLocalScale.y,
+                collectableLocalScale.z
+                );
+        }
+
 
         // If HandlePoint of Collectable is set, set collectable to that, otherwise use the default
         if (CollectableCollected.HandlePoint != null)
@@ -94,10 +145,13 @@ public class Collector : MonoBehaviour
 
 
         // Notify collectable
-        collectable.GetComponent<Collectable>().collect();
+        collectable.GetComponent<Collectable>().collect(UID);
 
         // Notify subscribers
         CollectEvent.Invoke(CollectableCollected.CollectableType);
+
+        
+        
     }
 
     public void Release()
@@ -123,7 +177,7 @@ public class Collector : MonoBehaviour
         //    collectableCollectedGO.transform.position = new Vector3(collectablePosition.x, yGround+collectableGroundOffSet, collectablePosition.z);
         //}
 
-        collectableCollectedGO.GetComponent<Collectable>().release();
+        collectableCollectedGO.GetComponent<Collectable>().release(UID);
 
         // Call realease action and initiase collectable afterwards
         RealeaseEvent.Invoke(CollectableCollected.CollectableType);

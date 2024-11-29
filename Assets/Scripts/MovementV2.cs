@@ -10,6 +10,7 @@ public class MovementV2 : MonoBehaviour
     public float jumpForce = 15f;
     public UnityEvent DidJump;
     public UnityEvent DidLand;
+    public UnityEvent<int> OnChangeDirection;
     private Animator anim;
 
 
@@ -44,6 +45,7 @@ public class MovementV2 : MonoBehaviour
         if (dir != 0)
         {
             transform.localScale = new Vector3(dir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            OnChangeDirection.Invoke(dir);
         }
 
         if (isGrounded) rb.velocity = new Vector2(dir * moveSpeed, rb.velocity.y);

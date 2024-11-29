@@ -9,9 +9,10 @@ public class Collectable : MonoBehaviour
     public string CollectableType;
     public int RotationOnCollection = 0;
     protected bool IsCollected = false;
-    public UnityEvent collectEvent;
-    public UnityEvent releaseEvent;
+    public UnityEvent<string, int> CollectEvent;
+    public UnityEvent<string, int> ReleaseEvent;
     public Transform HandlePoint;
+    private int collectedBy = -1;
     
 
     /// <summary>
@@ -30,16 +31,18 @@ public class Collectable : MonoBehaviour
         BACKWARDS = -1
     }
 
-    public void collect ()
+    public void collect (int collectorUID)
     {
         IsCollected = true;
-        collectEvent.Invoke();
+        collectedBy = collectorUID;
+        CollectEvent.Invoke(CollectableType, collectorUID);
     }
 
-    public void release ()
+    public void release (int collectorUID)
     {
         IsCollected = false;
-        releaseEvent.Invoke();
+        collectedBy = -1;
+        ReleaseEvent.Invoke(CollectableType, collectorUID);
     }
 
     public static GameObject FindCollectableGameObjectByType(string typeToFind)

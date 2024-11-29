@@ -139,12 +139,9 @@ public class CannonMechanics : MonoBehaviour
             deltaAngleTotal += deltaAngle;
             Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
             Vector3 newBarrelAngle = barrelRotationWrapperTransform.localEulerAngles + deltaVector;
-            Debug.Log($"Old angle: l: {barrelRotationWrapperTransform.localEulerAngles}, g: {barrelRotationWrapperTransform.eulerAngles}");
             if (IsWithinBoundaries(newBarrelAngle.z)) {
                 barrelRotationWrapperTransform.localEulerAngles = newBarrelAngle;
-                Debug.Log($"New angle: {newBarrelAngle}");
                 
-                // TODO: remove when cannonball rotation logic is implemented
                 GameObject cannonBall = getCannonball();
                 if (cannonBall)
                 { 
@@ -186,6 +183,7 @@ public class CannonMechanics : MonoBehaviour
         return cannonballCollector.GetCollectableIfCollected()?.gameObject;
     }
 
+    public Vector2 ForceDirection;
     /// <summary>
     /// Fires the cannon ball if loaded
     /// </summary>
@@ -204,11 +202,11 @@ public class CannonMechanics : MonoBehaviour
             float angle = GetAngleRelativeToScale(barrelRotationWrapperTransform.localEulerAngles.z);
             
             // Get direction vector
-            Vector2 dirVec = getDiretionVectorFromDegAngle(angle);
-            Debug.Log($"{name} fires in angle: {angle} -> {dirVec}");
+            ForceDirection = getDiretionVectorFromDegAngle(angle);
+            Debug.Log($"{name} fires in angle: {angle} -> {ForceDirection}");
 
             // FIRE!
-            rb.AddForce(FireForce*dirVec, ForceMode2D.Impulse);
+            rb.AddForce(FireForce*ForceDirection, ForceMode2D.Impulse);
         }
         barrelAnim.SetTrigger("fired");
         explosionAnim.SetTrigger("fired");

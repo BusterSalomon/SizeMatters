@@ -12,7 +12,7 @@ public class PursueEnemy : EnemyV2
     private Direction direction = Direction.Right;
     private Rigidbody2D rb;
 
-    private enum Direction
+    public enum Direction
     {
         Right=1,
         Left=-1

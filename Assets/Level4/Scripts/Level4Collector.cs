@@ -53,7 +53,7 @@ public class Level4Collector : MonoBehaviour
 
             collectable.transform.SetParent(transform);
             collectable.transform.position = gripPoint.position;
-            collectable.GetComponent<Collectable>().collect();
+            collectable.GetComponent<Collectable>().collect(-1);
 
             Collider2D collider = collectable.GetComponent<Collider2D>();
             if (collider != null) collider.enabled = false;
@@ -75,7 +75,7 @@ public class Level4Collector : MonoBehaviour
             Rigidbody2D rb = collectableCollectedGO.GetComponent<Rigidbody2D>();
             if (rb != null) rb.isKinematic = false;
             
-            collectableCollectedGO.GetComponent<Collectable>().release();
+            collectableCollectedGO.GetComponent<Collectable>().release(-1);
 
             // Enable collider
             Collider2D collider = collectableCollectedGO.GetComponent<Collider2D>();

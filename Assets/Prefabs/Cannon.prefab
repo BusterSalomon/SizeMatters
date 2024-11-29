@@ -524,6 +524,7 @@ MonoBehaviour:
   CollectEvent:
     m_PersistentCalls:
       m_Calls: []
+  PointCollectableInSameDirectionAsCollector: 0
   cannonballReleaseToCollectTime: 3
 --- !u!114 &2270203660197698741
 MonoBehaviour:
