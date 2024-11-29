@@ -58,8 +58,6 @@ public class CannonMechanics : MonoBehaviour
             Aim(up ? Direction.UP : Direction.DOWN);
         }
 
-        RotateCannonballOnceIfLoaded(cannonballCollector.GetCollectableIfCollected());
-
         // F (fire) (on realese) -> int
         int fireForce = HandleFireForceIO();
         if (fireForce > 0) Fire(fireForce);
@@ -70,21 +68,6 @@ public class CannonMechanics : MonoBehaviour
     {
         UP=1,
         DOWN=-1
-    }
-
-    /// <summary>
-    /// NOT IMPLEMENTED YET. Should rotate the cannonball when loaded.
-    /// </summary>
-    /// <param name="c"></param>
-    private void RotateCannonballOnceIfLoaded (Collectable c)
-    {
-        if (c && !cannonballRotated)
-        {
-            //Vector3 barrelAngles = barrelTransform.eulerAngles;
-            //Debug.Log(barrelAngles);
-            //c.transform.localEulerAngles = new Vector3(barrelAngles.x, barrelAngles.y, AngleToMP180(barrelAngles.z)-90);
-            //cannonballRotated = true;
-        }
     }
 
     public int FireForce = 0;
@@ -150,9 +133,11 @@ public class CannonMechanics : MonoBehaviour
             float deltaAngle = (int)direction * AimTickDistance;
             deltaAngleTotal += deltaAngle;
             Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
-            Vector3 newBarrelAngle = barrelTransform.eulerAngles + deltaVector;
+            Vector3 newBarrelAngle = barrelTransform.localEulerAngles + deltaVector;
+            Debug.Log($"Old angle: l: {barrelTransform.localEulerAngles}, g: {barrelTransform.eulerAngles}");
             if (IsWithinBoundaries(newBarrelAngle.z)) {
                 barrelTransform.localEulerAngles = newBarrelAngle;
+                Debug.Log($"New angle: {newBarrelAngle}");
                 
                 // TODO: remove when cannonball rotation logic is implemented
                 GameObject cannonBall = getCannonball();
@@ -211,26 +196,55 @@ public class CannonMechanics : MonoBehaviour
             Rigidbody2D rb = cannonBall.GetComponent<Rigidbody2D>();
 
             // Get force angle
-            float angleCannon = transform.eulerAngles.z;
-            float angleBarrel = barrelTransform.eulerAngles.z;
-            float angle = barrelTransform.eulerAngles.z;
+            float angle = GetAngleRelativeToScale(barrelTransform.localEulerAngles.z);
             
             // Get direction vector
             Vector2 dirVec = getDiretionVectorFromDegAngle(angle);
+            Debug.Log($"{name} fires in angle: {angle} -> {dirVec}");
 
             // FIRE!
             rb.AddForce(FireForce*dirVec, ForceMode2D.Impulse);
-
-            RotateCannonballOnFire(cannonBall.transform);
-            InitializeState();
         }
         barrelAnim.SetTrigger("fired");
         explosionAnim.SetTrigger("fired");
     }
 
-    private void InitializeState ()
+    /// <summary>
+    /// If the cannon is flipped, the angle should be adjustet
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <returns>The adjustet angle</returns>
+    private float GetAngleRelativeToScale (float angle)
     {
-        cannonballRotated = false;
+        float scaleX = transform.localScale.x;
+        if (Mathf.Sign(scaleX) > 0) return angle;
+        else return 180 - angle;
+    }
+
+
+    private Vector2 getDiretionVectorFromDegAngle (float angleDeg)
+    {
+        float angleRad = Mathf.Deg2Rad * angleDeg;
+        float cosAngle = Mathf.Cos(angleRad);
+        float sinAngle = Mathf.Sin(angleRad);
+        return new Vector2(cosAngle, sinAngle);
+    }
+
+
+    // --- METHODS NOT IMPLEMENTED YET
+    /// <summary>
+    /// NOT IMPLEMENTED YET. Should rotate the cannonball when loaded.
+    /// </summary>
+    /// <param name="c"></param>
+    private void RotateCannonballOnceIfLoaded(Collectable c)
+    {
+        if (c && !cannonballRotated)
+        {
+            //Vector3 barrelAngles = barrelTransform.eulerAngles;
+            //Debug.Log(barrelAngles);
+            //c.transform.localEulerAngles = new Vector3(barrelAngles.x, barrelAngles.y, AngleToMP180(barrelAngles.z)-90);
+            //cannonballRotated = true;
+        }
     }
 
     /// <summary>
@@ -242,11 +256,8 @@ public class CannonMechanics : MonoBehaviour
         // cannonballTransform.localEulerAngles += new Vector3(0, 0, 90-deltaAngleTotal);
     }
 
-    private Vector2 getDiretionVectorFromDegAngle (float angleDeg)
+    private void InitializeState()
     {
-        float angleRad = Mathf.Deg2Rad * angleDeg;
-        float cosAngle = Mathf.Cos(angleRad);
-        float sinAngle = Mathf.Sin(angleRad);
-        return new Vector2(cosAngle, sinAngle);
+        cannonballRotated = false;
     }
 }

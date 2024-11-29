@@ -289,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cannon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1470,7 +1474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRange: 2
-  gripPoint: {fileID: 395058415}
+  GripPoint: {fileID: 0}
   CollectableTypes:
   - Leafblower
   RealeaseEvent:
@@ -2923,15 +2927,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2270203660197698741, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: MaxForce
-      value: 250
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2270203660197698741, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: TimeToReachMaxForce
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: GripPoint
+      value: 
+      objectReference: {fileID: 1855169785}
+    - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: pickupRange
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: CollectableTypes.Array.size
@@ -2952,6 +2960,22 @@ PrefabInstance:
     - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
       propertyPath: m_Name
       value: Cannon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484374229730761168, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99691737
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484374229730761168, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.078459024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484374229730761168, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3808,7 +3832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRange: 5
-  gripPoint: {fileID: 857423901}
+  GripPoint: {fileID: 0}
   CollectableTypes: []
   RealeaseEvent:
     m_PersistentCalls:
@@ -3986,6 +4010,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1905682831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1855169785 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 850670508486991233, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+  m_PrefabInstance: {fileID: 995684765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1867629600
 GameObject:
   m_ObjectHideFlags: 0
@@ -4265,7 +4294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2296259375741390674, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7114990172926582916, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_Constraints
@@ -4702,6 +4731,99 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &2036414013
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -15.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329600213171809816, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2270203660197698741, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: MaxForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 2270203660197698741, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: TimeToReachMaxForce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: CollectableTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349981113620363533, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: CollectableTypes.Array.data[0]
+      value: Tim
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_Name
+      value: Cannon (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062102122733877135, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484374229730761168, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99691737
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484374229730761168, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.078459024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484374229730761168, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b9ea2f1c5863c04b91c98e539b1fe29, type: 3}
 --- !u!1 &2053019132
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,7 +5287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9221312449323529025, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: jumpForce
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9221312449323529025, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: moveSpeed
@@ -5392,3 +5514,4 @@ SceneRoots:
   - {fileID: 161091166}
   - {fileID: 1710922582}
   - {fileID: 103825716}
+  - {fileID: 2036414013}
