@@ -16,7 +16,7 @@ public class Collector : MonoBehaviour
     /// <summary>
     /// The position to hold the collectable
     /// </summary>
-    public Transform gripPoint;
+    public Transform GripPoint;
     
     /// <summary>
     /// Collectables that the Collector is able to collect. If empty, is will collect any collectable.
@@ -77,19 +77,19 @@ public class Collector : MonoBehaviour
         if (collider != null) collider.enabled = false;
 
         // Set parent, position and scale
-        collectable.transform.SetParent(gripPoint);
+        collectable.transform.SetParent(GripPoint);
         Vector3 collectableLocalScale = collectable.transform.localScale;
         collectable.transform.localScale = new Vector3((int)CollectableCollected.direction * Mathf.Abs(collectableLocalScale.x), collectableLocalScale.y, collectableLocalScale.z); // Make sure it points in the same position as the collector
 
         // If HandlePoint of Collectable is set, set collectable to that, otherwise use the default
         if (CollectableCollected.HandlePoint != null)
         {
-            Vector3 GripHandleOffset = gripPoint.position - CollectableCollected.HandlePoint.position;
+            Vector3 GripHandleOffset = GripPoint.position - CollectableCollected.HandlePoint.position;
             collectable.transform.position += GripHandleOffset;
         }
         else
         {
-            collectable.transform.position = gripPoint.position;
+            collectable.transform.position = GripPoint.position;
         }
 
 
@@ -172,11 +172,13 @@ public class Collector : MonoBehaviour
     {
         foreach (GameObject collectable in collectableGameObjects)
         {
-            // Calculates distance to HandlePoint if defined - otherwise to its own transform
+            // Get target and origin transform. Looks for grip point and handle point first.
             Transform collectableHandlePoint = collectable.GetComponent<Collectable>().HandlePoint;
-            Transform transformToConsider = collectableHandlePoint ? collectableHandlePoint : collectable.transform;
+            Transform targetTransformToConsider = collectableHandlePoint ? collectableHandlePoint : collectable.transform;
+            Transform originTransformToConsider = GripPoint ? GripPoint : transform;
+
             
-            float distance = Vector3.Distance(transform.position, transformToConsider.position);
+            float distance = Vector3.Distance(originTransformToConsider.position, targetTransformToConsider.position);
             if (distance < pickupRange)
             {
                 return collectable;

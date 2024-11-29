@@ -515,8 +515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b4de9efe7b658449e683078810bdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRange: 10
-  gripPoint: {fileID: 850670508486991233}
+  pickupRange: 2
+  GripPoint: {fileID: 850670508486991233}
   CollectableTypes: []
   RealeaseEvent:
     m_PersistentCalls:
