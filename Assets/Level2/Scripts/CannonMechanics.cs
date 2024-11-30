@@ -25,6 +25,7 @@ public class CannonMechanics : MonoBehaviour
     public UnityEvent OnFireInitiated;
     public UnityEvent<int, int> OnFireForceUpdated;
     public UnityEvent OnFire;
+    public UnityEvent OnCannonballLand;
     private int maxForce;
 
     [Header("Aiming")]
@@ -180,7 +181,7 @@ public class CannonMechanics : MonoBehaviour
 
     private GameObject getCannonball()
     {
-        return cannonballCollector.GetCollectableIfCollected()?.gameObject;
+        return cannonballCollector.GetCollectableIfCollected()? cannonballCollector.GetCollectableIfCollected().gameObject : null;
     }
 
     public Vector2 ForceDirection;
@@ -190,13 +191,15 @@ public class CannonMechanics : MonoBehaviour
     public void Fire (int FireForce)
     {
         Debug.Log($"Fire called! {FireForce}");
-        GameObject cannonBall = getCannonball();
-        if (cannonBall != null)
+        GameObject cannonballGO = getCannonball();
+        if (cannonballGO != null)
         {
+            Cannonball cannonball = cannonballGO.GetComponent<Cannonball>();
+
             cannonballCollector.Release();
 
             // Get rigidbody to apply force to
-            Rigidbody2D rb = cannonBall.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = cannonballGO.GetComponent<Rigidbody2D>();
 
             // Get force angle
             float angle = GetAngleRelativeToScale(barrelRotationWrapperTransform.localEulerAngles.z);
@@ -207,9 +210,22 @@ public class CannonMechanics : MonoBehaviour
 
             // FIRE!
             rb.AddForce(FireForce*ForceDirection, ForceMode2D.Impulse);
+            cannonball.WasFired(this);
         }
         barrelAnim.SetTrigger("fired");
         explosionAnim.SetTrigger("fired");
+    }
+
+    public void HandleCannonballDidLand(Cannonball cannonball)
+    {
+        OnCannonballLand.Invoke();
+    }
+
+    public void HandleOnCollect(string type)
+    {
+        GameObject collectableGO = Collectable.FindCollectableGameObjectByType(type);
+        Cannonball cannonball = collectableGO.GetComponent<Cannonball>();
+        cannonball.HandleOnLoad();
     }
 
     /// <summary>
