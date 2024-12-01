@@ -138,6 +138,7 @@ public class CannonMechanics : MonoBehaviour
         {
             float deltaAngle = (int)direction * AimTickDistance;
             deltaAngleTotal += deltaAngle;
+            Debug.Log($"a: {deltaAngleTotal}");
             Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
             Vector3 newBarrelAngle = barrelRotationWrapperTransform.localEulerAngles + deltaVector;
             if (IsWithinBoundaries(newBarrelAngle.z)) {

@@ -1,49 +1,175 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class CustomCameraFollow : MonoBehaviour
 {
-   
-    public float FollowSpeed = 2f;
-    public float yOffset = 1f;
-    public float xOffset = 0f;
-    public float defaultXOffset = -5f;
-    public float CameraSizeDeltaOnCharacterCannonLoad = 10f;
-    public float CameraSizeDeltaOnBugCannonLoad = 10f;
-    public float xOffsetOnCharacterCannonLoadRelativeToScreenWidth = 0f;
-    public float yOffsetOnCharacterCannonLoadRelativeToScreenHeight = 0f;
     public Transform target;
-    private Camera cam;
+    public float FollowSpeed = 2f;
+
+    [Header("Cannon Load")]
+    public float xOffsetFactorCannonLoad;
+    public float yOffsetFactorCannonLoad;
+    public float CameraSizeCannonLoad;
+    
+    [Header("Movement")]
+    public float xOffsetFactorMovement;
+    public float yOffsetFactorMovement;
+    public float CameraSizeMovement;
+
+    [Header("Flying")]
+    public float xOffsetFactorFlying;
+    public float yOffsetFactorFlying;
+    public float CameraSizeFlying;
+
+    [Header("Landing")]
+    private float xOffsetFactorLanding;
+    private float yOffsetFactorLanding;
+    private float cameraSizeLanding;
+
+    [Header("Cameras")]
+    public Camera cam;
+    public Camera bugCam;
+
+    // Private states
+    private float yOffset;
+    private float xOffset;
     private bool cameraShiftOnCharacterDirectionChangeDisabled = false;
-    private float oldCameraSize;
-    private bool cameraAdjustet = false;
-    private bool freezeTarget = false;
-    private Transform frozenTarget;
+    private int cannonDirection;
+    private bool bugIsLoaded;
 
 
     private void Start()
     {
-        cam = GetComponent<Camera>();
-        Vector3 newPos = new Vector3(target.position.x + defaultXOffset + xOffset, target.position.y + yOffset, -10f);
-        transform.position = newPos;
+        bugIsLoaded = false;
+        SetActiveCamera(cam);
+        xOffsetFactorLanding = xOffsetFactorMovement;
+        yOffsetFactorLanding = yOffsetFactorMovement;
+        cameraSizeLanding = CameraSizeMovement;
+       
+        cam.orthographicSize = CameraSizeMovement;
+        xOffset = 0f;
+        yOffset = GetScreenHeight() * yOffsetFactorMovement;
+        PursueCameraTarget();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // If the camera is frozen, follow the frozenTarget instead of the character
-        Transform currentTarget = freezeTarget ? frozenTarget : target;
+        if (bugIsLoaded)
+        {
+            SetActiveCamera(bugCam);
+        } else
+        {
+            SetActiveCamera(cam);
+            PursueCameraTarget();
+        }
+    }
 
-       
-        Vector3 newPos = new Vector3(currentTarget.position.x + defaultXOffset + xOffset, currentTarget.position.y + yOffset, -10f);
+    public void SetActiveCamera(Camera activeCamera)
+    {
+        // Activate the selected camera and deactivate others
+        cam.enabled = activeCamera == cam;
+        bugCam.enabled = activeCamera == bugCam;
+    }
+
+    private void PursueCameraTarget()
+    {
+        Vector3 newPos = new Vector3(target.position.x + xOffset, target.position.y + yOffset, -10f);
         transform.position = Vector3.Lerp(transform.position, newPos, FollowSpeed * Time.deltaTime);
-        
+    }
+
+    private float GetScreenHeight()
+    {
+        return 2f * cam.orthographicSize;
+    }
+
+    private float GetScreenWidth()
+    {
+        return GetScreenHeight() * cam.aspect;
     }
 
 
-    private float oldXOffset;
+    public void HandleOnCharacterChangeDirection(int direction)
+    {
+        if (!cameraShiftOnCharacterDirectionChangeDisabled)
+        {
+            cam.orthographicSize = CameraSizeMovement;
+            xOffset = direction * GetScreenWidth() * xOffsetFactorMovement;
+            yOffset = GetScreenHeight() * yOffsetFactorMovement;
+        }
+    } 
+
+    public void HandleOnCannonLoadCharacter(string _, int cannonCollectorID)
+    {
+        Collector cannonCollector = Collector.GetCollectorByUID(cannonCollectorID);
+        cannonDirection = (int)Mathf.Sign(cannonCollector.transform.localScale.x);
+
+        cam.orthographicSize = CameraSizeCannonLoad;
+        xOffset = cannonDirection * GetScreenWidth() * xOffsetFactorCannonLoad;
+        yOffset = GetScreenHeight() * yOffsetFactorCannonLoad;
+
+        // Disables movement for
+        cameraShiftOnCharacterDirectionChangeDisabled = true;
+    }
+    public void HandleOnCannonFireCharacter (string _, int cannonCollectorID)
+    {
+        cameraShiftOnCharacterDirectionChangeDisabled = false;
+        cam.orthographicSize = CameraSizeFlying;
+        xOffset = cannonDirection * GetScreenWidth() * xOffsetFactorFlying;
+        yOffset = GetScreenHeight() * yOffsetFactorFlying;
+    }
+
+    public void HandleOnCannonballLand ()
+    {
+        cam.orthographicSize = cameraSizeLanding;
+        xOffset = cannonDirection * GetScreenWidth() * xOffsetFactorLanding;
+        yOffset = GetScreenHeight() * yOffsetFactorLanding;
+    }
+
+    public void HandleOnCannonLoadBug ()
+    {
+        Debug.Log("Handle this!");
+        bugIsLoaded = true;
+    }
+
+
+    // ---- Methods for freezing the camera
+    //public void FreezeCamera()
+    //{
+    //    if (!freezeTarget)
+    //    {
+    //        // Create a new GameObject to hold the frozen position
+    //        GameObject frozenObject = new GameObject("FrozenTarget");
+    //        frozenObject.transform.position = target.transform.position;
+
+    //        // Assign the frozen target
+    //        frozenTarget = frozenObject.transform;
+    //        freezeTarget = true;
+    //    }
+    //}
+
+    //public void ThawCamera()
+    //{
+    //    if (freezeTarget)
+    //    {
+    //        // Destroy the frozen target GameObject
+    //        if (frozenTarget != null)
+    //        {
+    //            Destroy(frozenTarget.gameObject);
+    //            frozenTarget = null;
+    //        }
+    //        freezeTarget = false;
+    //    }
+    //}
+
+
+    /*
+     private float oldXOffset;
     public void SetXOffset(float offset)
     {
         oldXOffset = xOffset;
@@ -109,87 +235,9 @@ public class CustomCameraFollow : MonoBehaviour
             cameraAdjustet = true;
         }   
     }
-
-    public void HandleOnCharacterChangeDirection(int direction)
-    {
-        if (!cameraShiftOnCharacterDirectionChangeDisabled)
-        {
-            float screenWidth = GetScreenWidth();
-            xOffset = direction * screenWidth / 12;
-        }
-    } 
-
-    private float GetScreenHeight ()
-    {
-        return 2f * cam.orthographicSize;
-    }
-
-    private float GetScreenWidth ()
-    {
-        return GetScreenHeight() * cam.aspect;
-    }
-
-    /// <summary>
-    /// Set camera settings for when the character is collected
-    /// </summary>
-    /// <param name="_"></param>
-    /// <param name="cannonCollectorID"></param>
-    public void HandleOnCannonLoadCharacter(string _, int cannonCollectorID)
-    {
-        ResetAllCameraSettings();
-        Collector cannonCollector = Collector.GetCollectorByUID(cannonCollectorID);
-        float dir = Mathf.Sign(cannonCollector.transform.localScale.x);
-        
-        SetXOffset(dir * GetScreenWidth() * xOffsetOnCharacterCannonLoadRelativeToScreenWidth);
-        SetYOffset(GetScreenWidth() * yOffsetOnCharacterCannonLoadRelativeToScreenHeight);
-        IncrementCameraSize(CameraSizeDeltaOnCharacterCannonLoad);
-        
-        // Disables movement for
-        cameraShiftOnCharacterDirectionChangeDisabled = true;
-    }
-
-
-    public void HandleOnCannonFireCharacter (string _, int cannonCollectorID)
-    {
-        Collector cannonCollector = Collector.GetCollectorByUID(cannonCollectorID);
-        CannonMechanics cM = cannonCollector.GetComponent<CannonMechanics>();
-
-        // reset camera settings
-        ResetAllCameraSettings();
-        IncrementCameraSize(5);
-        cameraShiftOnCharacterDirectionChangeDisabled = false;
-        int dir = (int)Mathf.Sign(cM.ForceDirection.x);
-        HandleOnCharacterChangeDirection(dir);
-    }
-
-
-    // ---- Methods for freezing the camera
-    public void FreezeCamera()
-    {
-        if (!freezeTarget)
-        {
-            // Create a new GameObject to hold the frozen position
-            GameObject frozenObject = new GameObject("FrozenTarget");
-            frozenObject.transform.position = target.transform.position;
-
-            // Assign the frozen target
-            frozenTarget = frozenObject.transform;
-            freezeTarget = true;
-        }
-    }
-
-    public void ThawCamera()
-    {
-        if (freezeTarget)
-        {
-            // Destroy the frozen target GameObject
-            if (frozenTarget != null)
-            {
-                Destroy(frozenTarget.gameObject);
-                frozenTarget = null;
-            }
-            freezeTarget = false;
-        }
-    }
+     
+     
+     
+     */
 
 }

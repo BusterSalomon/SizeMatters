@@ -7,6 +7,7 @@ public class Cannonball : MonoBehaviour
 {
     public UnityEvent IWasFired;
     public UnityEvent IWasLoaded;
+    public UnityEvent ILanded;
     private CannonMechanics cannon;
     private bool _WasFired = false;
 
@@ -15,6 +16,7 @@ public class Cannonball : MonoBehaviour
         if (_WasFired && collision.gameObject.CompareTag("Ground"))
         {
             cannon.HandleCannonballDidLand(this);
+            ILanded.Invoke();
             _WasFired = false;
             Debug.Log("Did collide!");
         }
@@ -23,7 +25,6 @@ public class Cannonball : MonoBehaviour
 
     public void HandleOnLoad()
     {
-        if (_WasFired)
         IWasLoaded.Invoke();
     }
 

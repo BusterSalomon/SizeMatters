@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class EnemyV2 : MonoBehaviour
 {
@@ -11,13 +12,44 @@ public class EnemyV2 : MonoBehaviour
     public float Damage;
     public float MovementSpeed;
     protected bool enemyEnabled = true;
-    protected bool isGrounded = false;
+    [SerializeField] protected bool isGrounded = false;
+    protected BoxCollider2D collider;
+    public LayerMask groundLayer;
+
+    protected float rayCastLen;
+    public float rayCastDelta = 0.2f;
 
     protected virtual void Start()
     {
         CurrentHealth = MaxHealth;
         if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);
-        Debug.Log("Base start called");
+        InitializeGroundCheck();   
+    }
+
+    protected virtual void Update()
+    {
+        isGrounded = DoGroundCheck();
+    }
+
+    protected void InitializeGroundCheck()
+    {
+        collider = GetComponent<BoxCollider2D>();
+        rayCastLen = collider.size.y / 2 + rayCastDelta;
+        Debug.Log($"raylen: {rayCastLen}");
+    }
+    protected bool DoGroundCheck ()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayCastLen, groundLayer);
+        if (hit)
+        {
+           return true;
+        }
+        return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position - new Vector3(0, rayCastLen, 0));
     }
 
     public void TakeHit(float damage)
@@ -58,19 +90,19 @@ public class EnemyV2 : MonoBehaviour
         enemyEnabled = true;
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
+    //protected virtual void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.collider.CompareTag("Ground"))
+    //    {
+    //        isGrounded = true;
+    //    }
+    //}
 
-    protected virtual void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
+    //protected virtual void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.collider.CompareTag("Ground"))
+    //    {
+    //        isGrounded = false;
+    //    }
+    //}
 }

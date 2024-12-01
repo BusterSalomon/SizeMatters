@@ -84,12 +84,12 @@ public class Collector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject collectable = GetCollectableIfHovering();
-        
+        GameObject collectableGO = GetCollectableIfHovering();
+        Collectable collectable = collectableGO ? collectableGO.GetComponent<Collectable>() : null;
         // Collector DID collect an item
-        if (collectable != null && CollectableCollected == null && CollectCondition())
+        if (collectableGO != null && !collectable.IsCollected && CollectableCollected == null && CollectCondition())
         {
-            Collect(collectable);
+            Collect(collectableGO);
         }
 
         // Collector did NOT collect an item
