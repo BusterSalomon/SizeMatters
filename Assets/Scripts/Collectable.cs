@@ -8,7 +8,7 @@ public class Collectable : MonoBehaviour
     // Start is called before the first frame update
     public string CollectableType;
     public int RotationOnCollection = 0;
-    protected bool IsCollected = false;
+    public bool IsCollected = false;
     public UnityEvent<string, int> CollectEvent;
     public UnityEvent<string, int> ReleaseEvent;
     public Transform HandlePoint;
