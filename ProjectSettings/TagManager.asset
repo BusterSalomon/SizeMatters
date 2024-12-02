@@ -56,8 +56,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
+  - name: Background color
+    uniqueID: 816373587
+    locked: 0
+  - name: Background2
+    uniqueID: 983856875
+    locked: 0
+  - name: Transparency filter 2
+    uniqueID: 2339027693
+    locked: 0
+  - name: Background1
     uniqueID: 3572649973
+    locked: 0
+  - name: Transparency filter 1
+    uniqueID: 885025165
+    locked: 0
+  - name: Blocker
+    uniqueID: 1677809987
     locked: 0
   - name: Default
     uniqueID: 0
