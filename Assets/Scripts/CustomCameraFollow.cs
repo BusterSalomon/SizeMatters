@@ -106,8 +106,7 @@ public class CustomCameraFollow : MonoBehaviour
 
     public void HandleOnCannonLoadCharacter(string _, int cannonCollectorID)
     {
-        Collector cannonCollector = Collector.GetCollectorByUID(cannonCollectorID);
-        cannonDirection = (int)Mathf.Sign(cannonCollector.transform.localScale.x);
+        cannonDirection = GetCannonDirection(cannonCollectorID);
 
         cam.orthographicSize = CameraSizeCannonLoad;
         xOffset = cannonDirection * GetScreenWidth() * xOffsetFactorCannonLoad;
@@ -116,6 +115,13 @@ public class CustomCameraFollow : MonoBehaviour
         // Disables movement for
         cameraShiftOnCharacterDirectionChangeDisabled = true;
     }
+
+    private int GetCannonDirection (int collectorID)
+    {
+        Collector cannonCollector = Collector.GetCollectorByUID(collectorID);
+        return (int)Mathf.Sign(cannonCollector.transform.localScale.x);
+    }
+
     public void HandleOnCannonFireCharacter (string _, int cannonCollectorID)
     {
         cameraShiftOnCharacterDirectionChangeDisabled = false;
@@ -129,11 +135,12 @@ public class CustomCameraFollow : MonoBehaviour
         cam.orthographicSize = cameraSizeLanding;
         xOffset = cannonDirection * GetScreenWidth() * xOffsetFactorLanding;
         yOffset = GetScreenHeight() * yOffsetFactorLanding;
+        bugIsLoaded = false;
     }
 
-    public void HandleOnCannonLoadBug ()
+    public void HandleOnCannonLoadBug (string _, int cannonCollectorID)
     {
-        Debug.Log("Handle this!");
+        cannonDirection = GetCannonDirection(cannonCollectorID);
         bugIsLoaded = true;
     }
 
