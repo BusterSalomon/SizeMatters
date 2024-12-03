@@ -45,7 +45,7 @@ public class Movement : Walkable
             OnChangeDirection.Invoke(dir);
         }
 
-        if (IsGrounded) rb.velocity = new Vector2(dir * MovementSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(dir * MovementSpeed, rb.velocity.y);
     }
 
     void Jump()
