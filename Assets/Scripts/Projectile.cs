@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy")){
             Debug.Log("Hited an enemy");
-            collision.GetComponent<EnemyV2>().TakeHit(1);
+            collision.GetComponent<Enemy>().TakeHit(1);
         }
         hit = true;
         boxCollider.enabled = false;
