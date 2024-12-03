@@ -1,88 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Movement : MonoBehaviour
+public class Movement : Walkable
 {
-    private float horizontalSpeed = 10;
-    private float verticalSpeed = 15;
-    private Rigidbody2D body;
-    private bool grounded = false;
-    private Transform currentPlatform; // Speichere die aktuelle Plattform, auf der der Charakter steht
-    private Vector3 platformLastPosition; // Speichere die letzte Position der Plattform
+    [Header("Implementation")]
+    public float jumpForce = 15f;
+    public UnityEvent DidJump;
+    public UnityEvent<int> OnChangeDirection;
+    private Animator anim;
+    private Rigidbody2D rb;
 
-    private float horizontalInput;
-    private Vector3 originalScale;
-
-    void Awake()
+    void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        originalScale = transform.localScale; // Speichere die Originalskalierung des Charakters
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
-    private void Update()
+    protected override void MovementUpdate()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        Move();
+        Jump();
+    }
 
-        // Flip player when moving left-right, aber behalte die Originalskalierung
-        if (horizontalInput > 0.01f)
-            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
-        else if (horizontalInput < -0.01f)
-            transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
 
-        // Get jump input
-        bool jumpKeyPressed = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
-
-        // Set character speed on input
-        body.velocity = new Vector2(horizontalInput * horizontalSpeed, body.velocity.y);
-
-        // Jump logic
-        if (jumpKeyPressed && grounded)
+    void Move()
+    {
+        int dir = 0;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            body.velocity = new Vector2(body.velocity.x, verticalSpeed);
-            grounded = false;
+            dir = -1;
+        }
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            dir = 1;
         }
 
-        // Wenn der Charakter auf einer Plattform steht und der Spieler keine Taste drückt
-        if (currentPlatform != null && horizontalInput == 0)
+        if (dir != 0)
         {
-            Vector3 platformMovement = currentPlatform.position - platformLastPosition;
-            transform.position += platformMovement; // Bewege den Charakter relativ zur Plattform
+            transform.localScale = new Vector3(dir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            OnChangeDirection.Invoke(dir);
         }
 
-        // Aktualisiere die letzte Position der Plattform
-        if (currentPlatform != null)
+        if (IsGrounded) rb.velocity = new Vector2(dir * MovementSpeed, rb.velocity.y);
+    }
+
+    void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && IsGrounded)
         {
-            platformLastPosition = currentPlatform.position;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            DidJump.Invoke();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            grounded = true;
-        }
-
-        // Wenn der Charakter auf einer Plattform landet
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            currentPlatform = collision.transform; // Speichere die Plattform
-            platformLastPosition = currentPlatform.position; // Speichere die letzte Position der Plattform
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        // Wenn der Charakter die Plattform verlässt
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            currentPlatform = null; // Entferne die Plattformreferenz
-        }
-    }
-
-    public bool canAttack()
-    {
-        return true; // Beispiel: immer angreifen können
-    }
 }

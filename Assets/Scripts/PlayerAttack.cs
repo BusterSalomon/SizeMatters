@@ -11,13 +11,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] projectiles;
     private Animator anim;
-    private Movement playerMovement; 
+    private MovementDEPRECATED playerMovement; 
     private float cooldownTimer = Mathf.Infinity;
 
     private void Awake(){
 
         anim = GetComponent<Animator>();
-        playerMovement = GetComponent<Movement>();
+        playerMovement = GetComponent<MovementDEPRECATED>();
 
         maxAmmo = 30;
         currentAmmo = 10;
