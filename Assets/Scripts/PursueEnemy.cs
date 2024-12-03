@@ -25,17 +25,13 @@ public class PursueEnemy : EnemyV2
         base.Start();
         targets = GetTargetList();
         rb = GetComponent<Rigidbody2D>();
-        Debug.Log("Extended start called");
     }
 
-    private void FixedUpdate()
+    protected override void MovementFixedUpdate()
     {
-        if (enemyEnabled)
-        {
-            Target targetToPursue = GetTargetToFollow();
-            //CorrectDirection(targetToPursue.Transform);
-            PursueTargetX(targetToPursue.Transform);
-        }
+        //Debug.Log("MovementFixedUpdate");
+        Target targetToPursue = GetTargetToFollow();
+        PursueTargetX(targetToPursue.Transform);
     }
     
     
@@ -54,7 +50,7 @@ public class PursueEnemy : EnemyV2
         }
 
         //Make sure that the enemy doesn't follow vertically
-        if (isGrounded) rb.velocity = new Vector2((int)newDirection * MovementSpeed, 0);
+        if (IsGrounded) rb.velocity = new Vector2((int)newDirection * MovementSpeed, 0);
               
     }
 
@@ -92,14 +88,6 @@ public class PursueEnemy : EnemyV2
         }
 
         return targets;
-    }
-
-    protected void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Character"))
-        {
-            collision.gameObject.GetComponent<Health>().TakeDamage(Damage);
-        }
     }
 
 }
