@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PursueEnemy : EnemyV2
+public class PursueEnemy : Enemy
 {
     // ---- Public properties
     public List<string> TargetTags = new List<string> { "Character" };

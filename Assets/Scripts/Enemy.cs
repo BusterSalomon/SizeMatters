@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngineInternal;
 
-public class EnemyV2 : Walkable
+public class Enemy : Walkable
 {
     // Healthbar object
     public EnemyHealthbar Healthbar;
