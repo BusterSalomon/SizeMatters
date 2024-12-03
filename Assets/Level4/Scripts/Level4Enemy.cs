@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level4Enemy : MonoBehaviour
+public class Level4Enemy : EnemyV2
 {
     [SerializeField] private float damage;
     [SerializeField] private float startingHealth;
