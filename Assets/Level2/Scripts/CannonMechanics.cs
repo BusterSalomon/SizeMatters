@@ -17,6 +17,7 @@ public class CannonMechanics : MonoBehaviour
     private Animator barrelAnim;
     private Animator explosionAnim;
     private bool cannonballRotated = false;
+    private AudioManager audioManager;
 
     [Header("Fire")]
     public int MaxForce = 150;
@@ -38,6 +39,8 @@ public class CannonMechanics : MonoBehaviour
 
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         lastAimTickTime = Time.time - AimTickTimeInterval; // Allow to aim at the beginning
 
         // Retrive components
@@ -138,7 +141,6 @@ public class CannonMechanics : MonoBehaviour
         {
             float deltaAngle = (int)direction * AimTickDistance;
             deltaAngleTotal += deltaAngle;
-            Debug.Log($"a: {deltaAngleTotal}");
             Vector3 deltaVector = new Vector3(0, 0, deltaAngle);
             Vector3 newBarrelAngle = barrelRotationWrapperTransform.localEulerAngles + deltaVector;
             if (IsWithinBoundaries(newBarrelAngle.z)) {
@@ -149,6 +151,8 @@ public class CannonMechanics : MonoBehaviour
                 { 
                    cannonBall.transform.localEulerAngles -= deltaVector;
                 }
+
+                //audioManager.Play("cannon_tic");
             } 
 
             // Set time
@@ -212,6 +216,7 @@ public class CannonMechanics : MonoBehaviour
             // FIRE!
             rb.AddForce(FireForce*ForceDirection, ForceMode2D.Impulse);
             cannonball.WasFired(this);
+            audioManager.Play("cannon_shot");
         }
         barrelAnim.SetTrigger("fired");
         explosionAnim.SetTrigger("fired");

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,13 @@ public class Walkable : MonoBehaviour
     public float MovementSpeed;
     public bool MovementEnabled = true;
 
+    protected Rigidbody2D rb;
+    private float currentVelocity = 0;
+
+    protected virtual void Start ()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
     protected void DoGroundCheck()
     {
         RaycastHit2D hit = Physics2D.BoxCast(transform.position + new Vector3(XShift, 0, 0), BoxSize, 0, Vector2.down, CastDistance, groundLayer);
@@ -38,6 +46,18 @@ public class Walkable : MonoBehaviour
     {
         DoGroundCheck();
         if (MovementEnabled) MovementUpdate();
+
+        // Check for velocity changes
+        float vel = rb.velocity.x;
+        if (vel != 0 && currentVelocity == 0) {
+            currentVelocity = vel;
+            DidStartMoving();
+        }
+        else if (vel == 0 && currentVelocity != 0)
+        {
+            currentVelocity = vel;
+            DidStopMoving();
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -48,6 +68,10 @@ public class Walkable : MonoBehaviour
     protected virtual void MovementUpdate(){}
 
     protected virtual void MovementFixedUpdate(){}
+
+    protected virtual void DidStartMoving(){}
+
+    protected virtual void DidStopMoving() { }
 
     protected void OnDrawGizmos()
     {

@@ -10,7 +10,6 @@ public class PursueEnemy : Enemy
     // ---- Private properties
     private List<Target> targets = new List<Target>();
     private Direction direction = Direction.Right;
-    private Rigidbody2D rb;
 
     public enum Direction
     {
@@ -33,8 +32,17 @@ public class PursueEnemy : Enemy
         Target targetToPursue = GetTargetToFollow();
         PursueTargetX(targetToPursue.Transform);
     }
-    
-    
+
+    protected override void DidStartMoving()
+    {
+        FindObjectOfType<AudioManager>().Play("bug");
+    }
+
+    protected override void DidStopMoving()
+    {
+        FindObjectOfType<AudioManager>().Stop("bug");
+    }
+
     /// <summary>
     /// Default: Move towards the targets that it is closest to in the X direction
     /// </summary>

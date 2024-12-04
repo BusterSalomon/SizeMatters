@@ -5,27 +5,54 @@ using UnityEngine;
 public class LeafblowerCollectable : Collectable
 {
     public float initialForce = 100f;
+    public float AudioFadeTime = 1f;
     private Transform blowNozzle;
     private bool blow = false;
     private Animator anim;
+    private AudioManager audioManager;
 
     private void Start()
     {
         blowNozzle = transform.Find("BlowNozzle");
         anim = GetComponent<Animator>();
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
     private void Update()
     {
-        if (IsCollected && Input.GetKey(KeyCode.N))
+        if (IsCollected && KeyWasPressed(KeyCode.N))
         {
             blow = true;
             anim.SetBool("IsBlowing", true);
-        } else
+            StartCoroutine(audioManager.FadeIn("leafblower_middle", AudioFadeTime));
+        } 
+        if (IsCollected && KeyWasReleased(KeyCode.N))
         {
             blow = false;
             anim.SetBool("IsBlowing", false);
+            StartCoroutine(audioManager.FadeOut("leafblower_middle", AudioFadeTime));
         }
+    }
+
+    private bool buttonPressed = false;
+    private bool KeyWasPressed(KeyCode keycode)
+    {
+        if (!buttonPressed && Input.GetKey(keycode)) {
+            buttonPressed = true;
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    private bool KeyWasReleased(KeyCode keycode)
+    {
+        if (buttonPressed && !Input.GetKey(keycode))
+        {
+            buttonPressed = false;
+            return true;
+        }
+        else return false;
     }
 
     public void HandleObjectInBlowZone(Collider2D other)
