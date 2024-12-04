@@ -11,8 +11,9 @@ public class Enemy : Walkable
     public float MaxHealth;
     public float Damage;
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         CurrentHealth = MaxHealth;
         if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);  
     }

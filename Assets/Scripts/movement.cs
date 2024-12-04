@@ -12,9 +12,8 @@ public class Movement : Walkable
     public UnityEvent DidJump;
     public UnityEvent<int> OnChangeDirection;
     private Animator anim;
-    private Rigidbody2D rb;
 
-    void Start()
+    protected override void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
