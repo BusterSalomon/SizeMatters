@@ -63,4 +63,30 @@ public class Collectable : MonoBehaviour
         // Return null if no matching Collectable is found
         return null;
     }
+
+    protected bool buttonPressed = false;
+    protected bool KeyWasPressed(KeyCode keycode)
+    {
+        if (!buttonPressed && Input.GetKey(keycode))
+        {
+            buttonPressed = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    protected bool KeyWasReleased(KeyCode keycode)
+    {
+        if (buttonPressed && !Input.GetKey(keycode))
+        {
+            buttonPressed = false;
+            return true;
+        }
+        else return false;
+    }
+
+
 }
