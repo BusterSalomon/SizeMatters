@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GunCollectable : Collectable
+{
+    private Animator anim;
+    private AudioManager audioManager;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
+    }
+    private void Update()
+    {
+        if (IsCollected && KeyWasPressed(KeyCode.N))
+        {
+            // Do shooting logic
+            // ...
+
+
+            // Do animation
+            anim.SetTrigger("fire");
+            // Do audio
+            // audioManager.Play(...)
+        } 
+        if (IsCollected && KeyWasReleased(KeyCode.N))
+        {
+            // Optional on release logic
+        }
+    }
+}

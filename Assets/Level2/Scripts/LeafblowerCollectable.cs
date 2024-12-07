@@ -23,36 +23,14 @@ public class LeafblowerCollectable : Collectable
         {
             blow = true;
             anim.SetBool("IsBlowing", true);
-            StartCoroutine(audioManager.FadeIn("leafblower_middle", AudioFadeTime));
+            audioManager.FadeIn("leafblower_middle", AudioFadeTime);
         } 
         if (IsCollected && KeyWasReleased(KeyCode.N))
         {
             blow = false;
             anim.SetBool("IsBlowing", false);
-            StartCoroutine(audioManager.FadeOut("leafblower_middle", AudioFadeTime));
+            audioManager.FadeOut("leafblower_middle", AudioFadeTime);
         }
-    }
-
-    private bool buttonPressed = false;
-    private bool KeyWasPressed(KeyCode keycode)
-    {
-        if (!buttonPressed && Input.GetKey(keycode)) {
-            buttonPressed = true;
-            return true;
-        } else
-        {
-            return false;
-        }
-    }
-
-    private bool KeyWasReleased(KeyCode keycode)
-    {
-        if (buttonPressed && !Input.GetKey(keycode))
-        {
-            buttonPressed = false;
-            return true;
-        }
-        else return false;
     }
 
     public void HandleObjectInBlowZone(Collider2D other)
