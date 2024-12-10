@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +23,7 @@ public class Walkable : MonoBehaviour
 
     protected Rigidbody2D rb;
     private float currentVelocity = 0;
+    protected int latestPlatformID;
 
     protected virtual void Start ()
     {
@@ -36,7 +38,8 @@ public class Walkable : MonoBehaviour
             {
                 DidLand.Invoke();
                 IsGrounded = true;
-            }   
+            }
+            latestPlatformID = hit.collider.gameObject.GetInstanceID();
         }
         else if (IsGrounded) IsGrounded = false;
     }
@@ -76,6 +79,11 @@ public class Walkable : MonoBehaviour
     protected void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * CastDistance + new Vector3(XShift, 0, 0), BoxSize);
+    }
+
+    public int GetLatestPlatformID ()
+    {
+        return latestPlatformID;
     }
 
     public void DisableMovement ()
