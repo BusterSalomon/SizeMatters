@@ -59,6 +59,11 @@ public class PursueEnemy : Enemy
         FindObjectOfType<AudioManager>().Stop("bug");
     }
 
+    protected override void OnDeadAnimationStarted()
+    {
+        FindObjectOfType<AudioManager>().Stop("bug");
+    }
+
     /// <summary>
     /// Default: Move towards the targets that it is closest to in the X direction
     /// </summary>
@@ -113,7 +118,6 @@ public class PursueEnemy : Enemy
 
         return targets;
     }
-
 }
 
 public class Target

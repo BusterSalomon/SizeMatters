@@ -154,6 +154,7 @@ Transform:
   m_Children:
   - {fileID: 6598982556952996212}
   - {fileID: 7331615453869546545}
+  - {fileID: 91505395839789894}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6019026467012907602
@@ -240,13 +241,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa91889ba2c58544a9e85acfa33d294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  BoxSize: {x: 0, y: 0}
+  CastDistance: 0
+  IsGrounded: 0
+  XShift: 0
+  DidLand:
+    m_PersistentCalls:
+      m_Calls: []
+  MovementSpeed: 4
+  MovementEnabled: 1
   Healthbar: {fileID: 0}
   CurrentHealth: 0
   MaxHealth: 3
-  Damage: 1
-  MovementSpeed: 4
+  CollisionDamage: 0
+  SelfDamageOnCharacterCollision: 0
+  ExplosionAnimator: {fileID: 91505395848738288}
   TargetTags:
   - Character
+  SamePlatformDistance: 0
 --- !u!114 &403209668729438360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,10 +276,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollectableType: Bug
   RotationOnCollection: 0
-  collectEvent:
+  IsCollected: 0
+  CollectEvent:
     m_PersistentCalls:
       m_Calls: []
-  releaseEvent:
+  ReleaseEvent:
     m_PersistentCalls:
       m_Calls: []
   HandlePoint: {fileID: 8511471964709172363}
@@ -1097,3 +1113,70 @@ Transform:
   - {fileID: 6234521058025734958}
   m_Father: {fileID: 8511471964709172363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &91505395839363792
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8511471964709172363}
+    m_Modifications:
+    - target: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_Name
+      value: Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+--- !u!4 &91505395839789894 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 426390, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  m_PrefabInstance: {fileID: 91505395839363792}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &91505395848738288 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9510688, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  m_PrefabInstance: {fileID: 91505395839363792}
+  m_PrefabAsset: {fileID: 0}
