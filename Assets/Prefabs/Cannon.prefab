@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6577899221840678421}
   - component: {fileID: 4294145613396165103}
   - component: {fileID: 917930126595064434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 5615288533654851624}
   - component: {fileID: 5255516333303540352}
   - component: {fileID: 5726450977397705122}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
