@@ -226,17 +226,21 @@ public class Collector : MonoBehaviour
     {
         foreach (GameObject collectable in collectableGameObjects)
         {
-            // Get target and origin transform. Looks for grip point and handle point first.
-            Transform collectableHandlePoint = collectable.GetComponent<Collectable>().HandlePoint;
-            Transform targetTransformToConsider = collectableHandlePoint ? collectableHandlePoint : collectable.transform;
-            Transform originTransformToConsider = GripPoint ? GripPoint : transform;
-
-            
-            float distance = Vector3.Distance(originTransformToConsider.position, targetTransformToConsider.position);
-            if (distance < pickupRange)
+            if (collectable)
             {
-                return collectable;
+                // Get target and origin transform. Looks for grip point and handle point first.
+                Transform collectableHandlePoint = collectable.GetComponent<Collectable>().HandlePoint;
+                Transform targetTransformToConsider = collectableHandlePoint ? collectableHandlePoint : collectable.transform;
+                Transform originTransformToConsider = GripPoint ? GripPoint : transform;
+
+
+                float distance = Vector3.Distance(originTransformToConsider.position, targetTransformToConsider.position);
+                if (distance < pickupRange)
+                {
+                    return collectable;
+                }
             }
+            
         }
         return null;
     }

@@ -82,3 +82,12 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: explosion
+    clip: {fileID: 8300000, guid: e3de2b1c6d8eaa84d8583fd5c082ed2a, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

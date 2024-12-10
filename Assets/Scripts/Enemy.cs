@@ -9,14 +9,39 @@ public class Enemy : Walkable
     public EnemyHealthbar Healthbar;
     public float CurrentHealth;
     public float MaxHealth;
-    public float Damage;
+    public float CollisionDamage;
+    public float SelfDamageOnCharacterCollision;
+    public Animator ExplosionAnimator;
+    private bool enemyDeadDestroyOnDeadAnimationComplete = false;
 
     protected override void Start()
     {
         base.Start();
         CurrentHealth = MaxHealth;
-        if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);  
+        if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);
     }
+
+    private bool explosionAnimStarted = false;
+    protected override void Update()
+    {
+        base.Update();
+        
+        if (enemyDeadDestroyOnDeadAnimationComplete)
+        {
+            bool isExploding = ExplosionAnimator.GetCurrentAnimatorStateInfo(0).IsName("Explosion");
+            if (isExploding)
+            {
+                explosionAnimStarted = true;
+            }
+            if (!isExploding && explosionAnimStarted)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    protected virtual void OnDeadAnimationStarted ()
+    {}
 
     public void TakeHit(float damage)
     {
@@ -24,7 +49,16 @@ public class Enemy : Walkable
         if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);
         if (CurrentHealth <= 0)
         {
-            Destroy(gameObject);
+            if (ExplosionAnimator)
+            {
+                ExplosionAnimator.SetTrigger("fired");
+                FindObjectOfType<AudioManager>().Play("explosion");
+                OnDeadAnimationStarted();
+                enemyDeadDestroyOnDeadAnimationComplete = true;
+            } else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -50,7 +84,8 @@ public class Enemy : Walkable
     {
         if (collision.collider.CompareTag("Character"))
         {
-            collision.gameObject.GetComponent<Health>().TakeDamage(Damage);
+            collision.gameObject.GetComponent<Health>().TakeDamage(CollisionDamage);
+            TakeHit(SelfDamageOnCharacterCollision);
         }
     }
 
