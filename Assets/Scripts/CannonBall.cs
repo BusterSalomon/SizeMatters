@@ -13,14 +13,20 @@ public class Cannonball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (_WasFired && collision.gameObject.CompareTag("Ground"))
+        float timeSinceFire = Time.time - fireTime;
+        int barrelID = -1;
+        if (cannon)
+        {
+            Transform br = cannon.transform.Find("BarrelRotationWrapper");
+            Transform barrel = br.Find("Barrel");
+            barrelID = barrel.gameObject.GetInstanceID();
+        }
+        if (_WasFired && cannon && collision.gameObject.GetInstanceID() != barrelID) // removed && collision.gameObject.CompareTag("Ground")
         {
             cannon.HandleCannonballDidLand(this);
             ILanded.Invoke();
             _WasFired = false;
-            Debug.Log("Did collide!");
         }
-        
     }
 
     public void HandleOnLoad()
@@ -28,8 +34,10 @@ public class Cannonball : MonoBehaviour
         IWasLoaded.Invoke();
     }
 
+    private float fireTime = -1f; 
     public void WasFired(CannonMechanics cM)
     {
+        fireTime = Time.time;
         _WasFired = true;
         cannon = cM;
     }
