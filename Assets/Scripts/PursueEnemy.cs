@@ -7,6 +7,12 @@ public class PursueEnemy : Enemy
     // ---- Public properties
     public List<string> TargetTags = new List<string> { "Character" };
 
+    /// <summary>
+    /// If |pos.y-targetPos.y| < SamePlatformDistance 
+    /// then they are on the same platform
+    /// </summary>
+    public float SamePlatformDistance;
+
     // ---- Private properties
     private List<Target> targets = new List<Target>();
     private Direction direction = Direction.Right;
@@ -30,7 +36,17 @@ public class PursueEnemy : Enemy
     {
         //Debug.Log("MovementFixedUpdate");
         Target targetToPursue = GetTargetToFollow();
-        PursueTargetX(targetToPursue.Transform);
+        
+        if (IsOnTheSamePlatform(targetToPursue))
+        {
+            PursueTargetX(targetToPursue.Transform);
+        }
+
+    }
+
+    protected bool IsOnTheSamePlatform(Target targetToPursue)
+    {
+        return Mathf.Abs(targetToPursue.Transform.position.y - transform.position.y) < SamePlatformDistance;
     }
 
     protected override void DidStartMoving()
