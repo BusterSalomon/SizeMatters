@@ -7,9 +7,10 @@ public class LeafblowerCollectable : Collectable
     public float initialForce = 100f;
     public float AudioFadeTime = 1f;
     private Transform blowNozzle;
-    private bool blow = false;
+    private bool blowbtnpressed = false;
     private Animator anim;
     private AudioManager audioManager;
+    private Blowable blowable;
 
     private void Start()
     {
@@ -21,34 +22,47 @@ public class LeafblowerCollectable : Collectable
     {
         if (IsCollected && KeyWasPressed(KeyCode.N))
         {
-            blow = true;
+            blowbtnpressed = true;
             anim.SetBool("IsBlowing", true);
             audioManager.FadeIn("leafblower_middle", AudioFadeTime);
         } 
         if (IsCollected && KeyWasReleased(KeyCode.N))
         {
-            blow = false;
+            blowbtnpressed = false;
             anim.SetBool("IsBlowing", false);
             audioManager.FadeOut("leafblower_middle", AudioFadeTime);
+            if (blowable && blowable.IsGettingBlownAt) blowable.StopBlowing();
         }
     }
 
     public void HandleObjectInBlowZone(Collider2D other)
     {
-        if (blow)
-        {
-            Vector3 direction = (other.transform.position - blowNozzle.position).normalized;
-            float distance = Vector3.Distance(blowNozzle.position, other.transform.position);
+        if (other.TryGetComponent<Blowable>(out Blowable blowableInZone)) {
+            blowable = blowableInZone;
 
-            // Adjust force based on distance, using inverse-square law or other fall-off
-            float force = initialForce / Mathf.Pow(distance + 0.5f, 1.8f);
-
-            Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            if (blowbtnpressed)
             {
-                rb.AddForce(direction * force);
-            }
+                Vector3 direction = (other.transform.position - blowNozzle.position).normalized;
+                float distance = Vector3.Distance(blowNozzle.position, other.transform.position);
+
+                // Adjust force based on distance, using inverse-square law or other fall-off
+                float force = initialForce / Mathf.Pow(distance + 0.5f, 1.8f);
+
+                Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.AddForce(direction * force);
+                }
+
+                if (!blowable.IsGettingBlownAt) blowable.StartBlowing((int)Mathf.Sign(direction.x));
+            } 
         }
+        
+        
+        //else if (!blowable)
+        //{
+        //    if (blowable.IsGettingBlownAt) blowable.StartBlowing();
+        //}
     }
 
 }

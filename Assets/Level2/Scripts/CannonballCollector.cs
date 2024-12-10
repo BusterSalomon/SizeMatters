@@ -19,21 +19,30 @@ public class CannonballCollector : Collector
     }
 
     // TODO: make it only able to collect when the cannonball rolls into the barrel
-    private float cannonballReleaseTime = -1;
+    private float cannonballReleaseTime = 0f;
     public float cannonballReleaseToCollectTime = 3f;
     
-    public override bool CollectCondition()
+    public override bool CollectCondition(Collectable collectable)
     {
-        if (cannonballReleaseTime != -1)
+        float timeSinceRelease = Time.time - cannonballReleaseTime;
+        bool releaseToCollectTimeConstraintSatisfied = timeSinceRelease > cannonballReleaseToCollectTime;
+        if (releaseToCollectTimeConstraintSatisfied)
         {
-            float timeSinceRelease = Time.time - cannonballReleaseTime;
-            return timeSinceRelease > cannonballReleaseToCollectTime;
+            switch (collectable.CollectableType)
+            {
+                case "Bug":
+                    Blowable blowable = collectable.gameObject.GetComponent<Blowable>();
+                    bool blowDirectionIsTowardsCannonEntry = ((int)Mathf.Sign(transform.localScale.x)) != blowable.blowDirection;
+                    return blowable.IsGettingBlownAt && blowDirectionIsTowardsCannonEntry;
+                default:
+                    return true;
+
+            }
         }
-        else return true;
-        
+        else return false;
     }
 
-    public override bool ReleaseCondition()
+    public override bool ReleaseCondition(Collectable collectable)
     {
         cannonballReleaseTime = Time.time;
         bool didRelease = false;

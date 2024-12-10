@@ -87,13 +87,13 @@ public class Collector : MonoBehaviour
         GameObject collectableGO = GetCollectableIfHovering();
         Collectable collectable = collectableGO ? collectableGO.GetComponent<Collectable>() : null;
         // Collector DID collect an item
-        if (collectableGO != null && !collectable.IsCollected && CollectableCollected == null && CollectCondition())
+        if (collectableGO != null && !collectable.IsCollected && CollectableCollected == null && CollectCondition(collectable))
         {
             Collect(collectableGO);
         }
 
         // Collector did NOT collect an item
-        if (CollectableCollected != null && ReleaseCondition())
+        if (CollectableCollected != null && ReleaseCondition(CollectableCollected))
         {
             Release();
         }
@@ -254,7 +254,7 @@ public class Collector : MonoBehaviour
     /// <summary>
     /// Condition to enable collect. By default, evalutes to true when C is pressed. May be overridden by subclasses.
     /// </summary>
-    public virtual bool CollectCondition ()
+    public virtual bool CollectCondition (Collectable collectable)
     {
         btnPressedTime = Time.time;
         return Input.GetKey(KeyCode.C);
@@ -264,7 +264,7 @@ public class Collector : MonoBehaviour
     /// Condition to enable realse. By default, evalutes to true when R and collectToReleaseDelay is passed since the collectable was collected.
     /// May be overridden by subclasses.
     /// </summary>
-    public virtual bool ReleaseCondition()
+    public virtual bool ReleaseCondition(Collectable collectable)
     {
         bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
         return Input.GetKey(KeyCode.R) && canRelease;
