@@ -30,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
 
         if(Input.GetKey(KeyCode.N) && cooldownTimer > attackCooldown /*&& playerMovement.canAttack()*/){
             Attack();
+            FindObjectOfType<AudioManager>().Play("shooting");
             Debug.Log("Attack called " + currentAmmo);
         }
 

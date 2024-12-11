@@ -224,7 +224,7 @@ public class Collector : MonoBehaviour
     /// <summary>
     /// Returns the tag if the character is in the same position as a collectable
     /// </summary>
-    private GameObject GetCollectableIfHovering()
+    protected GameObject GetCollectableIfHovering()
     {
         foreach (GameObject collectable in collectableGameObjects)
         {

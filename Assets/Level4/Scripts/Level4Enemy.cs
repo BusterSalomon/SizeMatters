@@ -109,6 +109,7 @@ public class Level4Enemy : Enemy
             Health characterHealth = collision.collider.GetComponent<Health>();
             if (characterHealth != null)
             {
+                FindObjectOfType<AudioManager>().Play("takephysicaldamage");
                 // Reduce the character's health
                 characterHealth.TakeDamage(CollisionDamage);
                 
