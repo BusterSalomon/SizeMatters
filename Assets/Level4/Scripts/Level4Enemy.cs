@@ -5,7 +5,7 @@ using UnityEngine;
 public class Level4Enemy : Enemy
 {
     public float walkSpeed = 3f; // Movement logic, part of Walkable
-    private Rigidbody2D rb;
+    // private Rigidbody2D rb;
 
     public float spawnDistance = 1.3f;
     private PoliceHealthbar policeHealthbar;
@@ -111,7 +111,7 @@ public class Level4Enemy : Enemy
             {
                 // Reduce the character's health
                 characterHealth.TakeDamage(CollisionDamage);
-
+                
                 // Apply some damage to the enemy (optional)
                 TakeHit(MaxHealth / 4);
 
