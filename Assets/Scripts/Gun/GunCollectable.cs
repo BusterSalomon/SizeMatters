@@ -19,9 +19,9 @@ public class GunCollectable : Collectable
             // Do shooting logic
             // ...
 
-
             // Do animation
             anim.SetTrigger("fire");
+            //anim.ResetTrigger("fire");
             // Do audio
             // audioManager.Play(...)
         } 
