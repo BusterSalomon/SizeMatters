@@ -11,18 +11,31 @@ public class countDown : MonoBehaviour
     private Vector2 originalScale;
     // Reference to the SpriteRenderer on the enemy for color change
     private SpriteRenderer enemySpriteRenderer;
+    
+    private SpriteRenderer enemyHeadSpriteRenderer;
 
-    public Color targetColor = Color.red;
-    public Color targetColor2 = Color.blue;
+    public Color targetColor = Color.green;
+    public Color targetColor2 = Color.red;
+    public Color targetColor3 = Color.yellow;
+    public Color targetColor4 = Color.blue;
+
+    public Color targetColor5 = Color.black;
+
     int check = 0; 
 
     //Atempt to fix countdown
-    private enemeyScript emy;
+    private EnemyVirus emy;
 
         private void Awake()
     {
+        emy = GetComponentInParent<EnemyVirus>();
+
+        Transform head = emy.head;
+
         originalScale = transform.localScale;
-        enemySpriteRenderer = GetComponentInParent<SpriteRenderer>(); // Find the parent enemy's SpriteRenderer
+        enemyHeadSpriteRenderer = head.GetComponent<SpriteRenderer>(); // Find the parent enemy's SpriteRenderer
+        //enemySpriteRenderer = GetComponentInParent<SpriteRenderer>();
+        Debug.Log(enemySpriteRenderer);
     }
 
     public void Start()
@@ -42,6 +55,7 @@ public class countDown : MonoBehaviour
 
     void Update()
     {
+        Color nextcolor = targetColor;
         if (counter > 0)
         {
             counter -= Time.deltaTime;
@@ -51,17 +65,31 @@ public class countDown : MonoBehaviour
         {
             transform.localScale = new Vector2(Mathf.Abs(originalScale.x), originalScale.y);
             timer.text = "0";
-            if (check == 0)
-            {
-                enemySpriteRenderer.color = targetColor;
-                check++;
-                RestartCounter();
+
+            switch(check){
+                case 0:
+                    nextcolor = targetColor;
+                    break;
+                case 1:
+                    nextcolor = targetColor2;
+                    break;
+                case 2:
+                    nextcolor = targetColor3;
+                    break;
+                case 3:
+                    nextcolor = targetColor4;
+                    break;
+                case 4:
+                    nextcolor = targetColor5;
+                    break;
+                default:
+                    break;
             }
-            else if (check == 1) {
-                enemySpriteRenderer.color = targetColor2;
+                Debug.Log("status :" + check);
+                enemyHeadSpriteRenderer.color = nextcolor;
                 ResetCounter();
-                check++; 
-            }          
+                emy.mutateVirus(1,check);
+                check++;   
         }
     }
 }
