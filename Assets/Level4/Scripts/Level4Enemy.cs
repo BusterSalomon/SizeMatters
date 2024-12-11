@@ -111,7 +111,7 @@ public class Level4Enemy : Enemy
             {
                 // Reduce the character's health
                 characterHealth.TakeDamage(CollisionDamage);
-
+                
                 // Apply some damage to the enemy (optional)
                 TakeHit(MaxHealth / 4);
 
