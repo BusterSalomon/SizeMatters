@@ -12,11 +12,13 @@ public class Movement : Walkable
     public UnityEvent DidJump;
     public UnityEvent<int> OnChangeDirection;
     private Animator anim;
+    private AudioManager am;
 
     protected override void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        am = FindObjectOfType<AudioManager>();
     }
 
     protected override void MovementUpdate()
@@ -53,7 +55,23 @@ public class Movement : Walkable
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             DidJump.Invoke();
+            am.Play("jump");
         }
+    }
+
+    protected override void DidStartMoving()
+    {
+        am.Play("run");
+    }
+
+    protected override void DidStopMoving()
+    {
+        am.Stop("run");
+    }
+
+    protected override void DidLandInternal()
+    {
+        am.Play("land");
     }
 
 }
