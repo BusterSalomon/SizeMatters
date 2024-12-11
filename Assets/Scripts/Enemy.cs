@@ -43,7 +43,8 @@ public class Enemy : Walkable
     protected virtual void OnDeadAnimationStarted ()
     {}
 
-    public void TakeHit(float damage)
+
+    public virtual void TakeHit(float damage)
     {
         CurrentHealth -= damage;
         if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);

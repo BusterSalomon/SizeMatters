@@ -4,22 +4,11 @@ using UnityEngine;
 
 public class Level4Enemy : Enemy
 {
-    [SerializeField] private float damage;
-    [SerializeField] private float startingHealth;
-    private float currentHealth;
-    public float walkSpeed = 3f;
+    public float walkSpeed = 3f; // Movement logic, part of Walkable
     private Rigidbody2D rb;
 
     public float spawnDistance = 1.3f;
-    private BoxCollider2D boxCollider;
-
-    private Vector2 originalSize;  // Store the original size of the enemy
-    private SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer
-
-    private Color originalColor; // Store the original color
-    public float Hitpoints;
-    public float MaxHitpoints = 5;
-    public EnemyHealthbar Healthbar;
+    private PoliceHealthbar policeHealthbar;
 
     public GameObject enemyPrefab; // Enemy prefab to spawn
     private float respawnDelayMin = 5f; // Minimum respawn delay
@@ -27,80 +16,55 @@ public class Level4Enemy : Enemy
 
     private Vector2 spawnPosition; // Position to respawn the enemy
 
-    private PoliceHealthbar policeHealthbar;
-
-    void Start()
+    protected override void Start()
     {
-        Hitpoints = MaxHitpoints;
-        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
-        spawnPosition = transform.position; // Save the initial spawn position
-    }
+        base.Start(); // Call Enemy's Start method for basic initialization
 
-    public void TakeHit(float damage)
-    {
-        Hitpoints -= damage;
-        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
+        // Save the initial spawn position
+        spawnPosition = transform.position;
 
-        if (Hitpoints <= 0)
+        // Set health bar values if it exists
+        if (Healthbar)
         {
-            DieAndRespawn();
+            Healthbar.SetHealth(CurrentHealth, MaxHealth);
         }
-    }
 
-    private void Awake()
-    {
+        // Additional initialization specific to Level4Enemy
         rb = GetComponent<Rigidbody2D>();
-        originalSize = transform.localScale;
-        boxCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
-        originalColor = spriteRenderer.color; // Store the original color
         policeHealthbar = GetComponentInChildren<PoliceHealthbar>();
     }
 
-    private void FixedUpdate()
+    public override void TakeHit(float damage)
     {
-        rb.velocity = new Vector2(walkSpeed * Vector2.right.x, rb.velocity.y);
-    }
+        base.TakeHit(damage);
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ground"))
+        if (Healthbar)
         {
-            Flip();
+            Healthbar.SetHealth(CurrentHealth, MaxHealth);
         }
-        if (collision.gameObject.CompareTag("Character"))
-        {
-            collision.collider.GetComponent<Health>().TakeDamage(damage);
-            TakeHit((MaxHitpoints / 4));
-            Debug.Log("Bum");
-        }
-    }
 
-    public void TakeDamage(float _damage)
-    {
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
-
-        if (currentHealth > 0)
-        {
-            // Player hurt logic
-        }
-        else
+        // Trigger respawn logic if health is depleted
+        if (CurrentHealth <= 0)
         {
             DieAndRespawn();
         }
     }
 
-    public void Flip()
+    public new void Flip()
     {
-        
-         // Reverse the walk speed to change direction
+        // Reverse the walk speed to change direction
         walkSpeed *= -1;
-        // Flip the enemy sprite by inverting the local scale on the X axis
-        Vector2 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler; 
-        policeHealthbar.healthXposition *= -1;
 
+        // Flip the enemy sprite by inverting the local scale on the X axis
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
+
+        // Flip the health bar position
+        if (policeHealthbar != null)
+        {
+            policeHealthbar.healthXposition *= -1;
+        }
     }
 
     private void DieAndRespawn()
@@ -116,8 +80,11 @@ public class Level4Enemy : Enemy
     private void Respawn()
     {
         // Reset enemy health
-        Hitpoints = MaxHitpoints;
-        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
+        CurrentHealth = MaxHealth;
+        if (Healthbar)
+        {
+            Healthbar.SetHealth(CurrentHealth, MaxHealth);
+        }
 
         // Reset position
         transform.position = spawnPosition;
@@ -125,4 +92,41 @@ public class Level4Enemy : Enemy
         // Reactivate the enemy
         gameObject.SetActive(true);
     }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision); // Call base collision logic for handling damage to characters
+
+        // Level4Enemy-specific collision behavior
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground"))
+        {
+            Flip();
+        }
+
+        if (collision.gameObject.CompareTag("Character"))
+        {
+            // Attempt to get the Health component from the collided object
+            Health characterHealth = collision.collider.GetComponent<Health>();
+            if (characterHealth != null)
+            {
+                // Reduce the character's health
+                characterHealth.TakeDamage(CollisionDamage);
+
+                // Apply some damage to the enemy (optional)
+                TakeHit(MaxHealth / 4);
+
+                Debug.Log("Enemy hit the character. Damage applied.");
+            }
+            else
+            {
+                Debug.LogWarning("No Health component found on the character.");
+            }
+        }   
+    }
+
+    protected new void FixedUpdate()
+{
+    // Implement walk speed logic
+    rb.velocity = new Vector2(walkSpeed * Vector2.right.x, rb.velocity.y);
+}
 }
