@@ -2003,6 +2003,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 708957085730518428, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2681028209140105291, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: m_Name
       value: TimV2
@@ -2058,6 +2062,10 @@ PrefabInstance:
     - target: {fileID: 6202958696344387917, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641088993968712912, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8830945434466403526, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: m_SortingOrder
