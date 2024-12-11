@@ -89,12 +89,14 @@ public class Collector : MonoBehaviour
         // Collector DID collect an item
         if (collectableGO != null && !collectable.IsCollected && CollectableCollected == null && CollectCondition(collectable))
         {
+            FindObjectOfType<AudioManager>().Play("collect");
             Collect(collectableGO);
         }
 
         // Collector did NOT collect an item
         if (CollectableCollected != null && ReleaseCondition(CollectableCollected))
         {
+            FindObjectOfType<AudioManager>().Play("release");
             Release();
         }
 

@@ -91,3 +91,21 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: collect
+    clip: {fileID: 8300000, guid: c510988aa512dee4597c2048f2ae32ad, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: release
+    clip: {fileID: 8300000, guid: 0379956455a188342914e5cd532beabf, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
