@@ -25,6 +25,8 @@ public class Walkable : MonoBehaviour
     private float currentVelocity = 0;
     protected int latestPlatformID;
 
+    private bool didJustLand = false;
+
     protected virtual void Start ()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,6 +39,8 @@ public class Walkable : MonoBehaviour
             if (!IsGrounded)
             {
                 DidLand.Invoke();
+                DidLandInternal();
+                didJustLand = true;
                 IsGrounded = true;
             }
             latestPlatformID = hit.collider.gameObject.GetInstanceID();
@@ -50,15 +54,27 @@ public class Walkable : MonoBehaviour
         DoGroundCheck();
         if (MovementEnabled) MovementUpdate();
 
+        // TODO: doesn't start running sfx after landing?
         // Check for velocity changes
-        float vel = rb.velocity.x;
-        if (vel != 0 && currentVelocity == 0) {
-            currentVelocity = vel;
+        float velX = rb.velocity.x;
+        float velY = rb.velocity.y;
+        
+        // Start moving
+        if (velX != 0 && velY==0 && currentVelocity == 0) {
+            currentVelocity = velX;
             DidStartMoving();
         }
-        else if (vel == 0 && currentVelocity != 0)
+
+        // Start moving after run
+        else if (didJustLand && velX != 0)
         {
-            currentVelocity = vel;
+            didJustLand = false;
+        }
+
+        // Stop moving
+        else if ((velX == 0 && currentVelocity != 0) || (!didJustLand && velY != 0))
+        {
+            currentVelocity = velX;
             DidStopMoving();
         }
     }
@@ -75,6 +91,8 @@ public class Walkable : MonoBehaviour
     protected virtual void DidStartMoving(){}
 
     protected virtual void DidStopMoving() { }
+
+    protected virtual void DidLandInternal() { }
 
     protected void OnDrawGizmos()
     {

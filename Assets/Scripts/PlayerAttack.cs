@@ -13,11 +13,13 @@ public class PlayerAttack : MonoBehaviour
     private Animator anim;
     private MovementDEPRECATED playerMovement; 
     private float cooldownTimer = Mathf.Infinity;
+    [SerializeField] private Collectable gunCollectable;
 
     private void Awake(){
 
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<MovementDEPRECATED>();
+        //gunCollectable = GetComponent<GunCollectable>(); 
 
         maxAmmo = 30;
         currentAmmo = 10;
@@ -41,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
 
         private void Attack(){
 
-        if( (maxAmmo != 0 ) && (currentAmmo != 0) ){
+        if( (maxAmmo != 0 ) && (currentAmmo != 0) && canAttack()){
 
             anim.SetTrigger("attack");
             cooldownTimer = 0;
@@ -78,6 +80,10 @@ public class PlayerAttack : MonoBehaviour
     }
     private void UpdateAmmoText(){
         Ammo_Text.text = "Ammo: " + maxAmmo.ToString() + " | " + currentAmmo.ToString() ;
+    }
+
+    public bool canAttack(){
+        return gunCollectable.IsCollected;
     }
 
 }

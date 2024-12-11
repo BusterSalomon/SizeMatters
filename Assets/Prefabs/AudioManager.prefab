@@ -91,3 +91,48 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: collect
+    clip: {fileID: 8300000, guid: c510988aa512dee4597c2048f2ae32ad, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: release
+    clip: {fileID: 8300000, guid: 0379956455a188342914e5cd532beabf, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: run
+    clip: {fileID: 8300000, guid: 9a0d88be9fde38b4393ac625ba87be96, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: land
+    clip: {fileID: 8300000, guid: c38bdb04195137e498d3057b148b06fe, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: jump
+    clip: {fileID: 8300000, guid: f22c41343971fcc46bb5f163a24db54e, type: 3}
+    volume: 0.04
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
