@@ -5,7 +5,6 @@ using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
-
     public static AudioManager instance;
 
     public AudioMixerGroup mixerGroup;
@@ -27,11 +26,19 @@ public class AudioManager : MonoBehaviour
 
         foreach (Sound s in sounds)
         {
+            if (s.clip == null)
+            {
+                Debug.LogWarning("Sound: " + s.name + " hat keinen Clip zugewiesen!");
+                continue;
+            }
+
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.loop = s.loop;
 
             s.source.outputAudioMixerGroup = mixerGroup;
+
+            Debug.Log("Sound: " + s.name + " wurde erfolgreich initialisiert.");
         }
     }
 
@@ -40,7 +47,13 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, item => item.name == sound);
         if (s == null)
         {
-            Debug.LogWarning("Sound: " + name + " not found!");
+            Debug.LogWarning("Sound: " + sound + " not found in the AudioManager!");
+            return;
+        }
+
+        if (s.source == null)
+        {
+            Debug.LogWarning("AudioSource for sound: " + sound + " is null!");
             return;
         }
 
@@ -55,7 +68,13 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, item => item.name == sound);
         if (s == null)
         {
-            Debug.LogWarning("Sound: " + name + " not found!");
+            Debug.LogWarning("Sound: " + sound + " not found in the AudioManager!");
+            return;
+        }
+
+        if (s.source == null)
+        {
+            Debug.LogWarning("AudioSource for sound: " + sound + " is null!");
             return;
         }
 
@@ -113,7 +132,4 @@ public class AudioManager : MonoBehaviour
         }
         s.source.Stop();
     }
-
-    
-
 }
