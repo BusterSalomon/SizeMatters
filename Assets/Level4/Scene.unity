@@ -6589,7 +6589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ammo_Text: {fileID: 575457144}
-  maxAmmo: 50
+  maxAmmo: 100
   currentAmmo: 10
   attackCooldown: 1
   firePoint: {fileID: 1053451616}
@@ -16146,7 +16146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3870668382438344558, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: startingHealth
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4771061368655589510, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
       propertyPath: m_LocalPosition.x
