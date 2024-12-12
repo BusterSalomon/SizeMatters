@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float startingHealth = 10f; // Setze den Startwert für die Gesundheit
+    [SerializeField] protected float startingHealth = 10f; // Setze den Startwert für die Gesundheit
     public float currentHealth { get; private set; }
 
     // Referenz zum GameOverScreen
@@ -29,10 +29,10 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + _health, 0, startingHealth);
     }
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.E)){
-            TakeDamage(1);
-        }
-    }
+    // private void Update() {
+    //     if(Input.GetKeyDown(KeyCode.E)){
+    //         TakeDamage(1);
+    //     }
+    // }
 
 }

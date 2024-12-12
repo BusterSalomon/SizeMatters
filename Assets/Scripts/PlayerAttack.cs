@@ -5,28 +5,28 @@ public class PlayerAttack : MonoBehaviour
 {   
     public TMP_Text Ammo_Text;
 
-    [SerializeField] private uint maxAmmo;
-    [SerializeField] private uint currentAmmo;
+    [SerializeField] protected uint maxAmmo;
+    [SerializeField] protected uint currentAmmo;
     [SerializeField] private float attackCooldown;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] projectiles;
     private Animator anim;
     private MovementDEPRECATED playerMovement; 
     private float cooldownTimer = Mathf.Infinity;
-    [SerializeField] private Collectable gunCollectable;
+    [SerializeField] protected Collectable gunCollectable;
 
-    private void Awake(){
+    protected virtual void Awake(){
 
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<MovementDEPRECATED>();
         //gunCollectable = GetComponent<GunCollectable>(); 
 
-        maxAmmo = 30;
-        currentAmmo = 10;
+        // maxAmmo = 30;
+        // currentAmmo = 10;
         UpdateAmmoText();
     }
 
-    private void Update() {
+    protected virtual void Update() {
 
         if(Input.GetKey(KeyCode.N) && cooldownTimer > attackCooldown /*&& playerMovement.canAttack()*/){
             Attack();
@@ -36,31 +36,32 @@ public class PlayerAttack : MonoBehaviour
 
         if(Input.GetKey(KeyCode.R)){
             Reload();
+            FindObjectOfType<AudioManager>().Play("reload");
             Debug.Log("Reload");
         }
 
         cooldownTimer += Time.deltaTime;
     }
 
-        private void Attack(){
+    protected virtual void Attack(){
 
-        if( (maxAmmo != 0 ) && (currentAmmo != 0) && canAttack()){
+    if( (maxAmmo != 0 ) && (currentAmmo != 0) && canAttack()){
 
-            anim.SetTrigger("attack");
-            cooldownTimer = 0;
+        anim.SetTrigger("attack");
+        cooldownTimer = 0;
 
-            projectiles[FindProjectile()].transform.position = firePoint.position;
-            projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
-            //projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(-1);
-        
-            // Debug.Log(Mathf.Sign(transform.localScale.x));
+        projectiles[FindProjectile()].transform.position = firePoint.position;
+        projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+        //projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(-1);
+    
+        // Debug.Log(Mathf.Sign(transform.localScale.x));
 
-            currentAmmo--;
-            UpdateAmmoText();
-            }
+        currentAmmo--;
+        UpdateAmmoText();
         }
+    }
 
-    private void Reload(){
+    protected virtual void Reload(){
         maxAmmo -= (10 - currentAmmo);
         currentAmmo = 10;
         UpdateAmmoText();
@@ -79,12 +80,12 @@ public class PlayerAttack : MonoBehaviour
         maxAmmo += _ammo;
         UpdateAmmoText();
     }
-    private void UpdateAmmoText(){
+    protected virtual void UpdateAmmoText(){
         Ammo_Text.text = "Ammo: " + maxAmmo.ToString() + " | " + currentAmmo.ToString() ;
     }
 
-    public bool canAttack(){
-        return gunCollectable.IsCollected;
+    public virtual bool canAttack(){
+        return gunCollectable != null && gunCollectable.IsCollected;
     }
 
 }

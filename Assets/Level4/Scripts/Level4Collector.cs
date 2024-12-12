@@ -10,6 +10,6 @@ public class Level4Collector : Collector
     {
         // bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
         // return Input.GetKey(KeyCode.R) && canRelease;
-        return Input.GetKey(KeyCode.E);
+        return Input.GetKey(KeyCode.V);
     }
 }

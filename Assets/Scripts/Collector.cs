@@ -273,6 +273,6 @@ public class Collector : MonoBehaviour
     public virtual bool ReleaseCondition(Collectable collectable)
     {
         bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
-        return Input.GetKey(KeyCode.R) && canRelease;
+        return Input.GetKey(KeyCode.V) && canRelease;
     }
 }
