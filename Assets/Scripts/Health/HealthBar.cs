@@ -3,27 +3,27 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Health playerHealth; // Referenz auf das Health-Skript des Spielers
-    [SerializeField] private Image totalhealthBar; // Die gesamte Healthbar (Hintergrund)
-    [SerializeField] private Image currenthealthBar; // Die aktuelle Healthbar (die sich basierend auf der Gesundheit füllt)
+    [SerializeField] private Health playerHealth; // Reference to the Health script of the player
+    [SerializeField] private Image totalhealthBar; // The total health bar (background)
+    [SerializeField] private Image currenthealthBar; // The current health bar (that fills based on health)
     
-    [SerializeField] private GameOverScreen gameOverScreen; // Referenz auf das GameOverScreen-Skript
+    [SerializeField] private GameOverScreen gameOverScreen; // Reference to the GameOverScreen script
 
     private void Start() 
     {
-        // Stelle sicher, dass die Healthbar zu Beginn korrekt auf den maximalen Wert gesetzt ist
-        currenthealthBar.fillAmount = playerHealth.currentHealth / 10f; // Annahme: Maximalwert 10
+        // Ensure that the health bar is correctly set to the maximum value at the start
+        currenthealthBar.fillAmount = playerHealth.currentHealth / 10f; // Assumption: Maximum value is 10
     }
 
     private void Update() 
     {
-        // Aktualisiere die Healthbar, während das Spiel läuft
-        currenthealthBar.fillAmount = playerHealth.currentHealth / 10f; // Entsprechend der aktuellen Gesundheit des Spielers
+        // Update the health bar while the game is running
+        currenthealthBar.fillAmount = playerHealth.currentHealth / 10f; // Based on the player's current health
 
-        // Wenn die Gesundheit 0 erreicht, zeige den GameOver-Screen an
+        // If health reaches 0, display the Game Over screen
         if (playerHealth.currentHealth <= 0 && gameOverScreen != null)
         {
-            gameOverScreen.ShowGameOverScreen(); // Zeige den GameOverScreen an
+            gameOverScreen.ShowGameOverScreen(); // Display the Game Over screen
         }
     }
 }

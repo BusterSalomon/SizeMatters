@@ -5,7 +5,6 @@ using UnityEngine;
 public class Level4Enemy : Enemy
 {
     public float walkSpeed = 3f; // Movement logic, part of Walkable
-    // private Rigidbody2D rb;
 
     public float spawnDistance = 1.3f;
     private PoliceHealthbar policeHealthbar;
@@ -95,39 +94,36 @@ public class Level4Enemy : Enemy
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnCollisionEnter2D(collision); // Call base collision logic for handling damage to characters
-
-        // Level4Enemy-specific collision behavior
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground"))
-        {
-            Flip();
-        }
-
+        // Handle collision with the player (Character tag)
         if (collision.gameObject.CompareTag("Character"))
         {
-            // Attempt to get the Health component from the collided object
+            // Get the Health component from the player
             Health characterHealth = collision.collider.GetComponent<Health>();
             if (characterHealth != null)
             {
+                // Play damage sound effect
                 FindObjectOfType<AudioManager>().Play("takephysicaldamage");
+                
                 // Reduce the character's health
                 characterHealth.TakeDamage(CollisionDamage);
-                
-                // Apply some damage to the enemy (optional)
-                TakeHit(MaxHealth / 4);
 
-                Debug.Log("Enemy hit the character. Damage applied.");
+                Debug.Log("Player collided with the enemy. Damage applied.");
             }
             else
             {
-                Debug.LogWarning("No Health component found on the character.");
+                Debug.LogWarning("No Health component found on the player.");
             }
-        }   
+        }
+        // Handle collision with walls or ground to flip direction
+        else if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground"))
+        {
+            Flip();
+        }
     }
 
     protected new void FixedUpdate()
-{
-    // Implement walk speed logic
-    rb.velocity = new Vector2(walkSpeed * Vector2.right.x, rb.velocity.y);
-}
+    {
+        // Implement walk speed logic
+        rb.velocity = new Vector2(walkSpeed * Vector2.right.x, rb.velocity.y);
+    }
 }
