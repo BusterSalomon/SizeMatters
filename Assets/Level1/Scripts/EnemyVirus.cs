@@ -11,6 +11,12 @@ public class EnemyVirus : Enemy
     public float spawnDistance = 1.3f;
     private BoxCollider2D boxCollider;
 
+    [SerializeField] private bool isLevelBoss = false;
+    
+    [SerializeField] private int numOfMultiply = 5;
+
+
+
     private Vector2 originalSize;  // Store the original size of the enemy
     private SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer
 
@@ -21,9 +27,13 @@ public class EnemyVirus : Enemy
      public GameObject enemyPrefab; // Enemy prefab to spawn
     [SerializeField] private float spawnIntervalMin ; // Minimum spawn interval
     [SerializeField] private float spawnIntervalMax ; // Maximum spawn interval
+
+    private AudioManager am;
+
     protected override void Start()
     {
         base.Start();
+        am = FindObjectOfType<AudioManager>();
         CurrentHealth = MaxHealth;
         Healthbar.SetHealth(CurrentHealth, MaxHealth);
         StartCoroutine(SpawnEnemyRoutine()); // Start spawning enemies
@@ -50,6 +60,7 @@ public class EnemyVirus : Enemy
             Flip();
         }
         if(collision.gameObject.CompareTag("Character")){
+            am.Play("CellDie");
             collision.collider.GetComponent<Health>().TakeDamage(CollisionDamage);
             TakeHit((MaxHealth/4));
             Debug.Log("Bum hitted the player with: "+ CollisionDamage);
@@ -66,7 +77,8 @@ public class EnemyVirus : Enemy
     }
     private IEnumerator SpawnEnemyRoutine()
     {
-        while (true) // Keeps spawning indefinitely
+        int reproduced = 0; 
+        while ( (numOfMultiply - reproduced) > 0) // Keeps spawning indefinitely
         {
             // Random delay between spawns
             float spawnDelay = Random.Range(spawnIntervalMin, spawnIntervalMax);
@@ -85,6 +97,8 @@ public class EnemyVirus : Enemy
 
     private void SpawnEnemy()
     {
+        am.Play("CellSpawn");
+
         // Instantiate a new enemy at a position relative to the original enemy
         Vector2 spawnPosition = new Vector2(transform.position.x + spawnDistance, transform.position.y);
 
@@ -92,6 +106,8 @@ public class EnemyVirus : Enemy
 
         EnemyVirus newEnemyScript = newEnemy.GetComponent<EnemyVirus>();
         newEnemyScript.spriteRenderer.color = originalColor;
+        newEnemyScript.isLevelBoss = false;
+        
         //newEnemyScript.counterScript = counterScript; 
     }
 

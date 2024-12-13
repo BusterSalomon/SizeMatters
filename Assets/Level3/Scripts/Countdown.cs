@@ -4,7 +4,12 @@ using TMPro; // Für TextMeshPro-Elemente
 public class CountdownTimer : MonoBehaviour
 {
     private TextMeshProUGUI countdownText; // TextMeshPro-Element für den Countdown
-    private float countdownTime = 120f; // 2 Minuten in Sekunden
+    private float countdownTime = 10f; // 2 Minuten in Sekunden
+
+    public bool IsTimeUp() // Neue Methode, um abzufragen, ob die Zeit abgelaufen ist
+    {
+        return countdownTime <= 0;
+    }
 
     void Start()
     {

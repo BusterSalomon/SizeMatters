@@ -224,7 +224,7 @@ public class Collector : MonoBehaviour
     /// <summary>
     /// Returns the tag if the character is in the same position as a collectable
     /// </summary>
-    private GameObject GetCollectableIfHovering()
+    protected GameObject GetCollectableIfHovering()
     {
         foreach (GameObject collectable in collectableGameObjects)
         {
@@ -273,6 +273,6 @@ public class Collector : MonoBehaviour
     public virtual bool ReleaseCondition(Collectable collectable)
     {
         bool canRelease = Time.time - btnPressedTime > collectToReleaseDelay;
-        return Input.GetKey(KeyCode.R) && canRelease;
+        return Input.GetKey(KeyCode.V) && canRelease;
     }
 }

@@ -31,11 +31,11 @@ public class Movement : Walkable
     void Move()
     {
         int dir = 0;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             dir = -1;
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             dir = 1;
         }
@@ -51,7 +51,7 @@ public class Movement : Walkable
 
     void Jump()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded)
+        if (Input.GetKey(KeyCode.W) && IsGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             DidJump.Invoke();
