@@ -3,12 +3,34 @@ using System.Collections.Generic;
 
 public class Level4PlayerAttack : PlayerAttack
 {
-    [SerializeField] protected List<Collectable> gunCollectables; // List to hold multiple guns
-
-    protected override void Awake()
+    /*protected override void Awake()
     {
         base.Awake();
-        gunCollectables = new List<Collectable>(); // Initialize the list
+        FindGunCollectable();
+    }*/
+
+    protected override void Update()
+    {
+        base.Update();
+        FindGunCollectable(); // Continuously update the gunCollectable during gameplay
+    }
+
+    private void FindGunCollectable()
+    {
+        Collectable[] collectables = FindObjectsOfType<Collectable>();
+
+        foreach (var collectable in collectables)
+        {
+            if (collectable.IsCollected && collectable.transform.parent == this.transform)
+            {
+                gunCollectable = collectable;
+                Debug.Log($"GunCollectable set to {gunCollectable.name}");
+                return;
+            }
+        }
+
+        // If no gun is found, set gunCollectable to null
+        gunCollectable = null;
     }
 
     public override bool canAttack()
