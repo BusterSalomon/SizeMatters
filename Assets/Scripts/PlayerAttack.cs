@@ -15,13 +15,9 @@ public class PlayerAttack : MonoBehaviour
     private float cooldownTimer = Mathf.Infinity;
     [SerializeField] protected Collectable gunCollectable;
 
-<<<<<<< Updated upstream
-    protected virtual void Awake(){
-=======
     private AudioManager am;
 
     private void Awake(){
->>>>>>> Stashed changes
 
         am = FindObjectOfType<AudioManager>();
         anim = GetComponent<Animator>();
@@ -43,11 +39,7 @@ public class PlayerAttack : MonoBehaviour
 
         if(Input.GetKey(KeyCode.R)){
             Reload();
-<<<<<<< Updated upstream
-            FindObjectOfType<AudioManager>().Play("reload");
-=======
             am.Play("reloadGun");
->>>>>>> Stashed changes
             Debug.Log("Reload");
         }
 
@@ -58,14 +50,9 @@ public class PlayerAttack : MonoBehaviour
 
     if( (maxAmmo != 0 ) && (currentAmmo != 0) && canAttack()){
 
-<<<<<<< Updated upstream
-        anim.SetTrigger("attack");
-        cooldownTimer = 0;
-=======
             am.Play("shootGun");
             anim.SetTrigger("attack");
             cooldownTimer = 0;
->>>>>>> Stashed changes
 
         projectiles[FindProjectile()].transform.position = firePoint.position;
         projectiles[FindProjectile()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));

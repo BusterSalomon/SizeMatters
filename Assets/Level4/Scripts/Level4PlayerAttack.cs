@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Level4PlayerAttack : PlayerAttack
 {
-    protected override void Awake()
+    /*protected override void Awake()
     {
         base.Awake();
         FindGunCollectable();
-    }
+    }*/
 
     protected override void Update()
     {
