@@ -10,6 +10,8 @@ public abstract class LevelManager : MonoBehaviour
 {
     public UnityEvent DidWinEvent;
     public UnityEvent DidLoseEvent;
+    public UnityEvent<string> DidWinSwitchToScene;
+    public string nextScene = "";
     private GameState gameState = GameState.Running;
     public enum GameState
     {
@@ -18,7 +20,7 @@ public abstract class LevelManager : MonoBehaviour
         Won,
     }
 
-    void Update()
+    protected virtual void Update()
     {
         bool gameIsRunning = gameState == GameState.Running;
         if (DidLose() && gameIsRunning)
@@ -28,8 +30,14 @@ public abstract class LevelManager : MonoBehaviour
         }
         if (DidWin() && gameIsRunning)
         {
+            Debug.Log("level complete!");
             DidWinEvent.Invoke();
             gameState = GameState.Lost;
+
+            if (nextScene != "")
+            {
+                DidWinSwitchToScene.Invoke(nextScene);
+            }
         }
     }
     /// <summary>

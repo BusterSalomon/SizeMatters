@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level4/Scene.unity
     guid: c4604335dd83a405aadb7251b90480be
+  - enabled: 1
+    path: Assets/Tutorial/Move.unity
+    guid: 984d367eacf242d458d9fcc214d91d1e
+  - enabled: 1
+    path: Assets/Tutorial/GunTutorial.unity
+    guid: 8ade66d04db61c946a4ea81e5d21a1f3
   m_configObjects: {}
