@@ -145,3 +145,57 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: shootGun
+    clip: {fileID: 8300000, guid: a927e3eb93fcede4c9b6bd9e0a5582d5, type: 3}
+    volume: 0.07
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: reloadGun
+    clip: {fileID: 8300000, guid: 79a93fc90abe2774aa64f39775172e7f, type: 3}
+    volume: 0.07
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: CellDie
+    clip: {fileID: 8300000, guid: feaef91d677df014ab1cefe83e43716b, type: 3}
+    volume: 0.07
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: CellSpawn
+    clip: {fileID: 8300000, guid: ecee62cb6a9fddc4c9de94919b8e9d41, type: 3}
+    volume: 0.07
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: TimHurt
+    clip: {fileID: 8300000, guid: 0b995b218a229a74182921936955183a, type: 3}
+    volume: 0.07
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: TimDie
+    clip: {fileID: 8300000, guid: 3b77a076521945f43bc61ae9adb96138, type: 3}
+    volume: 0.07
+    volumeVariance: 0
+    pitch: 1.04
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
