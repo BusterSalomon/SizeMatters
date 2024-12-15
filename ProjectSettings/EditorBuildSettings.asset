@@ -20,4 +20,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level4/Scene.unity
     guid: c4604335dd83a405aadb7251b90480be
+  - enabled: 1
+    path: Assets/Tutorial/MoveT.unity
+    guid: 984d367eacf242d458d9fcc214d91d1e
+  - enabled: 1
+    path: Assets/Tutorial/GunT.unity
+    guid: d7542e1e634f2934a99d0a35b4c08581
+  - enabled: 1
+    path: Assets/Tutorial/LeafblowerT.unity
+    guid: d9b6541eb851c3d44a6edea9b747e6ab
+  - enabled: 1
+    path: Assets/Tutorial/CannonT.unity
+    guid: 9bd1ebae56be44f45bbb823ae0a589ce
   m_configObjects: {}

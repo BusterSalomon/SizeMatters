@@ -40,6 +40,7 @@ public class Cannonball : MonoBehaviour
         fireTime = Time.time;
         _WasFired = true;
         cannon = cM;
+        IWasFired.Invoke();
     }
 
 }
