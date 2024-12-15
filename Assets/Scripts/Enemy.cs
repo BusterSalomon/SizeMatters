@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngineInternal;
 
@@ -14,11 +15,17 @@ public class Enemy : Walkable
     public Animator ExplosionAnimator;
     private bool enemyDeadDestroyOnDeadAnimationComplete = false;
 
+    [SerializeField] bool canDrop = false;
+    [SerializeField] int DropChance;
+
+    public GameObject[] itemDrop;
+
     protected override void Start()
     {
         base.Start();
         CurrentHealth = MaxHealth;
         if (Healthbar) Healthbar.SetHealth(CurrentHealth, MaxHealth);
+        if(DropChance > 100) DropChance = 100;
     }
 
     private bool explosionAnimStarted = false;
@@ -58,6 +65,7 @@ public class Enemy : Walkable
                 enemyDeadDestroyOnDeadAnimationComplete = true;
             } else
             {
+                if(canDrop){ItemDrop();}
                 Destroy(gameObject);
             }
         }
@@ -87,6 +95,21 @@ public class Enemy : Walkable
         {
             collision.gameObject.GetComponent<Health>().TakeDamage(CollisionDamage);
             TakeHit(SelfDamageOnCharacterCollision);
+        }
+    }
+
+    public void ItemDrop(){
+
+        int rand = Random.Range(1, 100); 
+        int drop = itemDrop.Count();
+
+        if( rand < DropChance ){
+            if(itemDrop != null){
+
+                Debug.Log("NumOfItems: " + drop );
+                Instantiate(itemDrop[Random.Range(0,drop)], transform.position + new Vector3(0,1,0), Quaternion.identity);
+
+            }
         }
     }
 
