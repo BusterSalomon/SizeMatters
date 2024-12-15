@@ -100,6 +100,7 @@ public class EnemyVirus : Enemy
         am.Play("CellSpawn");
 
         // Instantiate a new enemy at a position relative to the original enemy
+        if(isLevelBoss){spawnDistance *= -1;}
         Vector2 spawnPosition = new Vector2(transform.position.x + spawnDistance, transform.position.y);
 
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
@@ -107,6 +108,7 @@ public class EnemyVirus : Enemy
         EnemyVirus newEnemyScript = newEnemy.GetComponent<EnemyVirus>();
         newEnemyScript.spriteRenderer.color = originalColor;
         newEnemyScript.isLevelBoss = false;
+        newEnemyScript.transform.localScale = new Vector3((float)0.35,(float)0.35,1);
         
         //newEnemyScript.counterScript = counterScript; 
     }
