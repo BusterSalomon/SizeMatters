@@ -9,8 +9,9 @@ public class InputFieldGrabber : MonoBehaviour
     [Header ("Showing the reaction to the player")]
     [SerializeField]private GameObject reactionGroup;
     [SerializeField]private TMP_Text reactionTextBox;
+
+    public GameObject window;
     private string CODE = "A42B";
-    public int SUCCESS = 0;
 
     public void GrabFromInputField(string input){
         inputText = input;
@@ -20,11 +21,12 @@ public class InputFieldGrabber : MonoBehaviour
     private void DisplayReactionToInput(){
 
         if(inputText == CODE){
-            reactionTextBox.text = "Your Input was correct ! Enter self-destruct sequence beginning...";
-            SUCCESS = 1;
+            //reactionTextBox.text = "Your Input was correct ! Enter self-destruct sequence beginning...";
+            window.SetActive(false);
+            reactionGroup.GetComponent<Level5Manager>().WinConditionMet = true;
         }
         else{
-            SUCCESS = -1;
+            reactionGroup.GetComponent<Level5Manager>().LoseConditionMet = true;
         }
         
     }

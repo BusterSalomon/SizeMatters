@@ -13,12 +13,12 @@ public class Level5Manager : LevelManager
     public override bool DidWin()
     {
 
-        return false;
+        return WinConditionMet;
     }
 
     public override bool DidLose()
     {
-        return  false;
+        return  LoseConditionMet;
     }
 }
 
