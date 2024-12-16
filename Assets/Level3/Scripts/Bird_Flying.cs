@@ -4,7 +4,7 @@ public class Bird : MonoBehaviour
 {
     public float moveSpeed = 3f;         // Geschwindigkeit der Vögel
     public Transform treeTarget;        // Baumziel
-    public float damageToTree = 1f;     // Schaden, den der Vogel dem Baum zufügt
+    public float damageToTree = 4f;     // Schaden, den der Vogel dem Baum zufügt
     private Vector2 targetPosition;     // Zielposition (Baum)
 
     void Start()

@@ -511,6 +511,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26525041cea6b24982f4fb3769927e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 3.7
   treeTarget: {fileID: 0}
-  damageToTree: 1
+  damageToTree: 1.5
