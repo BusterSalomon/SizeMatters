@@ -8,12 +8,9 @@ public class Health : MonoBehaviour
     // Referenz zum GameOverScreen
     public GameOverScreen gameOverScreen;
 
-    private AudioManager am;
-
     private void Awake() 
     {
         currentHealth = startingHealth; // Initialisiere die Gesundheit
-        am = FindObjectOfType<AudioManager>();
     }
 
     public void TakeDamage(float damage)
@@ -24,10 +21,10 @@ public class Health : MonoBehaviour
         
         if(currentHealth > 0){
             //player hurt
-            am.Play("TimHurt");
+            AudioManager.instance.Play("TimHurt");
         }else{
             //Dead
-            am.Play("TimDie");
+            AudioManager.instance.Play("TimDie");
         }
     
     }    

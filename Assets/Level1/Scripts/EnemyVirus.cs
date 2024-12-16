@@ -28,12 +28,9 @@ public class EnemyVirus : Enemy
     [SerializeField] private float spawnIntervalMin ; // Minimum spawn interval
     [SerializeField] private float spawnIntervalMax ; // Maximum spawn interval
 
-    private AudioManager am;
-
     protected override void Start()
     {
         base.Start();
-        am = FindObjectOfType<AudioManager>();
         CurrentHealth = MaxHealth;
         Healthbar.SetHealth(CurrentHealth, MaxHealth);
         StartCoroutine(SpawnEnemyRoutine()); // Start spawning enemies
@@ -60,7 +57,7 @@ public class EnemyVirus : Enemy
             Flip();
         }
         if(collision.gameObject.CompareTag("Character")){
-            am.Play("CellDie");
+            AudioManager.instance.Play("CellDie");
             collision.collider.GetComponent<Health>().TakeDamage(CollisionDamage);
             TakeHit((MaxHealth/4));
             Debug.Log("Bum hitted the player with: "+ CollisionDamage);
@@ -97,7 +94,7 @@ public class EnemyVirus : Enemy
 
     private void SpawnEnemy()
     {
-        am.Play("CellSpawn");
+        AudioManager.instance.Play("CellSpawn");
 
         // Instantiate a new enemy at a position relative to the original enemy
         if(isLevelBoss){spawnDistance *= -1;}

@@ -9,14 +9,12 @@ public class LeafblowerCollectable : Collectable
     private Transform blowNozzle;
     private bool blowbtnpressed = false;
     private Animator anim;
-    private AudioManager audioManager;
     private Blowable blowable;
 
     private void Start()
     {
         blowNozzle = transform.Find("BlowNozzle");
         anim = GetComponent<Animator>();
-        audioManager = FindObjectOfType<AudioManager>();
     }
     private void Update()
     {
@@ -24,13 +22,13 @@ public class LeafblowerCollectable : Collectable
         {
             blowbtnpressed = true;
             anim.SetBool("IsBlowing", true);
-            audioManager.FadeIn("leafblower_middle", AudioFadeTime);
+            AudioManager.instance.FadeIn("leafblower_middle", AudioFadeTime);
         } 
         if (IsCollected && KeyWasReleased(KeyCode.N))
         {
             blowbtnpressed = false;
             anim.SetBool("IsBlowing", false);
-            audioManager.FadeOut("leafblower_middle", AudioFadeTime);
+            AudioManager.instance.FadeOut("leafblower_middle", AudioFadeTime);
             if (blowable && blowable.IsGettingBlownAt) blowable.StopBlowing();
         }
     }

@@ -48,7 +48,7 @@ public abstract class LevelManager : MonoBehaviour
 
         if (!didWinOnce && gameState == GameState.Won && nextScene != "" && Time.time - gamestateChangeTime > TransitionDelay)
         {
-            FindObjectOfType<AudioManager>().StopAll();
+            AudioManager.instance.StopAll();
             DidWinEvent.Invoke();
             SceneManager.LoadScene(sceneName: nextScene);
             DidWinSwitchToScene.Invoke(nextScene);
@@ -60,13 +60,13 @@ public abstract class LevelManager : MonoBehaviour
             {
                 GO.SetActive(false);
             }
-            FindObjectOfType<AudioManager>().StopAll();
+            AudioManager.instance.StopAll();
             DidLoseEvent.Invoke();
         }
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            FindObjectOfType<AudioManager>().StopAll();
+            AudioManager.instance.StopAll();
             SceneManager.LoadScene(0);
         }
 

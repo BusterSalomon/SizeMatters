@@ -102,7 +102,7 @@ public class Level4Enemy : Enemy
             if (characterHealth != null)
             {
                 // Play damage sound effect
-                FindObjectOfType<AudioManager>().Play("takephysicaldamage");
+                AudioManager.instance.Play("takephysicaldamage");
                 
                 // Reduce the character's health
                 characterHealth.TakeDamage(CollisionDamage);

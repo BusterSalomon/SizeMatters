@@ -10,7 +10,7 @@ public class GunCollectable : Collectable
     private void Start()
     {
         anim = GetComponent<Animator>();
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = AudioManager.instance;
     }
     private void Update()
     {
