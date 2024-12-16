@@ -1565,38 +1565,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 6
---- !u!1 &1152446739
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1152446741}
-  - component: {fileID: 1152446740}
-  m_Layer: 0
-  m_Name: cartoon_computer_monitor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1131355002
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1131355001}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.2000122, y: 26.5, z: -5.0336704}
-  m_LocalScale: {x: 54.92567, y: 21.655163, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 105733696}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1131355003
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1649,6 +1617,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1152446739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1152446741}
+  - component: {fileID: 1131355003}
+  m_Layer: 0
+  m_Name: cartoon_computer_monitor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &1152446741
 Transform:
   m_ObjectHideFlags: 0
@@ -2528,6 +2513,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1875531325}
   - component: {fileID: 1875531326}
+  - component: {fileID: 1875531324}
+  - component: {fileID: 1875531327}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -2550,7 +2537,7 @@ MonoBehaviour:
   DidWinEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329779544}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIMockup, Assembly-CSharp
         m_MethodName: LogWin
         m_Mode: 1
@@ -2565,7 +2552,7 @@ MonoBehaviour:
   DidLoseEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329779544}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIMockup, Assembly-CSharp
         m_MethodName: LogLose
         m_Mode: 1
@@ -2614,19 +2601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DidWinEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 844345580}
-        m_TargetAssemblyTypeName: UIMockup, Assembly-CSharp
-        m_MethodName: LogWin
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   DidLoseEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2645,7 +2620,7 @@ MonoBehaviour:
   DidWinSwitchToScene:
     m_PersistentCalls:
       m_Calls: []
-  nextScene: Home
+  nextScene: YouWon
   TransitionDelay: 1
   GameObjectsToHideOnLose:
   - {fileID: 765251772}
@@ -2655,6 +2630,18 @@ MonoBehaviour:
   - {fileID: 1778876828}
   WinConditionMet: 0
   LoseConditionMet: 0
+--- !u!114 &1875531327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875531323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b0c9c390ab4644e8d7bf3e80fc1dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2098558846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2957,3 +2944,4 @@ SceneRoots:
   - {fileID: 1338079601}
   - {fileID: 48255200}
   - {fileID: 360402612}
+  - {fileID: 1152446741}
