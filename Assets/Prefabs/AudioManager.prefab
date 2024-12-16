@@ -201,7 +201,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LVL1_THEME
     clip: {fileID: 8300000, guid: 077265ae37fa1594385938df82d11635, type: 3}
-    volume: 0.07
+    volume: 0.2
     volumeVariance: 0
     pitch: 1.04
     pitchVariance: 0
@@ -210,7 +210,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LVL2_THEME
     clip: {fileID: 8300000, guid: 2ef4d486b63279148ad7cc677da60637, type: 3}
-    volume: 0.07
+    volume: 0.2
     volumeVariance: 0
     pitch: 1.04
     pitchVariance: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LVL3_THEME
     clip: {fileID: 8300000, guid: a8e2e9094f891af408bab4ee3ccae16e, type: 3}
-    volume: 0.07
+    volume: 0.2
     volumeVariance: 0
     pitch: 1.04
     pitchVariance: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LVL4_THEME
     clip: {fileID: 8300000, guid: d4f8b50e9e441c043a08cd749ce053b5, type: 3}
-    volume: 0.07
+    volume: 0.2
     volumeVariance: 0
     pitch: 1.04
     pitchVariance: 0
@@ -237,7 +237,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LVL5_THEME
     clip: {fileID: 8300000, guid: 153b366e450afe0489fbe06251c1c46c, type: 3}
-    volume: 0.07
+    volume: 0.2
     volumeVariance: 0
     pitch: 1.04
     pitchVariance: 0

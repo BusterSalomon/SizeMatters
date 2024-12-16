@@ -20,12 +20,14 @@ public class AudioManager : MonoBehaviour
         sceneID = SceneManager.GetActiveScene().buildIndex;
 
         playLevelMusic(sceneID);
+        Debug.Log("AudioManagger started with scene: " + sceneID);
     }
 
     void Update(){
         if(SceneManager.GetActiveScene().buildIndex != sceneID){
             sceneID = SceneManager.GetActiveScene().buildIndex;
             playLevelMusic(sceneID);
+            Debug.Log("Updated scene to: " + sceneID);
         }
     }
 
