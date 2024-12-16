@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Level4/Scene.unity
     guid: c4604335dd83a405aadb7251b90480be
   - enabled: 1
+    path: Assets/Level5/Scene.unity
+    guid: 75ba82c404926c04cb92bf2ed11cf03e
+  - enabled: 1
     path: Assets/Tutorial/MoveT.unity
     guid: 984d367eacf242d458d9fcc214d91d1e
   - enabled: 1
