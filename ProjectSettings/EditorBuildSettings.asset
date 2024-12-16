@@ -38,4 +38,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tutorial/EscT.unity
     guid: 71cbafef9ad75dc4b8f97149f73c6aa7
+  - enabled: 1
+    path: Assets/Level1/CutScene1.unity
+    guid: caf079ee4c4cf774b934a6e16339eb98
+  - enabled: 1
+    path: Assets/Level2/CutScene2.unity
+    guid: 71e6c5cc5cdcc814c9cd4dd1cedb921d
+  - enabled: 1
+    path: Assets/Level3/CutScene3.unity
+    guid: 587bccf177eb3e24fa5de5977370d0b5
+  - enabled: 1
+    path: Assets/Level4/CutScene4.unity
+    guid: 51f9751029cdd204382ba5b8cbc3a39e
+  - enabled: 1
+    path: Assets/Level5/CutScene5.unity
+    guid: 63456471a2ca2954aa91d9e79e053b70
   m_configObjects: {}
