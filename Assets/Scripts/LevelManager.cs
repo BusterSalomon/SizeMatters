@@ -64,6 +64,12 @@ public abstract class LevelManager : MonoBehaviour
             DidLoseEvent.Invoke();
         }
 
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            FindObjectOfType<AudioManager>().StopAll();
+            SceneManager.LoadScene(0);
+        }
+
     }
     /// <summary>
     /// Resets game state to running
