@@ -723,7 +723,7 @@ MonoBehaviour:
   DidWinSwitchToScene:
     m_PersistentCalls:
       m_Calls: []
-  nextScene: Level4/Scene
+  nextScene: Level4/CutScene4
   TransitionDelay: 1
   GameObjectsToHideOnLose:
   - {fileID: 141632903}
