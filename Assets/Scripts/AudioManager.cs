@@ -2,6 +2,7 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class AudioManager : MonoBehaviour
 {
@@ -78,6 +79,26 @@ public class AudioManager : MonoBehaviour
         }
 
         s.source.Stop();
+    }
+
+    public void StopAll ()
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s == null)
+            {
+                Debug.LogWarning("Sound: " + " not found in the AudioManager!");
+                return;
+            }
+
+            if (s.source == null)
+            {
+                Debug.LogWarning("AudioSource for sound: " + " is null!");
+                return;
+            }
+
+            s.source.Stop();
+        }
     }
 
     public void FadeIn(string name, float duration)
