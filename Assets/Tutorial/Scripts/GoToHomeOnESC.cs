@@ -9,7 +9,7 @@ public class GoToHomeOnEsc : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            FindObjectOfType<AudioManager>().StopAll();
+            AudioManager.instance.StopAll();
             SceneManager.LoadScene(0);
         }
     }

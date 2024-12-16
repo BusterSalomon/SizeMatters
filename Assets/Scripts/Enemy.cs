@@ -60,7 +60,7 @@ public class Enemy : Walkable
             if (ExplosionAnimator)
             {
                 ExplosionAnimator.SetTrigger("fired");
-                FindObjectOfType<AudioManager>().Play("explosion");
+                AudioManager.instance.Play("explosion");
                 OnDeadAnimationStarted();
                 enemyDeadDestroyOnDeadAnimationComplete = true;
             } else

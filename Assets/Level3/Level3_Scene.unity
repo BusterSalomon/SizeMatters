@@ -2207,7 +2207,7 @@ PrefabInstance:
     - target: {fileID: 8275090848451130144, guid: b245fa9c908aafe4d99e522a13520b55, type: 3}
       propertyPath: gameOverScreen
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1999514066}
     - target: {fileID: 9199295391455770340, guid: b245fa9c908aafe4d99e522a13520b55, type: 3}
       propertyPath: m_Name
       value: UI
@@ -5044,6 +5044,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49cf296f4e956dc428c9bcbfbee8051b, type: 3}
+--- !u!1 &1999514066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4717989311097220357, guid: b245fa9c908aafe4d99e522a13520b55, type: 3}
+  m_PrefabInstance: {fileID: 765723005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2011449259
 GameObject:
   m_ObjectHideFlags: 0

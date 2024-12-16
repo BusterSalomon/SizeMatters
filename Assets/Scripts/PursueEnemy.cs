@@ -51,17 +51,17 @@ public class PursueEnemy : Enemy
 
     protected override void DidStartMoving()
     {
-        FindObjectOfType<AudioManager>().Play("bug");
+        AudioManager.instance.Play("bug");
     }
 
     protected override void DidStopMoving()
     {
-        FindObjectOfType<AudioManager>().Stop("bug");
+        AudioManager.instance.Stop("bug");
     }
 
     protected override void OnDeadAnimationStarted()
     {
-        FindObjectOfType<AudioManager>().Stop("bug");
+        AudioManager.instance.Stop("bug");
     }
 
     /// <summary>
