@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,6 +12,44 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup mixerGroup;
 
     public Sound[] sounds;
+
+    int sceneID;
+    int currentSceneID;
+
+    void Start(){
+        sceneID = SceneManager.GetActiveScene().buildIndex;
+
+        playLevelMusic(sceneID);
+    }
+
+    void Update(){
+        if(SceneManager.GetActiveScene().buildIndex != sceneID){
+            sceneID = SceneManager.GetActiveScene().buildIndex;
+            playLevelMusic(sceneID);
+        }
+    }
+
+    public void playLevelMusic(int _sceneID){
+                switch(_sceneID){
+            case 1:
+                Play("LVL1_THEME");
+                break;
+            case 2:
+                Play("LVL2_THEME");
+                break;   
+            case 3:
+                Play("LVL3_THEME");
+                break;  
+            case 4:
+                Play("LVL4_THEME");
+                break;  
+            case 5:
+                Play("LVL5_THEME");
+                break;   
+            default:
+                break;           
+        }
+    }
 
     void Awake()
     {

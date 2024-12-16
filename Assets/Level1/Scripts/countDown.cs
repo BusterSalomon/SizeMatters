@@ -88,7 +88,7 @@ public class countDown : MonoBehaviour
                 Debug.Log("status :" + check);
                 enemyHeadSpriteRenderer.color = nextcolor;
                 ResetCounter();
-                emy.mutateVirus(1,check);
+                emy.mutateVirus(0.1f,check*0.1f);
                 check++;   
         }
     }
