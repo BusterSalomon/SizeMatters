@@ -570,6 +570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493250773}
   - component: {fileID: 493250775}
+  - component: {fileID: 493250776}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -608,6 +609,18 @@ MonoBehaviour:
   - {fileID: 1456524221}
   - {fileID: 687084007}
   NextTutorial: LeafblowerT
+--- !u!114 &493250776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493250771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639188c1ac1a97642be352380f88e943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &687084007
 GameObject:
   m_ObjectHideFlags: 0
