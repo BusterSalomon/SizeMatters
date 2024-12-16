@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tutorial/CannonT.unity
     guid: 9bd1ebae56be44f45bbb823ae0a589ce
+  - enabled: 1
+    path: Assets/Tutorial/EscT.unity
+    guid: 71cbafef9ad75dc4b8f97149f73c6aa7
   m_configObjects: {}
