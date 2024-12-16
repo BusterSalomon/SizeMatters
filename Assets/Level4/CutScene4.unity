@@ -551,7 +551,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1447347586}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: f07df46811d53ee4794819825aac62fa, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 252ff69df4a34e242b8a28a72c1901a9, type: 2}
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -563,6 +563,12 @@ PlayableDirector:
     value: {fileID: 2101895037}
   - key: {fileID: 3089861003855189170, guid: f07df46811d53ee4794819825aac62fa, type: 2}
     value: {fileID: 2521429}
+  - key: {fileID: -4481584027827719576, guid: 252ff69df4a34e242b8a28a72c1901a9, type: 2}
+    value: {fileID: 1896901364}
+  - key: {fileID: 3089861003855189170, guid: 252ff69df4a34e242b8a28a72c1901a9, type: 2}
+    value: {fileID: 2521429}
+  - key: {fileID: -2404824056214753075, guid: 252ff69df4a34e242b8a28a72c1901a9, type: 2}
+    value: {fileID: 2101895037}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1447347588
@@ -953,8 +959,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 32.849976, y: -13.140015}
+  m_SizeDelta: {x: 801.45, y: 411.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2038541334
 MonoBehaviour:
