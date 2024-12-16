@@ -18,7 +18,7 @@ public class Movement : Walkable
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        am = FindObjectOfType<AudioManager>();
+        am = AudioManager.instance;
     }
 
     protected override void MovementUpdate()
