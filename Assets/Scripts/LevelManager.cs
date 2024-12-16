@@ -29,6 +29,9 @@ public abstract class LevelManager : MonoBehaviour
         Won,
     }
 
+    protected virtual void Awake() {
+        AudioManager.instance.playLevelMusic(SceneManager.GetActiveScene().buildIndex);
+    }
     protected virtual void Update()
     {
         bool gameIsRunning = gameState == GameState.Running;

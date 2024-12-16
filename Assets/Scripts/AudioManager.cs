@@ -16,23 +16,8 @@ public class AudioManager : MonoBehaviour
     int sceneID;
     int currentSceneID;
 
-    void Start(){
-        sceneID = SceneManager.GetActiveScene().buildIndex;
-
-        playLevelMusic(sceneID);
-        Debug.Log("AudioManagger started with scene: " + sceneID);
-    }
-
-    void Update(){
-        if(SceneManager.GetActiveScene().buildIndex != sceneID){
-            sceneID = SceneManager.GetActiveScene().buildIndex;
-            playLevelMusic(sceneID);
-            Debug.Log("Updated scene to: " + sceneID);
-        }
-    }
-
     public void playLevelMusic(int _sceneID){
-                switch(_sceneID){
+            switch(_sceneID){
             case 1:
                 Play("LVL1_THEME");
                 break;
