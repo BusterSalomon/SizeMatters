@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public abstract class LevelManager : MonoBehaviour
 {
@@ -12,7 +13,15 @@ public abstract class LevelManager : MonoBehaviour
     public UnityEvent DidLoseEvent;
     public UnityEvent<string> DidWinSwitchToScene;
     public string nextScene = "";
+    public float TransitionDelay = 2f; 
     private GameState gameState = GameState.Running;
+    private float gamestateChangeTime;
+    private bool didWinOnce = false;
+    private bool didLoseOnce = false;
+
+
+    public List<GameObject> GameObjectsToHideOnLose;
+
     public enum GameState
     {
         Running,
@@ -25,20 +34,37 @@ public abstract class LevelManager : MonoBehaviour
         bool gameIsRunning = gameState == GameState.Running;
         if (DidLose() && gameIsRunning)
         {
-            DidLoseEvent.Invoke();
-            gameState = GameState.Won;
+            gameState = GameState.Lost;
+            gamestateChangeTime = Time.time;
         }
         if (DidWin() && gameIsRunning)
         {
             Debug.Log("level complete!");
-            DidWinEvent.Invoke();
-            gameState = GameState.Lost;
+            gameState = GameState.Won;
+            gamestateChangeTime = Time.time;
 
-            if (nextScene != "")
-            {
-                DidWinSwitchToScene.Invoke(nextScene);
-            }
+            
         }
+
+        if (!didWinOnce && gameState == GameState.Won && nextScene != "" && Time.time - gamestateChangeTime > TransitionDelay)
+        {
+            DidWinEvent.Invoke();
+            SceneManager.LoadScene(sceneName: nextScene);
+            DidWinSwitchToScene.Invoke(nextScene);
+        }
+
+        if (!didLoseOnce && gameState == GameState.Lost && nextScene != "" && Time.time - gamestateChangeTime > TransitionDelay)
+        {
+            foreach (GameObject GO in GameObjectsToHideOnLose)
+            {
+                GO.SetActive(false);
+            }
+
+            DidLoseEvent.Invoke();
+            SceneManager.LoadScene(sceneName: nextScene);
+            DidWinSwitchToScene.Invoke(nextScene);
+        }
+
     }
     /// <summary>
     /// Resets game state to running
