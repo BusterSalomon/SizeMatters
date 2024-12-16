@@ -858,7 +858,10 @@ MonoBehaviour:
       m_Calls: []
   nextScene: Level4/Scene
   TransitionDelay: 1
-  GameObjectsToHideOnLose: []
+  GameObjectsToHideOnLose:
+  - {fileID: 141632903}
+  - {fileID: 1516603666}
+  - {fileID: 1530187942}
 --- !u!1 &402781626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,7 +2210,7 @@ PrefabInstance:
     - target: {fileID: 8275090848451130144, guid: b245fa9c908aafe4d99e522a13520b55, type: 3}
       propertyPath: gameOverScreen
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 137880911}
     - target: {fileID: 9199295391455770340, guid: b245fa9c908aafe4d99e522a13520b55, type: 3}
       propertyPath: m_Name
       value: UI
