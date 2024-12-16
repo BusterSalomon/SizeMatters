@@ -4842,7 +4842,7 @@ MonoBehaviour:
   DidWinSwitchToScene:
     m_PersistentCalls:
       m_Calls: []
-  nextScene: Level1/Scene
+  nextScene: Level3/CutScene3
   TransitionDelay: 2
   GameObjectsToHideOnLose: []
 --- !u!4 &636773245
@@ -13359,11 +13359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511471964709172363, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.3
+      value: 14.61
       objectReference: {fileID: 0}
     - target: {fileID: 8511471964709172363, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.72
+      value: 7.76
       objectReference: {fileID: 0}
     - target: {fileID: 8511471964709172363, guid: e5fbe0cff9ebb254fa553bd44457f09d, type: 3}
       propertyPath: m_LocalPosition.z
