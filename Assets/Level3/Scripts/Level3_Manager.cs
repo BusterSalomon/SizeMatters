@@ -13,16 +13,6 @@ public class Level3Manager : LevelManager
         countdownTimer = FindObjectOfType<CountdownTimer>(); // Sucht das CountdownTimer-Skript in der Szene
         playerHealth = GameObject.FindGameObjectWithTag("Tree").GetComponent<Health>();
 
-        // Fehlerüberprüfung
-        if (countdownTimer == null)
-        {
-            Debug.LogError("CountdownTimer-Skript wurde nicht gefunden. Bitte stelle sicher, dass es in der Szene vorhanden ist.");
-        }
-
-        if (playerHealth == null)
-        {
-            Debug.LogError("Health-Skript wurde nicht gefunden. Bitte stelle sicher, dass das Charakter-Objekt das Health-Skript enthält.");
-        }
     }
 
     // Überprüfen, ob man gewonnen hat (Zeit ist abgelaufen)

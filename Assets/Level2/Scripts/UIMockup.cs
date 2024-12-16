@@ -13,6 +13,7 @@ public class UIMockup : MonoBehaviour
         // Ensure UI elements are inactive initially
         if (gameOverScreen != null) 
             gameOverScreen.SetActive(false);
+            Debug.Log("Game Over Screen is there");
 
         if (nextLevelScreen != null) 
             nextLevelScreen.SetActive(false);
@@ -20,7 +21,7 @@ public class UIMockup : MonoBehaviour
 
     public void LogWin()
     {
-        Debug.Log("You won!");
+        //Debug.Log("You won!");
         if (nextLevelScreen != null)
         {
             nextLevelScreen.SetActive(true);
@@ -33,7 +34,7 @@ public class UIMockup : MonoBehaviour
 
     public void LogLose()
     {
-        Debug.Log("You lost!");
+        //Debug.Log("You lost!");
         if (gameOverScreen != null)
         {
             gameOverScreen.SetActive(true);
