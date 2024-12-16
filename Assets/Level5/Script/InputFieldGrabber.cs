@@ -11,7 +11,7 @@ public class InputFieldGrabber : MonoBehaviour
     [SerializeField]private TMP_Text reactionTextBox;
 
     public GameObject window;
-    private string CODE = "A42B";
+    private string CODE = "A60B";
 
     public void GrabFromInputField(string input){
         inputText = input;
