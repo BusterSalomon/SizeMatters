@@ -61,8 +61,6 @@ public abstract class LevelManager : MonoBehaviour
             }
 
             DidLoseEvent.Invoke();
-            SceneManager.LoadScene(sceneName: nextScene);
-            DidWinSwitchToScene.Invoke(nextScene);
         }
 
     }
