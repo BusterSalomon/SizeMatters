@@ -15,6 +15,7 @@ public abstract class LevelManager : MonoBehaviour
     private bool didWinOnce = false;
     private bool didLoseOnce = false;
 
+    //private AudioManager am;
 
     public List<GameObject> GameObjectsToHideOnLose;
 
